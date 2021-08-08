@@ -1,7 +1,7 @@
 /*****************************************************************************
 * Author(s):                                                                 *
 *                                                                            *
-* File:		CS_Common.h                                                        *
+* File:	       CS_Common.h                                                   *
 *                                                                            *
 * Description: Common header file for Client-Server code                     *
 *                                                                            *

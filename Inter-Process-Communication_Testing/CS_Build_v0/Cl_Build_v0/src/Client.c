@@ -1,7 +1,7 @@
 /*****************************************************************************
 * Author(s):                                                                 *
 *                                                                            *
-* File:		Client.c                                                           *
+* File:		     Client.c                                                      *
 *                                                                            *
 * Description: Client-side code                                              *
 *                                                                            *

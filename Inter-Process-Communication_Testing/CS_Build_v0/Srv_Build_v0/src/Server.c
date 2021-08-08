@@ -1,7 +1,7 @@
 /*****************************************************************************
 * Author(s):                                                                 *
 *                                                                            *
-* File:		Server.c                                                           *
+* File:		     Server.c                                                      *
 *                                                                            *
 * Description: Server-side code                                              *
 *                                                                            *
