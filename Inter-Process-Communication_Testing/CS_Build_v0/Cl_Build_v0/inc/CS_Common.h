@@ -42,7 +42,7 @@ typedef	struct        					DataBuffer
 {
 	char								          cPayload[MAX_STR_SZ];	// Storage for string	
 	// uint32_t					  		    uBufferType;	        // Type of Buffer	
-	// uint32_t					  		    uDataSize;	          // Size of data
+	uint32_t						  		    uDataSize;	          // Size of data
 	uint16_t					  		      *pNext;			          // Next node *
 	uint16_t					  		      *pPrev;			          // Previous node *
 	
