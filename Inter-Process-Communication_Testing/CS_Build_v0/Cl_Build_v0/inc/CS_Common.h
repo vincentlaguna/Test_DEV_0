@@ -28,9 +28,9 @@
 #define	TEST_PORT     					12345
 #define TIME_V	   struct				timeval
 #define	S_SADDR	   struct				sockaddr
-#define S_SADDR_IN struct    		    sockaddr_in
-#define LOCAL_IP						"127.0.0.1"
-#define MAX_STR_SZ						256
+#define S_SADDR_IN struct    		sockaddr_in
+#define LOCAL_IP						    "127.0.0.1"
+#define MAX_STR_SZ						  256
 
 /****************************************************************************/
 
@@ -40,11 +40,11 @@
 
 typedef	struct        					DataBuffer
 {
-	char								cPayload[MAX_STR_SZ];		
-	// uint32_t					  		uBufferType;	// Type of Buffer	
-	// uint32_t					  		uDataSize;	    // Size of data
-	uint16_t					  		*pNext;			// Next node *
-	uint16_t					  		*pPrev;			// Previous node *
+	char								          cPayload[MAX_STR_SZ];		
+	// uint32_t					  		    uBufferType;	// Type of Buffer	
+	// uint32_t					  		    uDataSize;	    // Size of data
+	uint16_t					  		      *pNext;			// Next node *
+	uint16_t					  		      *pPrev;			// Previous node *
 	
 } DataBuffer_t;
 
