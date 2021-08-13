@@ -1,7 +1,7 @@
 /*****************************************************************************
 * Author(s):                                                                 *
 *                                                                            *
-* File:	       CS_Common.h                                                   *
+* File:		     CS_Common.h                                                   *
 *                                                                            *
 * Description: Common header file for Client-Server code                     *
 *                                                                            *
@@ -11,8 +11,13 @@
 #ifndef		CS_COMMON_H
 #define 	CS_COMMON_H
 
+#define		LIN
+
 /* Includes: ****************************************************************/
 
+#ifndef		LIN
+#include	<winsock.h>
+#else
 #include  <stdio.h>
 #include  <stdlib.h>
 #include  <string.h>
