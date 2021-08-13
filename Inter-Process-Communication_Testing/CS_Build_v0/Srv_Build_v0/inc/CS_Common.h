@@ -18,12 +18,13 @@
 #ifndef		LIN
 #include	<winsock.h>
 #else
-#include  <stdio.h>
-#include  <stdlib.h>
-#include  <string.h>
 #include  <sys/socket.h>
 #include  <arpa/inet.h>
 #include  <unistd.h>
+#endif
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
 
 /****************************************************************************/
 

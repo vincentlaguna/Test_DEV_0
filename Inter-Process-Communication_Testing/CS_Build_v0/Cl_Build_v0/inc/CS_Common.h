@@ -11,14 +11,20 @@
 #ifndef		CS_COMMON_H
 #define 	CS_COMMON_H
 
+#define		LIN
+
 /* Includes: ****************************************************************/
 
-#include  <stdio.h>
-#include  <stdlib.h>
-#include  <string.h>
+#ifndef		LIN
+#include	<winsock.h>
+#else
 #include  <sys/socket.h>
 #include  <arpa/inet.h>
 #include  <unistd.h>
+#endif
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
 
 /****************************************************************************/
 
