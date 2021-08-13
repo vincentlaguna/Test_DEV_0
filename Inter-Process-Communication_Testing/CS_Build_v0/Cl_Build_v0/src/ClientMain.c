@@ -37,6 +37,18 @@ int main(int argc, char *argv[])
   DataBuffer_t  SrvRspDbuff;
   // Create Socket
   uClSok                    = SokInit_Handlr();
+  // Winsock
+  #ifndef LIN
+    
+    WSADATA   wsaData;
+    
+    if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
+    {
+      fprintf(stderr,"WSAStartup() failed");
+      exit(1);
+    }
+    
+  #endif
   // Error Handling
   if (uClSok == -1)
   {
@@ -81,7 +93,12 @@ int main(int argc, char *argv[])
   // Output Server Response
   printf("\nServer Response: %s\n\n", SrvRspDbuff.cPayload);
   // Close the Client Socket
-  close(uClSok);
+  #ifndef LIN
+    closesocket(uClSok);
+    WSACleanup();
+  #else
+    close(uClSok);
+  #endif
   
   return(0);
 

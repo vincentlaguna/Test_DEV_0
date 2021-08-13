@@ -37,6 +37,18 @@ int main(int argc, char *argv[])
   DataBuffer_t  SrvDbuff;
   // Create Socket
   uSrvSok                 = SokInit_Handlr();
+  // Winsock
+  #ifndef LIN
+    
+    WSADATA   wsaData;
+    
+    if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
+    {
+      fprintf(stderr,"WSAStartup() failed");
+      exit(1);
+    }
+    
+  #endif
   // Error Handling
   if (uSrvSok == -1)
   {
@@ -164,9 +176,13 @@ int main(int argc, char *argv[])
     //   printf("\nSEND Failed.\n");
     //   return 1;
     // }
-    
-    close(sok);
-    sleep(1);
+    #ifndef LIN
+      closesocket(uSrvSok);
+      WSACleanup();
+    #else
+      close(uSrvSok);
+    #endif
+      sleep(1);
     
   }
   
