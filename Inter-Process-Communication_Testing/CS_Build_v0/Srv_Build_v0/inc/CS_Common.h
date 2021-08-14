@@ -2,7 +2,7 @@
 /*****************************************************************************
 * Author(s):                                                                 *
 *                                                                            *
-* File:		     CS_Common.h                                                	 *
+* File: CS_Common.h                                                          *
 *                                                                            *
 * Description: Common header file for Client-Server code                     *
 *                                                                            *
@@ -34,11 +34,11 @@
 
 /* Defines: *****************************************************************/
 
-#define		LOCAL_TEST
+// #define		LOCAL_TEST
 #define		TEST_PORT     				12345
 #define		TIME_V	   struct			timeval
 #define		S_SADDR	   struct			sockaddr
-#define		S_SADDR_IN struct    	sockaddr_in
+#define		S_SADDR_IN struct			sockaddr_in
 #define		LOCAL_IP							"127.0.0.1"
 #define		MAX_STR_SZ						256
 
@@ -48,13 +48,13 @@
 
 /* Data Buffer **************************************************************/
 
-typedef	struct        					DataBuffer
+typedef	struct									DataBuffer
 {
 	char													cPayload[MAX_STR_SZ]; // Storage for string	
-	// uint32_t					  	      uBufferType;	      // Type of Buffer	
-	uint32_t						    			uDataSize;	          // Size of data
-	uint16_t					  					*pNext;			      // Next node *
-	uint16_t					  					*pPrev;			      // Previous node *
+	// uint32_t										uBufferType;	      	// Type of Buffer	
+	uint32_t											uDataSize;	          // Size of data
+	uint16_t											*pNext;			      		// Next node *
+	uint16_t											*pPrev;			      		// Previous node *
 
 } DataBuffer_t;
 
