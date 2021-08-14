@@ -14,7 +14,7 @@
 #ifndef		CS_COMMON_H
 #define 	CS_COMMON_H
 
-#define	LIN
+#define	  LIN
 
 /* Includes: ****************************************************************/
 
