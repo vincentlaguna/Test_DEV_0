@@ -25,22 +25,22 @@
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  uint16_t    uSrvSok     = 0; 
-  uint16_t    sok         = 0; 
-  uint16_t    clLen       = 0;
+  uint16_t  uSrvSok = 0; 
+  uint16_t  sok     = 0; 
+  uint16_t  clLen   = 0;
   
-  S_SADDR     cL;
+  S_SADDR   cL;
   // Initialize buffers to store the data
   // char        msg[100]    = {0};
   // char        clMsg[200]  = {0};
   // const char  *pMsg       = clMsg;
   DataBuffer_t  SrvDbuff;
   // Create Socket
-  uSrvSok                 = SokInit_Handlr();
+  uSrvSok = SokInit_Handlr();
   // Winsock
-  #ifndef LIN
+  #ifndef   LIN
     
-    WSADATA   wsaData;
+    WSADATA wsaData;
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
@@ -66,11 +66,11 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   
-  sleep(1);
+  SLEEP
   
   printf("\n<<< BIND Done >>>\n\n");
   // Listen
-  listen(uSrvSok, 3); // Number of MAX connections
+  listen(uSrvSok, 5); // Number of MAX connections
   
   sleep(1);
   

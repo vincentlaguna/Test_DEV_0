@@ -46,6 +46,8 @@ Description: Common header file for Client-Server code
 #define	  S_SADDR    struct	 sockaddr
 #define	  S_SADDR_IN struct	 sockaddr_in
 #define	  MAX_STR_SZ 256
+#define   MAX_CONN   5
+#define   SLEEP		 sleep(1);
 
 /****************************************************************************/
 
@@ -75,6 +77,7 @@ typedef	struct  DataBuffer
 
 uint16_t  SokInit_Handlr(void);
 uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
+// uint32_t  SrvConnection_Hndlr(uint32_t uSrvSok);
 uint32_t  SokConnect_Hndlr(uint32_t uClSok);
 uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
 uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
