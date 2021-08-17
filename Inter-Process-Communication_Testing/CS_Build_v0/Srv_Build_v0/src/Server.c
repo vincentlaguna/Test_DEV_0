@@ -38,13 +38,13 @@ uint16_t  SokInit_Handlr(void)
   // Output
   printf("\n>>> Server-Side Socket Initialization >>>\n\n");
   
-  sleep(1);
+  SLEEP
   
   // Socket System Call
   hSok = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
   printf("\n<<< Server-Side Socket Init Success <<<\n\n");
-  sleep(1);
+  SLEEP
   // Function Return
   return  hSok;
 }
@@ -65,18 +65,18 @@ Returns:		Unsigned 32-bit integer
 uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 {
   // Local Variables
-  uint32_t    retVal      = -1;
-  uint32_t    sPort       = TEST_PORT;
+  uint32_t  retVal    = -1;
+  uint32_t  sPort     = TEST_PORT;
   // sock_addr_in initialization
-  S_SADDR_IN  Srv         = {0};
+  S_SADDR_IN  Srv     = {0};
   // Struct Member Init
-  Srv.sin_family          = AF_INET;
-  Srv.sin_addr.s_addr     = htonl(INADDR_ANY);
-  Srv.sin_port            = htons(sPort);
+  Srv.sin_family      = AF_INET;
+  Srv.sin_addr.s_addr = htonl(INADDR_ANY);
+  Srv.sin_port        = htons(sPort);
   // Bind System Call
-  retVal    = bind(uSrvSok, (S_SADDR *)&Srv, sizeof(Srv));
+  retVal = bind(uSrvSok, (S_SADDR *)&Srv, sizeof(Srv));
   // Function Return
-  return      retVal;    
+  return  retVal;    
 }
 
 // End BindSrvSok_Handlr() 

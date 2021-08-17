@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   
-  sleep(1);
+  SLEEP
   
   printf("\n>>> The SOCKET has been created >>>\n\n");
   // Bind
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     #else
       close(uSrvSok);
     #endif
-      sleep(1);
+      SLEEP;
     
   }
   
