@@ -70,9 +70,9 @@ int main(int argc, char *argv[])
   
   printf("\n<<< BIND Done >>>\n\n");
   // Listen
-  listen(uSrvSok, 5); // Number of MAX connections
+  listen(uSrvSok, MAX_CONN); // Number of MAX connections
   
-  sleep(1);
+  SLEEP
   
   // Accept incoming connections
   while (1)
@@ -176,13 +176,13 @@ int main(int argc, char *argv[])
     //   printf("\nSEND Failed.\n");
     //   return 1;
     // }
-    #ifndef LIN
-      closesocket(uSrvSok);
-      WSACleanup();
-    #else
-      close(uSrvSok);
-    #endif
-      SLEEP;
+    // #ifndef LIN
+    //   closesocket(uSrvSok);
+    //   WSACleanup();
+    // #else
+    //   close(uSrvSok);
+    // #endif
+    //   SLEEP;
     
   }
   

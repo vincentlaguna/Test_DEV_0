@@ -20,6 +20,7 @@ Description: Common header file for Client-Server code
 
 #ifndef	  LIN
 #include  <winsock.h>
+#include  <Windows.h>
 #else
 #include  <sys/socket.h>
 #include  <arpa/inet.h>
