@@ -59,26 +59,14 @@ int main(int argc, char *argv[])
   SLEEP
   
   printf("\n>>> The SOCKET has been created >>>\n\n");
-  // Bind
-  if (BindSrvSok_Hndlr(uSrvSok) < 0)
-  {
-    perror("BIND Failed."); // Print the error message
-    return EXIT_FAILURE;
-  }
-  
-  SLEEP
-  
-  printf("\n<<< BIND Done >>>\n\n");
-  // Listen
-  listen(uSrvSok, MAX_CONN); // Number of MAX connections
-  
-  SLEEP
+
+  SrvConnection_Hndlr(uSrvSok, MAX_CONN);
   
   // Accept incoming connections
   while (1)
   {
     printf("\n>>> Waiting for incoming connections...\n\n");
-    clLen                 = sizeof(S_SADDR_IN);
+    clLen = sizeof(S_SADDR_IN);
     // Accept connection from an incoming client
     sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t *)&cL);
     
@@ -89,52 +77,9 @@ int main(int argc, char *argv[])
     }
     
     printf("\nConnection ACCEPTED\n\n");
+    
     // Buffers
-    
-    // memset(clMsg, '\0', sizeof clMsg);
-    // memset(msg, '\0', sizeof msg);
-    // // Receive a reply from the Client
-    // if (recv(sok, clMsg, 200, 0) < 0)
-    // {
-    //   printf("\nRECEIVE Failed.\n");
-    //   break;
-    // }
-    
-    // printf("Client Message: %s\n", clMsg);
-    
-    // if (strncmp(pMsg, clMsg, sizeof(pMsg)) == 0)
-    // {
-    //   strcpy(msg, "Message Received Successfully");
-    // }
-    // else
-    // {
-    //   strcpy(msg, "INVALID MESSAGE!");
-    // }
-    // // Send some data
-    // if(send(sok, msg, strlen(msg), 0) < 0)
-    // {
-    //   printf("\nSEND Failed.\n");
-    //   return EXIT_FAILURE;
-    // }
-    
-    // printf("\n<<< Waiting for incoming connections...\n");
-    // // Accept Connection from another incoming Client
-    // sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t*)&clLen);
-   
-    // if (sok < 0)
-    // {
-    //   perror("ACCEPT Failed.");
-    //   return 1;
-    // }
-    // printf("\nConnection ACCEPTED\n\n");
-    // // Send some Data
-    // if (send(sok, msg, strlen(msg), 0) < 0)
-    // {
-    //   printf("\nSEND Failed.\n");
-    //   return 1;
-    // }
-    
-    uint32_t  DbuffSize    = sizeof(DataBuffer_t);
+    uint32_t  DbuffSize = sizeof(DataBuffer_t);
     memset(SrvDbuff.cPayload, '\0', MAX_STR_SZ);
     // Receive a reply from the Client
     if (recv(sok, SrvDbuff.cPayload, DbuffSize, 0) < 0)
@@ -144,15 +89,7 @@ int main(int argc, char *argv[])
     }
     
     printf("Client Message: %s\n", SrvDbuff.cPayload);
-    
-    // if (strncmp(pMsg, clMsg, sizeof(pMsg)) == 0)
-    // {
-    //   strcpy(msg, "Message Received Successfully");
-    // }
-    // else
-    // {
-    //   strcpy(msg, "INVALID MESSAGE!");
-    // }
+
     // Send some data
     if(send(sok, SrvDbuff.cPayload, MAX_STR_SZ, 0) < 0)
     {

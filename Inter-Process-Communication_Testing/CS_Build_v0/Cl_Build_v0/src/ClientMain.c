@@ -81,8 +81,8 @@ int main(int argc, char *argv[])
   // // Output Server Response
   // printf("\nServer Response: %s\n\n", srvReply);
   
-  uint32_t  DbuffSize    = sizeof(DataBuffer_t);
-  printf("Please Enter the Message: ");
+  uint32_t  DbuffSize = sizeof(DataBuffer_t);
+  printf("Please Enter Message to Send: ");
   fgets(ClDbuff.cPayload, DbuffSize, stdin);
   
   SLEEP

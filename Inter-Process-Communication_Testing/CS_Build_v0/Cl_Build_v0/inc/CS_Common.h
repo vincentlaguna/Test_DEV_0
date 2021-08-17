@@ -58,10 +58,10 @@ Description: Common header file for Client-Server code
 
 typedef	struct  DataBuffer
 {
-	char		cPayload[MAX_STR_SZ]; // Storage for string	
+	char			cPayload[MAX_STR_SZ]; // Storage for string	
 	uint32_t	uDataSize;	          // Size of data
-	uint16_t	*pNext;	       		  // Next node *
-	uint16_t    *pPrev;			      // Previous node *
+	uint16_t	*pNext;	       		    // Next node *
+	uint16_t  *pPrev;			          // Previous node *
 
 } DataBuffer_t;
 
@@ -78,7 +78,7 @@ typedef	struct  DataBuffer
 
 uint16_t  SokInit_Handlr(void);
 uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
-// uint32_t  SrvConnection_Hndlr(uint32_t uSrvSok);
+void		  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 uint32_t  SokConnect_Hndlr(uint32_t uClSok);
 uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
 uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);

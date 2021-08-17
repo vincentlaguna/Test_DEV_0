@@ -143,7 +143,7 @@ uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
   // Receive System Call to  receieve (parameters) from the Server
   retVal = recv(uClSok, pRsp, rcvSize, 0);
   // Output Response
-  printf("\nResponse: %s\n\n", pRsp);
+  printf("\nServer Reply: %s\n\n", pRsp);
   // Function Return
   return      retVal;    
 }
