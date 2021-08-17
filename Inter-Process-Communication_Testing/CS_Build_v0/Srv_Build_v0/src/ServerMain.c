@@ -176,13 +176,13 @@ int main(int argc, char *argv[])
     //   printf("\nSEND Failed.\n");
     //   return 1;
     // }
-    // #ifndef LIN
-    //   closesocket(uSrvSok);
-    //   WSACleanup();
-    // #else
-    //   close(uSrvSok);
-    // #endif
-    //   SLEEP;
+    #ifndef LIN
+      closesocket(uSrvSok);
+      WSACleanup();
+    #else
+      close(uSrvSok);
+    #endif
+      SLEEP
     
   }
   

@@ -93,12 +93,12 @@ int main(int argc, char *argv[])
   // Output Server Response
   printf("\nServer Response: %s\n\n", SrvRspDbuff.cPayload);
   // Close the Client Socket
-  // #ifndef LIN
-  //   closesocket(uClSok);
-  //   WSACleanup();
-  // #else
-  //   close(uClSok);
-  // #endif
+  #ifndef LIN
+    closesocket(uClSok);
+    WSACleanup();
+  #else
+    close(uClSok);
+  #endif
   
   return(0);
 
