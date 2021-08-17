@@ -1,10 +1,10 @@
 /*****************************************************************************
-* Author(s):                                                                 *
-*                                                                            *
-* File:		     ServerMain.c                                                  *
-*                                                                            *
-* Description: Server-side Main                                              *
-*                                                                            *
+Author(s):                                                                 
+
+File: ServerMain.c              
+
+Description: Server-side Main                                              
+
 *****************************************************************************/
 
 

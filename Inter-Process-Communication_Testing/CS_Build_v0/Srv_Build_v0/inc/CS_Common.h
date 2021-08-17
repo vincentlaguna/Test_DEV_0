@@ -1,11 +1,11 @@
 #pragma once
 /*****************************************************************************
 Author(s):                                                                 
-                                                                            
+  
 File: CS_Common.h                                                          
 
 Description: Common header file for Client-Server code                     
-                                                                            
+
 *****************************************************************************/
 // Header Include Guards
 

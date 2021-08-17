@@ -1,10 +1,10 @@
 /*****************************************************************************
-* Author(s):                                                                 *
-*                                                                            *
-* File:		     ClientMain.c                                                  *
-*                                                                            *
-* Description: Client-side Main                                              *
-*                                                                            *
+Author(s):                                                                 
+
+File: ClientMain.c                                                  
+
+Description: Client-side Main                                              
+
 *****************************************************************************/
 
 
@@ -25,9 +25,9 @@
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  uint16_t    uClSok        = 0; 
-  uint16_t    sok           = 0; 
-  uint16_t    clLen         = 0;
+  uint16_t  uClSok = 0; 
+  uint16_t  sok    = 0; 
+  uint16_t  clLen  = 0;
   // This is where we fill-in the Server-Side address info
   S_SADDR_IN  Srv; 
   // Initialize buffers to store the data
@@ -36,11 +36,11 @@ int main(int argc, char *argv[])
   DataBuffer_t  ClDbuff;
   DataBuffer_t  SrvRspDbuff;
   // Create Socket
-  uClSok                    = SokInit_Handlr();
+  uClSok = SokInit_Handlr();
   // Winsock
   #ifndef LIN
     
-    WSADATA   wsaData;
+    WSADATA wsaData;
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   
-  sleep(1);
+  SLEEP
   
   printf("\n>>> The SOCKET has been created >>>\n\n");
   // Bind
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   
-  sleep(1);
+  SLEEP
   
   printf("Connection to Remote Server = Successful\n\n");
   
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
   printf("Please Enter the Message: ");
   fgets(ClDbuff.cPayload, DbuffSize, stdin);
   
-  sleep(1);
+  SLEEP
   // Send data to the Remote Server 
   SokSend_Hndlr(uClSok, ClDbuff.cPayload, DbuffSize);
   // Received the data from the Remote Server
@@ -93,12 +93,12 @@ int main(int argc, char *argv[])
   // Output Server Response
   printf("\nServer Response: %s\n\n", SrvRspDbuff.cPayload);
   // Close the Client Socket
-  #ifndef LIN
-    closesocket(uClSok);
-    WSACleanup();
-  #else
-    close(uClSok);
-  #endif
+  // #ifndef LIN
+  //   closesocket(uClSok);
+  //   WSACleanup();
+  // #else
+  //   close(uClSok);
+  // #endif
   
   return(0);
 

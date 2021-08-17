@@ -1,10 +1,10 @@
 /*****************************************************************************
-* Author(s):                                                                 *
-*                                                                            *
-* File:		     Client.c                                                      *
-*                                                                            *
-* Description: Client-side code                                              *
-*                                                                            *
+Author(s):
+
+File: Client.c
+
+Description: Client-side code                                              
+
 *****************************************************************************/
 
 
@@ -24,12 +24,12 @@
 // Helper Functions
 
 /*****************************************************************************
-*                                                                            *
-* Name:			  SokInit_Handlr()                                               *
-* Purpose:    Handles the creation of a Socket                               *
-* Parameters: None                                                           *  
-* Returns:		Unsigned 16-bit integer                                        *
-*                                                                            *
+
+Name: SokInit_Handlr()                                               
+Purpose:  Handles the creation of a Socket                               
+Parameters: None                                                             
+Returns:  Unsigned 16-bit integer                                        
+
 *****************************************************************************/
 
 uint16_t	SokInit_Handlr(void)
@@ -85,13 +85,13 @@ uint32_t	SokConnect_Hndlr(uint32_t uClSok)
 
 
 /*****************************************************************************
-*                                                                            *
-* Name:			  SokSend_Handlr()                                               *
-* Purpose:    Handles sending Data to the Server                             *
-* Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   *
-*             Request, Unsigned 16-bit integer for Length of the Request     *
-* Returns:		Unsigned 32-bit integer                                        *
-*                                                                            *
+
+Name: SokSend_Handlr()                                               
+Purpose:  Handles sending Data to the Server                             
+Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
+            Request, Unsigned 16-bit integer for Length of the Request     
+Returns:  Unsigned 32-bit integer                                        
+
 *****************************************************************************/
 
 uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
@@ -118,13 +118,13 @@ uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
 
 
 /*****************************************************************************
-*                                                                            *
-* Name:			  SokRcv_Handlr()                                                *
-* Purpose:    Handles receiving Data form the Server                         *
-* Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   *
-*             Response, Unsigned 16-bit integer for Size of the Response     *
-* Returns:		Unsigned 32-bit integer                                        *
-*                                                                            *
+
+Name:	SokRcv_Handlr()                                                
+Purpose: Handles receiving Data form the Server                         
+Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
+            Response, Unsigned 16-bit integer for Size of the Response     
+Returns: Unsigned 32-bit integer                                        
+
 *****************************************************************************/
 
 uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
