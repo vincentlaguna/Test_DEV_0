@@ -35,19 +35,20 @@ Returns:  Unsigned 16-bit integer
 uint16_t	SokInit_Handlr(void)
 {
   // Local Variables
-  uint32_t                  hSok;
+  uint32_t  hSok;
   // Output
   printf("\n>>> Client-Side Socket Initialization >>>\n\n");
   
-  sleep(1);
+  SLEEP
   
   // Socket System Call
-  hSok                   = socket(AF_INET, SOCK_STREAM, 0);
+  hSok = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
   printf("\n<<< Client-Side Socket Init Success <<<\n\n");
-  sleep(1);
+  
+  SLEEP
   // Function Return
-  return                    hSok;
+  return  hSok;
 }
 
 // End SokInit_Handlr()
@@ -66,18 +67,18 @@ uint16_t	SokInit_Handlr(void)
 uint32_t	SokConnect_Hndlr(uint32_t uClSok)
 {
   // Local Variables
-  uint32_t    retVal      = -1;
-  uint32_t    sPort       = TEST_PORT;
+  uint32_t  retVal    = -1;
+  uint32_t  sPort     = TEST_PORT;
   // sock_addr_in initialization
-  S_SADDR_IN  Cl          = {0};
+  S_SADDR_IN  Cl      = {0};
   // Struct Member Init
-  Cl.sin_family          = AF_INET;
-  Cl.sin_addr.s_addr     = inet_addr(LOCAL_IP);
-  Cl.sin_port            = htons(sPort);
+  Cl.sin_family       = AF_INET;
+  Cl.sin_addr.s_addr  = inet_addr(LOCAL_IP); // <- REMOTE SERVER IP
+  Cl.sin_port         = htons(sPort);
   // Connect System Call
-  retVal    = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
+  retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
   // Function Return
-  return      retVal;    
+  return  retVal;    
 }
 
 // End SokConnect_Hndlr() 
@@ -97,10 +98,10 @@ Returns:  Unsigned 32-bit integer
 uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
 {
   // Local Variables
-  uint32_t    retVal      = -1;
-  TIME_V      Tv;
-  Tv.tv_sec               = 20; // Time-Out in Seconds
-  Tv.tv_usec              = 0;
+  uint32_t  retVal  = -1;
+  TIME_V    Tv;
+  Tv.tv_sec         = 20; // Time-Out in Seconds
+  Tv.tv_usec        = 0;
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_SNDTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
@@ -110,7 +111,7 @@ uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
   // Send System Call to send request (parameters) to the Server
   retVal = send(uClSok, pRqst, pRqstLen, 0);
   // Function Return
-  return      retVal;    
+  return  retVal;    
 }
 
 // End SokSend_Hndlr() 
@@ -130,10 +131,10 @@ Returns: Unsigned 32-bit integer
 uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
 {
   // Local Variables
-  uint32_t    retVal      = -1;
-  TIME_V      Tv;
-  Tv.tv_sec               = 20; // Time-Out in Seconds
-  Tv.tv_usec              = 0;
+  uint32_t  retVal  = -1;
+  TIME_V    Tv;
+  Tv.tv_sec         = 20; // Time-Out in Seconds
+  Tv.tv_usec        = 0;
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
@@ -145,7 +146,7 @@ uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
   // Output Response
   printf("\nServer Reply: %s\n\n", pRsp);
   // Function Return
-  return      retVal;    
+  return  retVal;    
 }
 
 // End SokRcv_Hndlr() 

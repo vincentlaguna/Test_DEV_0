@@ -37,18 +37,19 @@ Description: Common header file for Client-Server code
 
 // #define  LOCAL_TEST
 #define   TEST_PORT  12345
-#define	  IP0		 "192.168.135.21"
-#define	  IP1		 "192.168.135.22"
-#define	  IP2		 "192.168.135.23"
-#define	  IP3		 "192.168.135.24"
-#define	  IP4		 "192.168.135.25"
+#define	  IP0				 "192.168.135.21"
+#define	  IP1				 "192.168.135.22"
+#define	  IP2				 "192.168.135.23"
+#define	  IP3				 "192.168.135.24"
+#define	  IP4			   "192.168.135.25"
+#define		REM_SRV_IP "192.168.143.10"	
 #define   LOCAL_IP   "127.0.0.1"
 #define	  TIME_V     struct  timeval
 #define	  S_SADDR    struct	 sockaddr
 #define	  S_SADDR_IN struct	 sockaddr_in
 #define	  MAX_STR_SZ 256
 #define   MAX_CONN   5
-#define   SLEEP		 sleep(1);
+#define   SLEEP			 sleep(1);
 
 /****************************************************************************/
 

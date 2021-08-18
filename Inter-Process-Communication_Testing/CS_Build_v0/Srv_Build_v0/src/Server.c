@@ -164,7 +164,7 @@ void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
   
 }
 
-// End BindSrvSok_Handlr() 
+// End SrvConnection_Handlr() 
 /****************************************************************************/
 
 
