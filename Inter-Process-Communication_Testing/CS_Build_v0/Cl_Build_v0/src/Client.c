@@ -74,7 +74,7 @@ uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP)
   // Struct Member Init
   Cl.sin_family       = AF_INET;
   Cl.sin_addr.s_addr  = inet_addr(remIP); // <- REMOTE SERVER IP
-  Cl.sin_port         = htons(sPort);
+  Cl.sin_port         = htons(sPort); // <- REMOTE SERVER PORT
   // Connect System Call
   retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
   // Function Return
