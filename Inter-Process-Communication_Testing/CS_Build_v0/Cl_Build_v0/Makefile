@@ -15,11 +15,14 @@ else
 	TARGET_EXTENSION=.out
 endif
 
+# Provision to provide Server Address at build step
+#SRV_IP=127.0.0.1 #192.168.128.131
+
 #Path Definitions
 # PATHU = ../unity/
 PATHS = src/
 # PATHT = test/
-# PATHI = inc/
+PATHI = inc/
 PATHB = build/
 
 # determine our source files
@@ -38,13 +41,12 @@ OBJ = $(OBJS)
 
 # Other files we care about
 # DEP = $(PATHU)unity.h $(PATHU)unity_internals.h
-TGT = $(PATHB)CSBuild0$(TARGET_EXTENSION)
-
+TGT = $(PATHB)$(TARGET_EXTENSION) #$(SRV_IP)
 
 # Tool Definitions
 CC=gcc
 # CFLAGS=-I. -I$(PATHU) -I$(PATHI) -I$(PATHS) -DTEST
-CCLAGS=-I. -I$(PATHS)
+CFLAGS=-I. -I$(PATHI) -I$(PATHS)
 
 test: $(PATHB) $(TGT)
 	./$(TGT)

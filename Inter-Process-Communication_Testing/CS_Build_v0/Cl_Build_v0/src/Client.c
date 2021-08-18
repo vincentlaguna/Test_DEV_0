@@ -56,15 +56,15 @@ uint16_t	SokInit_Handlr(void)
 
 
 /*****************************************************************************
-*                                                                            *
-* Name:			  SokConnect_Handlr()                                            *
-* Purpose:    Handles the Connection of a Socket to the Server               *
-* Parameters: Unsigned 32-bit integer                                        *  
-* Returns:		Unsigned 32-bit integer                                        *
-*                                                                            *
+
+Name: SokConnect_Handlr()                                            
+Purpose: Handles the Connection of a Socket to the Server               
+Parameters: Unsigned 32-bit integer                                          
+Returns: Unsigned 32-bit integer                                        
+
 *****************************************************************************/
 
-uint32_t	SokConnect_Hndlr(uint32_t uClSok)
+uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP)
 {
   // Local Variables
   uint32_t  retVal    = -1;
@@ -73,7 +73,7 @@ uint32_t	SokConnect_Hndlr(uint32_t uClSok)
   S_SADDR_IN  Cl      = {0};
   // Struct Member Init
   Cl.sin_family       = AF_INET;
-  Cl.sin_addr.s_addr  = inet_addr(LOCAL_IP); // <- REMOTE SERVER IP
+  Cl.sin_addr.s_addr  = inet_addr(remIP); // <- REMOTE SERVER IP
   Cl.sin_port         = htons(sPort);
   // Connect System Call
   retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));

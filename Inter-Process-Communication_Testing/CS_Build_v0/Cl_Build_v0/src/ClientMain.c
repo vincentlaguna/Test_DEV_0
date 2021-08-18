@@ -24,15 +24,15 @@ Description: Client-side Main
 //
 int main(int argc, char *argv[])
 {
+  // char *SrvAddr = argv[1];
+  // printf("\nServer Address: %s\n", SrvAddr);
   // Initialize Local Variables
   uint16_t  uClSok = 0; 
   uint16_t  sok    = 0; 
   uint16_t  clLen  = 0;
   // This is where we fill-in the Server-Side address info
   S_SADDR_IN  Srv; 
-  // Initialize buffers to store the data
-  // char        sndToSrv[100] = {"Client (n) Connected"};
-  // char        srvReply[200] = {0};
+
   DataBuffer_t  ClDbuff;
   DataBuffer_t  SrvRspDbuff;
   // Create Socket
@@ -60,7 +60,8 @@ int main(int argc, char *argv[])
   
   printf("\n>>> The SOCKET has been created >>>\n\n");
   // Bind
-  if (SokConnect_Hndlr(uClSok) < 0)
+  // if (SokConnect_Hndlr(uClSok, SrvAddr) < 0)
+  if (SokConnect_Hndlr(uClSok, LOCAL_IP) < 0)
   {
     perror("CONNECT Failed."); // Print the error message
     return EXIT_FAILURE;
@@ -68,30 +69,21 @@ int main(int argc, char *argv[])
   
   SLEEP
   
-  printf("Connection to Remote Server = Successful\n\n");
-  
-  // printf("Please Enter the Message: ");
-  // fgets(sndToSrv, 100, stdin);
-  
-  // sleep(1);
-  // // Send data to the Remote Server 
-  // SokSend_Hndlr(uClSok, sndToSrv, strlen(sndToSrv));
-  // // Received the data from the Remote Server
-  // SokRcv_Hndlr(uClSok, srvReply, 200);
-  // // Output Server Response
-  // printf("\nServer Response: %s\n\n", srvReply);
+  printf("Connection to Remote Server = SUCCESS\n\n");
   
   uint32_t  DbuffSize = sizeof(DataBuffer_t);
   printf("Please Enter Message to Send: ");
   fgets(ClDbuff.cPayload, DbuffSize, stdin);
   
+  
   SLEEP
   // Send data to the Remote Server 
   SokSend_Hndlr(uClSok, ClDbuff.cPayload, DbuffSize);
   // Received the data from the Remote Server
-  SokRcv_Hndlr(uClSok, SrvRspDbuff.cPayload, DbuffSize);
+  if (SokRcv_Hndlr(uClSok, SrvRspDbuff.cPayload, DbuffSize))
   // Output Server Response
-  printf("\nServer Response: %s\n\n", SrvRspDbuff.cPayload);
+    printf("Server Status: Payload (%d Bytes) RECIEVED->SENT = SUCCESS\n\n", 
+            strlen(SrvRspDbuff.cPayload));
   // Close the Client Socket
   #ifndef LIN
     closesocket(uClSok);
