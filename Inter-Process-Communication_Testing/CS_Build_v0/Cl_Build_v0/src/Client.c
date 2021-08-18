@@ -98,10 +98,10 @@ Returns:  Unsigned 32-bit integer
 uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
 {
   // Local Variables
-  uint32_t  retVal  = -1;
-  TIME_V    Tv;
-  Tv.tv_sec         = 20; // Time-Out in Seconds
-  Tv.tv_usec        = 0;
+  uint32_t   retVal = -1;
+  TIME_V     Tv;
+  Tv.tv_sec  = 20; // Time-Out in Seconds
+  Tv.tv_usec = 0;
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_SNDTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
@@ -131,10 +131,10 @@ Returns: Unsigned 32-bit integer
 uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
 {
   // Local Variables
-  uint32_t  retVal  = -1;
-  TIME_V    Tv;
-  Tv.tv_sec         = 20; // Time-Out in Seconds
-  Tv.tv_usec        = 0;
+  uint32_t   retVal = -1;
+  TIME_V     Tv;
+  Tv.tv_sec  = 20; // Time-Out in Seconds
+  Tv.tv_usec = 0;
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {

@@ -57,20 +57,21 @@ Description: Common header file for Client-Server code
 
 /* Data Buffer **************************************************************/
 
-typedef	struct  DataBuffer
+struct  DataBuffer
 {
-	char			cPayload[MAX_STR_SZ]; // Storage for string	
-	uint32_t	uDataSize;	          // Size of data
-	uint16_t	*pNext;	       		    // Next node *
-	uint16_t  *pPrev;			          // Previous node *
+	char	cPayload[MAX_STR_SZ]; // Storage for string	
+	// uint32_t	uDataSize;	          // Size of data
+	// uint16_t	*pNext;	       		    // Next node *
+	// uint16_t  *pPrev;			        // Previous node *
 
-} DataBuffer_t;
+} __attribute__((__packed__));
 
 /****************************************************************************/
 
 /* Typedefs: ****************************************************************/
 
 // typedef  DataBuffer_  *pDbuff;
+typedef	struct DataBuffer DBffr;
 
 /****************************************************************************/
 

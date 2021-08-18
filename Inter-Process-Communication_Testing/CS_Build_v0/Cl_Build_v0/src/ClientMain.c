@@ -25,7 +25,7 @@ Description: Client-side Main
 int main(int argc, char *argv[])
 {
   // char *SrvAddr = argv[1];
-  // printf("\nServer Address: %s\n", SrvAddr);
+  // printf("\nConnecting to Server Address: %s\n", SrvAddr);
   // Initialize Local Variables
   uint16_t  uClSok = 0; 
   uint16_t  sok    = 0; 
@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
   // This is where we fill-in the Server-Side address info
   S_SADDR_IN  Srv; 
 
-  DataBuffer_t  ClDbuff;
-  DataBuffer_t  SrvRspDbuff;
+  DBffr  ClDbuff;
+  DBffr  SrvRspDbuff;
   // Create Socket
   uClSok = SokInit_Handlr();
   // Winsock
@@ -71,10 +71,9 @@ int main(int argc, char *argv[])
   
   printf("Connection to Remote Server = SUCCESS\n\n");
   
-  uint32_t  DbuffSize = sizeof(DataBuffer_t);
+  uint32_t  DbuffSize = sizeof(DBffr);
   printf("Please Enter Message to Send: ");
   fgets(ClDbuff.cPayload, DbuffSize, stdin);
-  
   
   SLEEP
   // Send data to the Remote Server 

@@ -19,10 +19,10 @@ Description: Server-side code
 
 /*****************************************************************************
 
-Name:			  SokInit_Handlr()                                               
-Purpose:    Handles the creation of a Socket                               
+Name:	SokInit_Handlr()                                               
+Purpose: Handles the creation of a Socket                               
 Parameters: None                                                             
-Returns:		Unsigned 16-bit integer                                        
+Returns: Unsigned 16-bit integer                                        
 
 *****************************************************************************/
 
@@ -51,10 +51,10 @@ uint16_t  SokInit_Handlr(void)
 
 /*****************************************************************************
 
-Name:			  BindSrvSok_Handlr()                                            
-Purpose:    Handles the binding of a Socket to the Server                  
+Name: BindSrvSok_Handlr()                                            
+Purpose: Handles the binding of a Socket to the Server                  
 Parameters: Unsigned 32-bit integer                                          
-Returns:		Unsigned 32-bit integer                                        
+Returns: Unsigned 32-bit integer                                        
 
 *****************************************************************************/
 
@@ -81,23 +81,23 @@ uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 
 /*****************************************************************************
 
-Name:			  SrvConnection_Hndlr()                                            
-Purpose:    Handles incoming connections to the server                 
+Name:	SrvConnection_Hndlr()                                            
+Purpose: Handles incoming connections to the server                 
 Parameters: Unsigned 32-bit integer                                          
-Returns:		Unsigned 32-bit integer                                        
+Returns: Unsigned 32-bit integer                                        
 
 *****************************************************************************/
 
 void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
 {
   // Local Variables
-  uint16_t  sok     = 0; 
-  uint16_t  clLen   = 0;
+  uint16_t  sok   = 0; 
+  uint16_t  clLen = 0;
   
   S_SADDR   cL;
   // Initialize buffers to store the data
-  DataBuffer_t  *SrvDbuff;
-  SrvDbuff = (DataBuffer_t *)malloc(sizeof(DataBuffer_t));
+  DBffr  *SrvDbuff;
+  SrvDbuff = (DBffr *)malloc(sizeof(DBffr));
   clLen = sizeof(S_SADDR_IN);
   // Create Socket
   uSrvSok = SokInit_Handlr();
@@ -127,7 +127,7 @@ void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
         
     printf("\nConnection ACCEPTED\n\n");
     // Buffers
-    uint32_t  DbuffSize = sizeof(DataBuffer_t);
+    uint32_t  DbuffSize = sizeof(DBffr);
     memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
     // Receive a reply from the Client
     if (recv(sok, &SrvDbuff->cPayload, (uint32_t)DbuffSize, 0) < 0)

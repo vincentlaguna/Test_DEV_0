@@ -16,7 +16,7 @@ else
 endif
 
 # Provision to provide Server Address at build step
-#SRV_IP=127.0.0.1 #192.168.128.131
+#SRV_IP=192.168.143.10
 
 #Path Definitions
 # PATHU = ../unity/
