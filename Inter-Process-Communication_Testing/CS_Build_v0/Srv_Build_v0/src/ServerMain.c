@@ -19,6 +19,7 @@ Description: Server-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
+  printf("\n%d\n", sizeof(char));
   uint16_t  uSrvSok = 0; 
   uSrvSok = SokInit_Handlr();
   // Winsock

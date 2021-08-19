@@ -30,12 +30,18 @@ Description: Common header file for Client-Server code
 #include  <stdlib.h>
 #include  <stdint.h>
 #include  <string.h>
+#include	<sys/time.h>
+#include	<sys/types.h>
+#include	<sys/ioctl.h>
 
 /****************************************************************************/
 
 /* Defines: *****************************************************************/
 
-// #define  LOCAL_TEST
+#define   MAX_CONN	5
+#define		MAX_LEN	4096
+#define	  MAX_STR_SZ	256
+#define   SLEEP	sleep(1);
 #define   TEST_PORT  12345
 #define	  IP0	"192.168.135.21"
 #define	  IP1	"192.168.135.22"
@@ -47,9 +53,6 @@ Description: Common header file for Client-Server code
 #define	  TIME_V	struct  timeval
 #define	  S_SADDR struct	sockaddr
 #define	  S_SADDR_IN struct	sockaddr_in
-#define	  MAX_STR_SZ	256
-#define   MAX_CONN	5
-#define   SLEEP	sleep(1);
 
 /****************************************************************************/
 
@@ -77,10 +80,10 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-
+char			*convertHex(const uint8_t *src, size_t len);
+void		  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 uint16_t  SokInit_Handlr(void);
 uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
-void		  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP);
 uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
 uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);

@@ -32,6 +32,23 @@ Returns:  Unsigned 16-bit integer
 
 *****************************************************************************/
 
+char  *convertHex(const uint8_t *src, size_t len)
+{
+ 
+}
+
+// End SokInit_Handlr()
+/****************************************************************************/
+
+/*****************************************************************************
+
+Name: SokInit_Handlr()                                               
+Purpose:  Handles the creation of a Socket                               
+Parameters: None                                                             
+Returns:  Unsigned 16-bit integer                                        
+
+*****************************************************************************/
+
 uint16_t	SokInit_Handlr(void)
 {
   // Local Variables
