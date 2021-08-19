@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s):                                                                 
+Author(s) or Contributor(s): Version .0  ~<NAME> 2021                                                                 
 
 File:	Server.c                                                      
 
@@ -62,7 +62,7 @@ uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 {
   // Local Variables
   uint32_t  retVal    = -1;
-  uint32_t  sPort     = TEST_PORT;
+  uint32_t  sPort     = REM_SRV_PORT;
   // sock_addr_in initialization
   S_SADDR_IN  Srv     = {0};
   // Struct Member Init

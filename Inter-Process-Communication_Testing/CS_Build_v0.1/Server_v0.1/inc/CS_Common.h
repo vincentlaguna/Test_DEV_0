@@ -43,12 +43,13 @@ Description: Common header file for Client-Server code
 #define	  MAX_LEN 4096
 #define	  MAX_STR_SZ 256
 #define   SLEEP	sleep(1);
-#define   TEST_PORT 12345
 #define	  IP0 "192.168.135.21"
 #define	  IP1 "192.168.135.22"
 #define	  IP2 "192.168.135.23"
 #define	  IP3 "192.168.135.24"
 #define	  IP4 "192.168.135.25"
+#define   REM_CL_PORT 12346 
+#define   REM_SRV_PORT 12345
 #define	  REM_SRV_IP "192.168.143.10"	
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
@@ -85,7 +86,7 @@ char	    *convertHex(const uint8_t *src, size_t len);
 void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 uint16_t  SokInit_Handlr(void);
 uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
-uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP);
+uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
 uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
 uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
 

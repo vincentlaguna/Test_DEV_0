@@ -62,7 +62,7 @@ uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 {
   // Local Variables
   uint32_t  retVal    = -1;
-  uint32_t  sPort     = TEST_PORT;
+  uint32_t  sPort     = REM_SRV_PORT;
   // sock_addr_in initialization
   S_SADDR_IN  Srv     = {0};
   // Struct Member Init

@@ -102,17 +102,16 @@ Returns: Unsigned 32-bit integer
 
 *****************************************************************************/
 
-uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP)
+uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP, uint16_t remPort)
 {
   // Local Variables
   uint32_t  retVal    = -1;
-  uint32_t  sPort     = TEST_PORT;
   // sock_addr_in initialization
   S_SADDR_IN  Cl      = {0};
   // Struct Member Init
   Cl.sin_family       = AF_INET;
   Cl.sin_addr.s_addr  = inet_addr(remIP); // <- REMOTE SERVER IP
-  Cl.sin_port         = htons(sPort); // <- REMOTE SERVER PORT
+  Cl.sin_port         = htons(remPort); // <- REMOTE SERVER PORT
   // Connect System Call
   retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
   // Function Return

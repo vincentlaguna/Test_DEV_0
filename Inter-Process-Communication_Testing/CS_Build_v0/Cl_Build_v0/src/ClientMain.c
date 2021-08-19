@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s):                                                                 
+Author(s) or Contributor(s): Version .0  ~<NAME> 2021                                                                
 
 File: ClientMain.c                                                  
 
@@ -24,12 +24,15 @@ Description: Client-side Main
 //
 int main(int argc, char *argv[])
 {
-  // char *SrvAddr = argv[1];
-  // printf("\nConnecting to Server Address: %s\n", SrvAddr);
   // Initialize Local Variables
-  uint16_t  uClSok = 0; 
-  uint16_t  sok    = 0; 
-  uint16_t  clLen  = 0;
+  // char *SrvAddr = argv[1];
+  // char *SrvAddr = REM_SRV_IP;
+  // uint16_t  SrvPort = REM_SRV_PORT;
+  // printf("\nConnecting to Server Address: %s\n", SrvAddr);
+  
+  uint16_t  uClSok  = 0; 
+  uint16_t  sok     = 0; 
+  uint16_t  clLen   = 0;
   // This is where we fill-in the Server-Side address info
   S_SADDR_IN  Srv; 
 
@@ -60,8 +63,8 @@ int main(int argc, char *argv[])
   
   printf("\n>>> The SOCKET has been created >>>\n\n");
   // Bind
-  // if (SokConnect_Hndlr(uClSok, SrvAddr) < 0)
-  if (SokConnect_Hndlr(uClSok, LOCAL_IP) < 0)
+  // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
+  if (SokConnect_Hndlr(uClSok, LOCAL_IP, REM_SRV_PORT) < 0)
   {
     perror("CONNECT Failed."); // Print the error message
     return EXIT_FAILURE;
