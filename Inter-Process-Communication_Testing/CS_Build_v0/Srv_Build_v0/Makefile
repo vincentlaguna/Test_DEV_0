@@ -46,7 +46,7 @@ TGT = $(PATHB)$(TARGET_EXTENSION) #$(SRV_IP)
 # Tool Definitions
 CC=gcc
 # CFLAGS=-I. -I$(PATHU) -I$(PATHI) -I$(PATHS) -DTEST
-CFLAGS=-I. -I$(PATHI) -I$(PATHS)
+CFLAGS=-I. -I$(PATHI) -I$(PATHS) -DTEST
 
 test: $(PATHB) $(TGT)
 	./$(TGT)
@@ -66,7 +66,7 @@ $(TGT): $(OBJ)
 
 clean:
 	$(CLEANUP) $(PATHB)*.o
-	$(CLEANUP) $(TGT)
+	$(CLEANUP) $(TGT)*.out
 
 $(PATHB):
 	$(MKDIR) $(PATHB)

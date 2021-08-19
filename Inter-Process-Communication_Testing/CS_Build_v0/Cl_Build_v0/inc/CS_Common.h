@@ -29,6 +29,7 @@ Description: Common header file for Client-Server code
 #include  <stdio.h>
 #include  <stdlib.h>
 #include  <stdint.h>
+#include  <string.h>
 #include  <strings.h>
 #include	<sys/time.h>
 #include	<sys/types.h>
