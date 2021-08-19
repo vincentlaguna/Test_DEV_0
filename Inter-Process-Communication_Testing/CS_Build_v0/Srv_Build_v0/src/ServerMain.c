@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s):                                                                 
+Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                                 
 
 File: ServerMain.c              
 

@@ -1,6 +1,6 @@
 #pragma once
 /*****************************************************************************
-Author(s): Version .0  ~Vincent A. Laguna 2021                                                               
+Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                               
   
 File: CS_Common.h                                                          
 
