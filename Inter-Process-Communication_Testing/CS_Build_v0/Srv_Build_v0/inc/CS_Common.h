@@ -80,8 +80,8 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-char	  *convertHex(const uint8_t *src, size_t len);
-void	  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
+char	    *convertHex(const uint8_t *src, size_t len);
+void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 uint16_t  SokInit_Handlr(void);
 uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
 uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP);
