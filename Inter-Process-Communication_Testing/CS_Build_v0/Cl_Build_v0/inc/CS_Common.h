@@ -29,7 +29,7 @@ Description: Common header file for Client-Server code
 #include  <stdio.h>
 #include  <stdlib.h>
 #include  <stdint.h>
-#include  <string.h>
+#include  <strings.h>
 #include	<sys/time.h>
 #include	<sys/types.h>
 #include	<sys/ioctl.h>
@@ -63,9 +63,9 @@ Description: Common header file for Client-Server code
 struct  DataBuffer
 {
 	char	cPayload[MAX_STR_SZ]; // Storage for string	
-	// uint32_t	uDataSize;	          // Size of data
-	// uint16_t	*pNext;	       		    // Next node *
-	// uint16_t  *pPrev;			        // Previous node *
+	// uint32_t	uDataSize;	    // Size of data
+	// uint16_t	*pNext;	       	// Next node *
+	// uint16_t  *pPrev;			  // Previous node *
 
 } __attribute__((__packed__));
 
