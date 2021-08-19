@@ -88,10 +88,10 @@ uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP)
 /*****************************************************************************
 
 Name: SokSend_Handlr()                                               
-Purpose:  Handles sending Data to the Server                             
+Purpose: Handles sending Data to the Server                             
 Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
             Request, Unsigned 16-bit integer for Length of the Request     
-Returns:  Unsigned 32-bit integer                                        
+Returns: Unsigned 32-bit integer                                        
 
 *****************************************************************************/
 
