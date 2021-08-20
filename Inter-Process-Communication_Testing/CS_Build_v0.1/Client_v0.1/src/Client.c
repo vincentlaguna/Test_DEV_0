@@ -25,50 +25,12 @@ Description: Client-side code
 
 /*****************************************************************************
 
-Name: convertHex()                                               
-Purpose:  Converts binary data to hexadecimal representation                               
-Parameters: const unsigned char pointer and size_t for length                                                             
-Returns:  Unsigned char pointer                                        
-
-*****************************************************************************/
-
-char  *convertHex(const uint8_t *src, size_t len)
-{
-  char  *retVal;
-  char  *hexBits = "0123456789ABCDEF";
-  
-  if (src == NULL || len <= 0)
-    return NULL;
-    
-  uint32_t  retValLen = (len * 3) + 1;
-  retVal = malloc(retValLen);
-  // sets the first n bytes of the area starting at retVal 
-  // to zero (bytes containing '\0')
-  bzero(retVal, retValLen);
-  
-  for (uint8_t i = 0; i < len; i++)
-  {
-    retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
-    retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
-    retVal[(i*3)+2] = ' '; // Space each value
-  }
-  
-  return retVal;
-  
-}
-
-// End convertHex()
-/****************************************************************************/
-
-
-/*****************************************************************************
-
 Name: SokInit_Handlr()                                               
 Purpose:  Handles the creation of a Socket                               
 Parameters: None                                                             
 Returns:  Unsigned 16-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint16_t	SokInit_Handlr(void)
 {
@@ -100,7 +62,7 @@ Purpose: Handles the Connection of a Socket to the Server
 Parameters: Unsigned 32-bit integer                                          
 Returns: Unsigned 32-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP, uint16_t remPort)
 {
@@ -130,7 +92,7 @@ Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to
             Request, Unsigned 16-bit integer for Length of the Request     
 Returns: Unsigned 32-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
 {
@@ -163,7 +125,7 @@ Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to
             Response, Unsigned 16-bit integer for Size of the Response     
 Returns: Unsigned 32-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
 {
@@ -187,6 +149,44 @@ uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
 }
 
 // End SokRcv_Hndlr() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name: convertHex()                                               
+Purpose:  Converts binary data to hexadecimal representation                               
+Parameters: const unsigned char pointer and size_t for length                                                             
+Returns:  Unsigned char pointer                                        
+
+*****************************************************************************/
+
+char  *convertHex(const char *src, size_t len)
+{
+  char  *retVal;
+  char  *hexBits = "0123456789ABCDEF";
+  
+  if (src == NULL || len <= 0)
+    return NULL;
+    
+  uint32_t  retValLen = (len * 3) + 1;
+  retVal = malloc(retValLen);
+  // sets the first n bytes of the area starting at retVal 
+  // to zero (bytes containing '\0')
+  bzero(retVal, retValLen);
+  
+  for (uint8_t i = 0; i < len; i++)
+  {
+    retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
+    retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
+    retVal[(i*3)+2] = ' '; // Space each value
+  }
+  
+  return retVal;
+  
+}
+
+// End convertHex()
 /****************************************************************************/
 
 

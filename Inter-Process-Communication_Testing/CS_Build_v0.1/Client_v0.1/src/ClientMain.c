@@ -25,21 +25,18 @@ Description: Client-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  // char *SrvAddr = argv[1];
-  // char *SrvAddr = REM_SRV_IP;
-  // uint16_t  SrvPort = REM_SRV_PORT;
-  // printf("\nConnecting to Server Address: %s\n", SrvAddr);
+  int sokFD, r;
+  int sndBytes;
+  char *IPbuffer;
   
-  uint16_t  uClSok = 0; 
-  uint16_t  sok    = 0; 
-  uint16_t  clLen  = 0;
-  // This is where we fill-in the Server-Side address info
-  S_SADDR_IN  Srv; 
-
-  DBffr  ClDbuff;
-  DBffr  SrvRspDbuff;
-  // Create Socket
-  uClSok = SokInit_Handlr();
+  S_SADDR_IN  SrvAddr;
+  
+  TIME_V     Tv;
+  Tv.tv_sec  = TIME_O; // Time-Out in Seconds
+  Tv.tv_usec = 0;
+  
+  uint8_t sndLine[MAX_LEN+1];
+  uint8_t rcvLine[MAX_LEN+1];
   // Winsock
   #ifndef LIN
     
@@ -53,45 +50,74 @@ int main(int argc, char *argv[])
     
   #endif
   // Error Handling
-  if (uClSok == -1)
+  // if (argc != 2)
+  // {
+  //   printf("Usage: %s <SERVER ADDRESS>", argv[0]);
+  //   return EXIT_FAILURE;
+  // }
+  if ((sokFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
     printf("\nCreation of SOCKET Failed.\n");
     return EXIT_FAILURE;
   }
-  
-  SLEEP
-  
   printf("\n>>> The SOCKET has been created >>>\n\n");
-  // Bind
-  // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
-  if (SokConnect_Hndlr(uClSok, LOCAL_IP, REM_SRV_PORT) < 0)
+  // Setup Server struct Info
+  bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
+  SrvAddr.sin_family      = AF_INET;
+  SrvAddr.sin_port        = htons(REM_SRV_PORT);
+  // Get remote server address
+  if (inet_pton(AF_INET, LOCAL_IP, &SrvAddr.sin_addr) <= 0)
   {
-    perror("CONNECT Failed."); // Print the error message
+    printf("\nError for remote address: %s\n", LOCAL_IP);
+    return EXIT_FAILURE;
+  }
+  // Connect to server
+  if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
+  {
+    printf("\nError conecting to remote address: %s\n", argv[1]);
+    return EXIT_FAILURE;
+  }
+  IPbuffer = inet_ntoa(SrvAddr.sin_addr);
+  
+  printf("Connection to Remote Server = SUCCESS\n\n");
+  printf("Connected to remote address: %s\n", IPbuffer);
+  // Connected to server -> prepare the message to send
+  sprintf(sndLine, "This is the test string from the client");
+  sndBytes = strlen(sndLine);
+  // Send data to the Remote Server 
+  if (write(sokFD, sndLine, sndBytes) != sndBytes)
+  {
+    printf("\nWRITE ERROR on socket file descriptor.\n");
+    return EXIT_FAILURE;
+  }
+  memset(rcvLine, 0, MAX_LEN);
+  // Output Server Response
+  if (setsockopt(sokFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  {
+    printf("\nTIME OUT.\n");
+    return EXIT_FAILURE;
+  }
+  while ((r = read(sokFD, rcvLine, MAX_LEN-1)) > 0)
+  {
+      fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, r), rcvLine);
+      // Look for end of message
+      if (rcvLine[r-1] == '\n')
+        break;
+    }
+    // Zero-out rcvLine
+    // memset(rcvLine, 0, MAX_LEN);
+  // Check for errors and close the socket
+  if (r < 0)
+  {
+    printf("\nREAD ERROR on socket file descriptor.\n");
     return EXIT_FAILURE;
   }
   
-  SLEEP
-  
-  printf("Connection to Remote Server = SUCCESS\n\n");
-  
-  uint32_t  DbuffSize = sizeof(DBffr);
-  printf("Please Enter Message to Send: ");
-  fgets(ClDbuff.cPayload, DbuffSize, stdin);
-  
-  SLEEP
-  // Send data to the Remote Server 
-  SokSend_Hndlr(uClSok, ClDbuff.cPayload, DbuffSize);
-  // Received the data from the Remote Server
-  if (SokRcv_Hndlr(uClSok, SrvRspDbuff.cPayload, DbuffSize))
-  // Output Server Response
-    printf("Server Status: Payload (%d Bytes) RECIEVED->SENT = SUCCESS\n\n", 
-            strlen(SrvRspDbuff.cPayload));
-  // Close the Client Socket
   #ifndef LIN
-    closesocket(uClSok);
+    closesocket(sokFD);
     WSACleanup();
   #else
-    close(uClSok);
+    close(sokFD);
   #endif
   
   return(0);

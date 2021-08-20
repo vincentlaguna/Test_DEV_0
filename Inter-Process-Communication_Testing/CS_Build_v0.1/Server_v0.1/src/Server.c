@@ -24,7 +24,7 @@ Purpose: Handles the creation of a Socket
 Parameters: None                                                             
 Returns: Unsigned 16-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint16_t  SokInit_Handlr(void)
 {
@@ -56,7 +56,7 @@ Purpose: Handles the binding of a Socket to the Server
 Parameters: Unsigned 32-bit integer                                          
 Returns: Unsigned 32-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 {
@@ -86,7 +86,7 @@ Purpose: Handles incoming connections to the server
 Parameters: Unsigned 32-bit integer                                          
 Returns: Unsigned 32-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
 {
@@ -177,7 +177,7 @@ Returns:  Unsigned char pointer
 
 *****************************************************************************/
 
-char  *convertHex(const uint8_t *src, size_t len)
+char  *convertHex(const char *src, size_t len)
 {
   char  *retVal;
   char  *hexBits = "0123456789ABCDEF";

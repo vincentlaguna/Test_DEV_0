@@ -31,6 +31,7 @@ Description: Common header file for Client-Server code
 #include  <stdint.h>
 #include  <string.h>
 #include  <strings.h>
+#include  <stddef.h>
 #include  <sys/time.h>
 #include  <sys/types.h>
 #include  <sys/ioctl.h>
@@ -39,6 +40,7 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
+#define   TIME_O 10
 #define   MAX_CONN 5
 #define	  MAX_LEN 4096
 #define	  MAX_STR_SZ 256
@@ -60,7 +62,7 @@ Description: Common header file for Client-Server code
 
 /* Data Sructure Definitions: ***********************************************/
 
-/* Data Buffer **************************************************************/
+/* Data Buffer **************************************************************
 
 struct  DataBuffer
 {
@@ -73,7 +75,7 @@ struct  DataBuffer
 
 /****************************************************************************/
 
-/* Typedefs: ****************************************************************/
+/* Typedefs: ****************************************************************
 
 // typedef  DataBuffer_  *pDbuff;
 typedef	struct DataBuffer DBffr;
@@ -82,13 +84,13 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-char	    *convertHex(const uint8_t *src, size_t len);
-void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
-uint16_t  SokInit_Handlr(void);
-uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
-uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
-uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
-uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
+char	    *convertHex(const char *src, size_t len);
+// void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
+// uint16_t  SokInit_Handlr(void);
+// uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
+// uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
+// uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
+// uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
 
 /****************************************************************************/
 #endif // CS_COMMON_H
