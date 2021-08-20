@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
 {
   // Initialize Local Variables
   int listFD, connFD; 
-  // int n;
+  int n;
   S_SADDR_IN  SrvAddr; 
-  char buffer[MAX_LEN+1];
-  // uint8_t buffer[MAX_LEN+1];
+  // char buffer[MAX_LEN+1];
+  uint8_t buffer[MAX_LEN+1];
   // uint8_t rcvLine[MAX_LEN+1];
   // uint8_t replyLine[MAX_LEN+1];
   // Winsock
@@ -88,6 +88,13 @@ int main(int argc, char *argv[])
     //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(rcvLine, n), rcvLine);
     //   // Look for end of message
     //   if (rcvLine[n-1] == '\n')
+    //     break;
+    // }
+    // while ((n = read(connFD, buffer, MAX_LEN-1)) > 0)
+    // {
+    //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(buffer, n), buffer);
+    //   // Look for end of message
+    //   if (buffer[n-1] == '\n')
     //     break;
     // }
     // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));

@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
   // int r;
   int sndBytes;
   char *IPbuffer;
-  char buffer[MAX_LEN+1];
-  // uint8_t buffer[MAX_LEN+1];
+  // char buffer[MAX_LEN+1];
+  uint8_t buffer[MAX_LEN+1];
   // uint8_t sndLine[MAX_LEN+1];
   uint8_t rcvLine[MAX_LEN+1];
   
