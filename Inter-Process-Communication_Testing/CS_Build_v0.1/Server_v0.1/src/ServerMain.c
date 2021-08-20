@@ -19,11 +19,13 @@ Description: Server-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  int listFD, connFD, n;
+  int listFD, connFD; 
+  // int n;
   S_SADDR_IN  SrvAddr; 
-  uint8_t buffer[MAX_LEN+1];
-  uint8_t rcvLine[MAX_LEN+1];
-  uint8_t replyLine[MAX_LEN+1];
+  char buffer[MAX_LEN+1];
+  // uint8_t buffer[MAX_LEN+1];
+  // uint8_t rcvLine[MAX_LEN+1];
+  // uint8_t replyLine[MAX_LEN+1];
   // Winsock
   #ifndef   LIN
     
@@ -59,6 +61,7 @@ int main(int argc, char *argv[])
     perror("LISTEN Failed.");
   }
   printf("\n>>> Listening on PORT %d\n\n", REM_SRV_PORT);
+  
   while(1)
   {
     // Initialize struct and variable for client info
@@ -76,38 +79,42 @@ int main(int argc, char *argv[])
     }
     printf("\nConnection ACCEPTED\n\n");
     // Zero-out the receive buffer and null terminate it
-    memset(rcvLine, 0, MAX_LEN);
+    // memset(rcvLine, 0, MAX_LEN);
+    bzero(buffer, MAX_LEN);
     // Reading the client's message
-    while ((n = read(connFD, rcvLine, MAX_LEN-1)) > 0)
-    {
-      fprintf(stdout, "\n%s\n\n%s\n", convertHex(rcvLine, n), rcvLine);
-      // Look for end of message
-      if (rcvLine[n-1] == '\n')
-        break;
-    }
-    strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
-    printf("\nbuffer: %s\n", rcvLine);
+    read(connFD, buffer, MAX_LEN);
+    // while ((n = read(connFD, rcvLine, MAX_LEN-1)) > 0)
+    // {
+    //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(rcvLine, n), rcvLine);
+    //   // Look for end of message
+    //   if (rcvLine[n-1] == '\n')
+    //     break;
+    // }
+    // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
+    // printf("\nbuffer: %s\n", rcvLine);
+    printf("\nbuffer: %s\n", buffer);
     // Reply the message back to the client
     // snprintf((char *)buffer, sizeof(buffer), 
     //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
     // Write to socket and close
-    write(connFD, (char *)buffer, strlen((char *)buffer));
+    // write(connFD, (char *)buffer, strlen((char *)buffer));
+    write(connFD, buffer, strlen(buffer));
     close(connFD);
     // Zero-out rcvLine
     // memset(rcvLine, 0, MAX_LEN);
   }
-  if (n < 0)
-  {
-    perror("READ Failed.");
-  }
+  // if (n < 0)
+  // {
+  //   perror("READ Failed.");
+  // }
   // Copy received data into buffer
-  strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
+  // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
   // Reply the message back to the client
   // snprintf((char *)buffer, sizeof(buffer), 
   //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
   // Write to socket and close
-  write(connFD, (char *)buffer, strlen((char *)buffer));
-  close(connFD);
+  // write(connFD, (char *)buffer, strlen((char *)buffer));
+  // close(connFD);
            
   return(0);
 

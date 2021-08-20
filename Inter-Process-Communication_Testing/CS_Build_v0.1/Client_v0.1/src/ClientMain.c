@@ -25,18 +25,20 @@ Description: Client-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  int sokFD, r;
+  int sokFD; 
+  // int r;
   int sndBytes;
   char *IPbuffer;
+  char buffer[MAX_LEN+1];
+  // uint8_t buffer[MAX_LEN+1];
+  // uint8_t sndLine[MAX_LEN+1];
+  uint8_t rcvLine[MAX_LEN+1];
   
   S_SADDR_IN  SrvAddr;
   
   TIME_V     Tv;
   Tv.tv_sec  = TIME_O; // Time-Out in Seconds
   Tv.tv_usec = 0;
-  
-  uint8_t sndLine[MAX_LEN+1];
-  uint8_t rcvLine[MAX_LEN+1];
   // Winsock
   #ifndef LIN
     
@@ -82,10 +84,13 @@ int main(int argc, char *argv[])
   printf("Connection to Remote Server = SUCCESS\n\n");
   printf("Connected to remote address: %s\n", IPbuffer);
   // Connected to server -> prepare the message to send
-  sprintf(sndLine, "This is the test string from the client");
-  sndBytes = strlen(sndLine);
+  // sprintf(sndLine, "This is the test string from the client");
+  // sndBytes = strlen(sndLine);
+  bzero(buffer, MAX_LEN);
+  strcpy(buffer, "Test string from client");
   // Send data to the Remote Server 
-  if (write(sokFD, sndLine, sndBytes) != sndBytes)
+  // if (write(sokFD, sndLine, sndBytes) != sndBytes)
+  if (write(sokFD, buffer, strlen(buffer)) != strlen(buffer))
   {
     printf("\nWRITE ERROR on socket file descriptor.\n");
     return EXIT_FAILURE;
@@ -97,21 +102,24 @@ int main(int argc, char *argv[])
     printf("\nTIME OUT.\n");
     return EXIT_FAILURE;
   }
-  while ((r = read(sokFD, rcvLine, MAX_LEN-1)) > 0)
-  {
-      fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, r), rcvLine);
-      // Look for end of message
-      if (rcvLine[r-1] == '\n')
-        break;
-    }
-    // Zero-out rcvLine
-    // memset(rcvLine, 0, MAX_LEN);
-  // Check for errors and close the socket
-  if (r < 0)
-  {
-    printf("\nREAD ERROR on socket file descriptor.\n");
-    return EXIT_FAILURE;
-  }
+  // while ((r = read(sokFD, rcvLine, MAX_LEN-1)) > 0)
+  // {
+  //     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, r), rcvLine);
+  //     // Look for end of message
+  //     if (rcvLine[r-1] == '\n')
+  //       break;
+  //   }
+  //   // Zero-out rcvLine
+  //   // memset(rcvLine, 0, MAX_LEN);
+  // // Check for errors and close the socket
+  // if (r < 0)
+  // {
+  //   printf("\nREAD ERROR on socket file descriptor.\n");
+  //   return EXIT_FAILURE;
+  // }
+  read(sokFD, rcvLine, MAX_LEN);
+  printf("\nServer Reply: %s\n", rcvLine);
+  
   
   #ifndef LIN
     closesocket(sokFD);
