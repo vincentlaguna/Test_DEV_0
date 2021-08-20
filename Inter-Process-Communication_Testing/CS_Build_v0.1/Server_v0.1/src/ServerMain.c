@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     // }
     while ((n = read(connFD, buffer, MAX_LEN-1)) > 0)
     {
-      fprintf(stdout, "\n%s\n\n%s\n", convertHex(buffer, n), buffer);
+      fprintf(stdout, "%s\n\n%s\n", convertHex(buffer, n), buffer);
       // Look for end of message
       if (buffer[n-1] == '\n' || '\0')
         break;

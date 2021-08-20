@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
   // sprintf(sndLine, "This is the test string from the client");
   // sndBytes = strlen(sndLine);
   bzero(buffer, MAX_LEN);
-  strcpy(buffer, "Test string from client");
+  strcpy(buffer, "Test string from client\n");
   // Send data to the Remote Server 
   // if (write(sokFD, sndLine, sndBytes) != sndBytes)
   if (write(sokFD, buffer, strlen(buffer)) != strlen(buffer))
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
   //   return EXIT_FAILURE;
   // }
   read(sokFD, rcvLine, MAX_LEN);
-  rcvLine[strlen(rcvLine)] = '\0';
+  // rcvLine[strlen(rcvLine)-1] = '\0';
   printf("\nServer Reply: %s\n", rcvLine);
   
   
