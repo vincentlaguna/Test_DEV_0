@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
   // Initialize Local Variables
   int sokFD; 
   // int r;
-  int sndBytes;
+  // int sndBytes;
   char *IPbuffer;
   // char buffer[MAX_LEN+1];
   uint8_t buffer[MAX_LEN+1];
@@ -65,18 +65,18 @@ int main(int argc, char *argv[])
   printf("\n>>> The SOCKET has been created >>>\n\n");
   // Setup Server struct Info
   bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
-  SrvAddr.sin_family      = AF_INET;
-  SrvAddr.sin_port        = htons(REM_SRV_PORT);
+  SrvAddr.sin_family = AF_INET;
+  SrvAddr.sin_port   = htons(REM_SRV_PORT);
   // Get remote server address
-  if (inet_pton(AF_INET, LOCAL_IP, &SrvAddr.sin_addr) <= 0)
+  if (inet_pton(AF_INET, REM_SRV_IP, &SrvAddr.sin_addr) <= 0)
   {
-    printf("\nError for remote address: %s\n", LOCAL_IP);
+    printf("\nError for remote address: %s\n", REM_SRV_IP);
     return EXIT_FAILURE;
   }
   // Connect to server
   if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
-    printf("\nError conecting to remote address: %s\n", argv[1]);
+    printf("\nError conecting to remote address: %s\n", REM_SRV_IP);
     return EXIT_FAILURE;
   }
   IPbuffer = inet_ntoa(SrvAddr.sin_addr);
@@ -119,6 +119,13 @@ int main(int argc, char *argv[])
   // }
   read(sokFD, rcvLine, MAX_LEN);
   // rcvLine[strlen(rcvLine)-1] = '\0';
+  while (rcvLine)
+  {
+    fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, strlen(rcvLine)), rcvLine);
+    // Look for end of message
+    if (rcvLine[strlen(rcvLine)-1] == '\n')
+    break;
+  }
   printf("\nServer Reply: %s\n", rcvLine);
   
   
