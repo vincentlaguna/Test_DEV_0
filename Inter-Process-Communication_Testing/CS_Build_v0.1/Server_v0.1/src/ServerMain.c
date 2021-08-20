@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
   // char buffer[MAX_LEN+1];
   uint8_t buffer[MAX_LEN+1];
   // uint8_t rcvLine[MAX_LEN+1];
-  // uint8_t replyLine[MAX_LEN+1];
+  uint8_t replyLine[MAX_LEN+1];
   // Winsock
   #ifndef   LIN
     
@@ -81,8 +81,9 @@ int main(int argc, char *argv[])
     // Zero-out the receive buffer and null terminate it
     // memset(rcvLine, 0, MAX_LEN);
     bzero(buffer, MAX_LEN);
+    bzero(replyLine, MAX_LEN);
     // Reading the client's message
-    read(connFD, buffer, MAX_LEN);
+    // read(connFD, buffer, MAX_LEN);
     // while ((n = read(connFD, rcvLine, MAX_LEN-1)) > 0)
     // {
     //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(rcvLine, n), rcvLine);
@@ -90,22 +91,24 @@ int main(int argc, char *argv[])
     //   if (rcvLine[n-1] == '\n')
     //     break;
     // }
-    // while ((n = read(connFD, buffer, MAX_LEN-1)) > 0)
-    // {
-    //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(buffer, n), buffer);
-    //   // Look for end of message
-    //   if (buffer[n-1] == '\n')
-    //     break;
-    // }
+    while ((n = read(connFD, buffer, MAX_LEN-1)) > 0)
+    {
+      fprintf(stdout, "\n%s\n\n%s\n", convertHex(buffer, n), buffer);
+      // Look for end of message
+      if (buffer[n-1] == '\n' || '\0')
+        break;
+    }
     // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
     // printf("\nbuffer: %s\n", rcvLine);
     printf("\nbuffer: %s\n", buffer);
+    strcpy(replyLine, buffer);
+    // replyLine[strlen(replyLine)] = '\0';
     // Reply the message back to the client
     // snprintf((char *)buffer, sizeof(buffer), 
     //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
     // Write to socket and close
     // write(connFD, (char *)buffer, strlen((char *)buffer));
-    write(connFD, buffer, strlen(buffer));
+    write(connFD, replyLine, strlen(replyLine));
     close(connFD);
     // Zero-out rcvLine
     // memset(rcvLine, 0, MAX_LEN);

@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     printf("\nWRITE ERROR on socket file descriptor.\n");
     return EXIT_FAILURE;
   }
-  memset(rcvLine, 0, MAX_LEN);
+  bzero(rcvLine, MAX_LEN);
   // Output Server Response
   if (setsockopt(sokFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
   //   return EXIT_FAILURE;
   // }
   read(sokFD, rcvLine, MAX_LEN);
+  rcvLine[strlen(rcvLine)] = '\0';
   printf("\nServer Reply: %s\n", rcvLine);
   
   
