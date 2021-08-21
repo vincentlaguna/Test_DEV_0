@@ -83,11 +83,11 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 char	*convertHex(const uint8_t *src, size_t len);
 void	SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort);
-uint16_t  SokInit_Handlr(void);
-int16_t  BindSrvSok_Hndlr(int16_t sSrvSOK, uint16_t sPort);
-int16_t  SokConnect_Hndlr(int16_t sClSOK, char* remIP, uint16_t remPort);
-int16_t  SokSend_Hndlr(int16_t sClSOK, char *pRqst, uint16_t pRqstLen);
-int16_t  SokRcv_Hndlr(int16_t sClSOK, char *pRsp, uint16_t rcvSize);
+int16_t  SOKInit_Handlr(void);
+int16_t  BindSrvSOK_Hndlr(int16_t sSrvSOK, uint16_t sPort);
+int16_t  SOKConnect_Hndlr(int16_t sClSOK, char* remIP, uint16_t remPort);
+int16_t  SOKSend_Hndlr(int16_t sClSOK, char *pRqst, uint16_t pRqstLen);
+int16_t  SOKRcv_Hndlr(int16_t sClSOK, char *pRsp, uint16_t rcvSize);
 
 /****************************************************************************/
 #endif // CS_COMMON_H

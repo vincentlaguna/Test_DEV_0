@@ -19,46 +19,43 @@ Description: Server-side code
 
 /*****************************************************************************
 
-Name:	SokInit_Handlr()                                               
+Name:	SOKInit_Handlr()                                               
 Purpose: Handles the creation of a Socket                               
 Parameters:                                                             
 Returns: 
 
 *****************************************************************************/
 
-int16_t  SokInit_Handlr(void)
+int16_t  SOKInit_Handlr(void)
 {
   // Local Variables
-  uint32_t  hSok;
+  int16_t  hSOK;
   // Output
-  printf("\n[-]Server-Side Socket Initialization = in progress...\n\n");
-  
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n\n");
   SLEEP
-  
   // Socket System Call
-  hSok = socket(AF_INET, SOCK_STREAM, 0);
+  hSOK = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n[+]Server-Side Socket Initialization = OK\n\n");
-  
+  printf("\n[+]SERVER-Side Socket Initialization = OK\n\n");
   SLEEP
   // Function Return
-  return  hSok;
+  return  hSOK;
 }
 
-// End SokInit_Handlr()
+// End SOKInit_Handlr()
 /****************************************************************************/
 
 
 /*****************************************************************************
 
-Name: BindSrvSok_Handlr()                                            
+Name: BindSrvSOK_Handlr()                                            
 Purpose: Handles the binding of a Socket to the Server                  
 Parameters:                                          
 Returns:
 
 *****************************************************************************/
 
-uint32_t	BindSrvSok_Hndlr(int16_t sSrvSOK, uint16_t sPort)
+uint32_t	BindSrvSOK_Hndlr(int16_t sSrvSOK, uint16_t sPort)
 {
   // Local Variables
   int16_t  retVal    = -1;
@@ -76,7 +73,7 @@ uint32_t	BindSrvSok_Hndlr(int16_t sSrvSOK, uint16_t sPort)
   return  retVal;    
 }
 
-// End BindSrvSok_Handlr() 
+// End BindSrvSOK_Handlr() 
 /****************************************************************************/
 
 
@@ -196,8 +193,8 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
 
 Name: convertHex()                                               
 Purpose:  Converts binary data to hexadecimal representation                               
-Parameters: const unsigned char pointer and size_t for length                                                             
-Returns:  Unsigned char pointer                                        
+Parameters:                                                         
+Returns:
 
 *****************************************************************************/
 

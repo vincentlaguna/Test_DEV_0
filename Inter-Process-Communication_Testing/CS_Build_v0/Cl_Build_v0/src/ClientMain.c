@@ -30,16 +30,23 @@ int main(int argc, char *argv[])
   // uint16_t  SrvPort = REM_SRV_PORT;
   // printf("\nConnecting to Server Address: %s\n", SrvAddr);
   
-  uint16_t  uClSok  = 0; 
-  uint16_t  sok     = 0; 
+  int16_t  sClSok; 
+  int16_t  connSOK; 
   uint16_t  clLen   = 0;
   // This is where we fill-in the Server-Side address info
   S_SADDR_IN  Srv; 
-
-  DBffr  ClDbuff;
-  DBffr  SrvRspDbuff;
+  // Client connection time-out (s)
+  TIME_V     Tv;
+  Tv.tv_sec  = TIME_O; // Time-Out in Seconds
+  Tv.tv_usec = 0;
+  // Initialize buffers to store the data (struct data)
+  // DBffr  ClDbuff;
+  // DBffr  SrvRspDbuff;
+  // No struct
+  uint8_t buffer[MAX_LEN+1];
+  uint8_t rcvLine[MAX_LEN+1];
   // Create Socket
-  uClSok = SokInit_Handlr();
+  sClSOK = SokInit_Handlr();
   // Winsock
   #ifndef LIN
     
@@ -47,22 +54,26 @@ int main(int argc, char *argv[])
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"WSAStartup() failed");
+      fprintf(stderr,"[-]WSAStartup() = FAIL");
       exit(1);
     }
     
   #endif
   // Error Handling
-  if (uClSok == -1)
+  // if (argc != 2)
+  // {
+  //   printf("Usage: %s <SERVER ADDRESS>", argv[0]);
+  //   return EXIT_FAILURE;
+  // }
+  if (sClSOK == -1)
   {
-    printf("\nCreation of SOCKET Failed.\n");
+    printf("\n[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
   
   SLEEP
   
-  printf("\n>>> The SOCKET has been created >>>\n\n");
-  // Bind
+  printf("\n[+]Creation of SOCKET = OK\n\n");
   // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
   if (SokConnect_Hndlr(uClSok, LOCAL_IP, REM_SRV_PORT) < 0)
   {

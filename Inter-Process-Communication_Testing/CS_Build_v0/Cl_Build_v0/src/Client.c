@@ -25,10 +25,155 @@ Description: Client-side code
 
 /*****************************************************************************
 
+Name: SOKInit_Handlr()                                               
+Purpose:  Handles the creation of a Socket                               
+Parameters:                                                            
+Returns:  
+
+*****************************************************************************/
+
+int16_t	SOKInit_Handlr(void)
+{
+  // Local Variables
+  int16_t  hSOK;
+  // Output
+  printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n\n");
+  SLEEP
+  // Socket System Call
+  hSOK = socket(AF_INET, SOCK_STREAM, 0);
+  // Output Validation
+  printf("\n[+]CLIENT-Side Socket Initialization = OK\n\n");
+  SLEEP
+  // Function Return
+  return  hSOK;
+}
+
+// End SOKInit_Handlr()
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name: SOKConnect_Handlr()                                            
+Purpose: Handles the Connection of a Socket to the Server               
+Parameters:                          
+Returns:
+
+*****************************************************************************/
+
+int16_t	SOKConnect_Hndlr(int16_t sClSOK, char *remIP, uint16_t remPort)
+{
+  // Local Variables
+  int16_t  retVal    = -1;
+  // Initialize Server struct info (sockaddr_in)
+  S_SADDR_IN  SrvAddr;
+  bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
+  // Struct Member Init
+  SrvAddr.sin_family = AF_INET;
+  SrvAddr.sin_port   = htons(remPort); // <- REMOTE SERVER PORT
+  // Get remote server address
+  if (inet_pton(AF_INET, remIP, &SrvAddr.sin_addr) <= 0)
+  {
+    printf("\nError for remote address: %s\n", REM_SRV_IP);
+    // return EXIT_FAILURE;
+  }
+  // Connect to server
+  ...
+  
+  // Connect to server
+  // if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
+  // {
+  //   printf("\nError conecting to remote address: %s\n", REM_SRV_IP);
+  //   return EXIT_FAILURE;
+  // }
+  // IPbuffer = inet_ntoa(SrvAddr.sin_addr);
+  
+  // printf("Connection to Remote Server = SUCCESS\n\n");
+  // printf("Connected to remote address: %s\n", IPbuffer);
+  // Connect System Call
+  retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
+  // Function Return
+  return  retVal;    
+}
+
+// End SOKConnect_Hndlr() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name: SOKSend_Handlr()                                               
+Purpose: Handles sending Data to the Server                             
+Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
+            Request, Unsigned 16-bit integer for Length of the Request     
+Returns: Unsigned 32-bit integer                                        
+
+*****************************************************************************/
+
+uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
+{
+  // Local Variables
+  uint32_t   retVal = -1;
+  TIME_V     Tv;
+  Tv.tv_sec  = 20; // Time-Out in Seconds
+  Tv.tv_usec = 0;
+  // Set Socket Options
+  if (setsockopt(uClSok, SOL_SOCKET, SO_SNDTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  {
+    printf("\nTIME OUT.\n");
+    return EXIT_FAILURE;
+  }
+  // Send System Call to send request (parameters) to the Server
+  retVal = send(uClSok, pRqst, pRqstLen, 0);
+  // Function Return
+  return  retVal;    
+}
+
+// End SOKSend_Hndlr() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	SOKRcv_Handlr()                                                
+Purpose: Handles receiving Data form the Server                         
+Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
+            Response, Unsigned 16-bit integer for Size of the Response     
+Returns: Unsigned 32-bit integer                                        
+
+*****************************************************************************/
+
+uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
+{
+  // Local Variables
+  uint32_t   retVal = -1;
+  TIME_V     Tv;
+  Tv.tv_sec  = 20; // Time-Out in Seconds
+  Tv.tv_usec = 0;
+  // Set Socket Options
+  if (setsockopt(uClSok, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  {
+    printf("\nTIME OUT.\n");
+    return EXIT_FAILURE;
+  }
+  // Receive System Call to  receieve (parameters) from the Server
+  retVal = recv(uClSok, pRsp, rcvSize, 0);
+  // Output Response
+  printf("\nServer Reply: %s\n\n", pRsp);
+  // Function Return
+  return  retVal;    
+}
+
+// End SOKRcv_Hndlr() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
 Name: convertHex()                                               
 Purpose:  Converts binary data to hexadecimal representation                               
-Parameters: const unsigned char pointer and size_t for length                                                             
-Returns:  Unsigned char pointer                                        
+Parameters:                                                            
+Returns:                
 
 *****************************************************************************/
 
@@ -58,135 +203,6 @@ char  *convertHex(const uint8_t *src, size_t len)
 }
 
 // End convertHex()
-/****************************************************************************/
-
-
-/*****************************************************************************
-
-Name: SokInit_Handlr()                                               
-Purpose:  Handles the creation of a Socket                               
-Parameters: None                                                             
-Returns:  Unsigned 16-bit integer                                        
-
-*****************************************************************************/
-
-uint16_t	SokInit_Handlr(void)
-{
-  // Local Variables
-  uint32_t  hSok;
-  // Output
-  printf("\n>>> Client-Side Socket Initialization >>>\n\n");
-  
-  SLEEP
-  
-  // Socket System Call
-  hSok = socket(AF_INET, SOCK_STREAM, 0);
-  // Output Validation
-  printf("\n<<< Client-Side Socket Init Success <<<\n\n");
-  
-  SLEEP
-  // Function Return
-  return  hSok;
-}
-
-// End SokInit_Handlr()
-/****************************************************************************/
-
-
-/*****************************************************************************
-
-Name: SokConnect_Handlr()                                            
-Purpose: Handles the Connection of a Socket to the Server               
-Parameters: Unsigned 32-bit integer                                          
-Returns: Unsigned 32-bit integer                                        
-
-*****************************************************************************/
-
-uint32_t	SokConnect_Hndlr(uint32_t uClSok, char *remIP, uint16_t remPort)
-{
-  // Local Variables
-  uint32_t  retVal    = -1;
-  // sock_addr_in initialization
-  S_SADDR_IN  Cl      = {0};
-  // Struct Member Init
-  Cl.sin_family       = AF_INET;
-  Cl.sin_addr.s_addr  = inet_addr(remIP); // <- REMOTE SERVER IP
-  Cl.sin_port         = htons(remPort); // <- REMOTE SERVER PORT
-  // Connect System Call
-  retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
-  // Function Return
-  return  retVal;    
-}
-
-// End SokConnect_Hndlr() 
-/****************************************************************************/
-
-
-/*****************************************************************************
-
-Name: SokSend_Handlr()                                               
-Purpose: Handles sending Data to the Server                             
-Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
-            Request, Unsigned 16-bit integer for Length of the Request     
-Returns: Unsigned 32-bit integer                                        
-
-*****************************************************************************/
-
-uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
-{
-  // Local Variables
-  uint32_t   retVal = -1;
-  TIME_V     Tv;
-  Tv.tv_sec  = 20; // Time-Out in Seconds
-  Tv.tv_usec = 0;
-  // Set Socket Options
-  if (setsockopt(uClSok, SOL_SOCKET, SO_SNDTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
-  {
-    printf("\nTIME OUT.\n");
-    return EXIT_FAILURE;
-  }
-  // Send System Call to send request (parameters) to the Server
-  retVal = send(uClSok, pRqst, pRqstLen, 0);
-  // Function Return
-  return  retVal;    
-}
-
-// End SokSend_Hndlr() 
-/****************************************************************************/
-
-
-/*****************************************************************************
-
-Name:	SokRcv_Handlr()                                                
-Purpose: Handles receiving Data form the Server                         
-Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
-            Response, Unsigned 16-bit integer for Size of the Response     
-Returns: Unsigned 32-bit integer                                        
-
-*****************************************************************************/
-
-uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
-{
-  // Local Variables
-  uint32_t   retVal = -1;
-  TIME_V     Tv;
-  Tv.tv_sec  = 20; // Time-Out in Seconds
-  Tv.tv_usec = 0;
-  // Set Socket Options
-  if (setsockopt(uClSok, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
-  {
-    printf("\nTIME OUT.\n");
-    return EXIT_FAILURE;
-  }
-  // Receive System Call to  receieve (parameters) from the Server
-  retVal = recv(uClSok, pRsp, rcvSize, 0);
-  // Output Response
-  printf("\nServer Reply: %s\n\n", pRsp);
-  // Function Return
-  return  retVal;    
-}
-
-// End SokRcv_Hndlr() 
 /****************************************************************************/
 
 
