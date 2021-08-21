@@ -21,24 +21,24 @@ Description: Server-side code
 
 Name:	SokInit_Handlr()                                               
 Purpose: Handles the creation of a Socket                               
-Parameters: None                                                             
-Returns: Unsigned 16-bit integer                                        
+Parameters:                                                             
+Returns: 
 
 *****************************************************************************/
 
-uint16_t  SokInit_Handlr(void)
+int16_t  SokInit_Handlr(void)
 {
   // Local Variables
   uint32_t  hSok;
   // Output
-  printf("\n>>> Server-Side Socket Initialization >>>\n\n");
+  printf("\n[-]Server-Side Socket Initialization = in progress...\n\n");
   
   SLEEP
   
   // Socket System Call
   hSok = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n<<< Server-Side Socket Init Success <<<\n\n");
+  printf("\n[+]Server-Side Socket Initialization = OK\n\n");
   
   SLEEP
   // Function Return
@@ -53,24 +53,25 @@ uint16_t  SokInit_Handlr(void)
 
 Name: BindSrvSok_Handlr()                                            
 Purpose: Handles the binding of a Socket to the Server                  
-Parameters: Unsigned 32-bit integer                                          
-Returns: Unsigned 32-bit integer                                        
+Parameters:                                          
+Returns:
 
 *****************************************************************************/
 
-uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
+uint32_t	BindSrvSok_Hndlr(int16_t sSrvSOK, uint16_t sPort)
 {
   // Local Variables
-  uint32_t  retVal    = -1;
-  uint32_t  sPort     = REM_SRV_PORT;
+  int16_t  retVal    = -1;
   // sock_addr_in initialization
-  S_SADDR_IN  Srv     = {0};
+  S_SADDR_IN  Srv;
   // Struct Member Init
+  bzero(&Srv, sizeof(Srv)); // Zero-out struct values
   Srv.sin_family      = AF_INET;
   Srv.sin_addr.s_addr = htonl(INADDR_ANY);
   Srv.sin_port        = htons(sPort);
   // Bind System Call
-  retVal = bind(uSrvSok, (S_SADDR *)&Srv, sizeof(Srv));
+  retVal = bind(sSrvSOK, (S_SADDR *)&Srv, sizeof(Srv));
+  printf("\n[+]Binding to PORT... %d\n\n", sPort);
   // Function Return
   return  retVal;    
 }
@@ -83,66 +84,89 @@ uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
 
 Name:	SrvConnection_Hndlr()                                            
 Purpose: Handles incoming connections to the server                 
-Parameters: Unsigned 32-bit integer                                          
-Returns: Unsigned 32-bit integer                                        
+Parameters:                                          
+Returns:                                        
 
 *****************************************************************************/
 
-void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
+void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort)
 {
   // Local Variables
-  uint16_t  sok   = 0; 
-  uint16_t  clLen = 0;
-  
-  S_SADDR   cL;
-  // Initialize buffers to store the data
-  DBffr  *SrvDbuff;
-  SrvDbuff = (DBffr *)malloc(sizeof(DBffr));
-  clLen = sizeof(S_SADDR_IN);
+  int16_t connSOK;
+  int16_t sVal;
+  // Initialize buffers to store the data (struct data)
+  // DBffr  *SrvDbuff;
+  // SrvDbuff = (DBffr *)malloc(sizeof(DBffr));
+  // No struct
+  uint8_t buffer[MAX_LEN+1];
+  uint8_t replyLine[MAX_LEN+1];
   // Create Socket
-  uSrvSok = SokInit_Handlr();
+  sSrvSOK = SokInit_Handlr();
   // Bind
-  if (BindSrvSok_Hndlr(uSrvSok) < 0)
+  printf("\n[-]Binding = in progress...\n\n");
+  if (BindSrvSok_Hndlr(sSrvSOK, sPort) < 0)
   {
-    perror("BIND Failed."); // Print the error message
+    perror("[-]BIND = FAIL"); // Print the error message
   }
   
   SLEEP
   
-  printf("\n<<< BIND Done >>>\n\n");
+  printf("\n[+]Bind = OK\n\n");
   // Listen
-  listen(uSrvSok, nConnections); // Number of MAX connections
-  
-  printf("\n>>> Waiting for incoming connections...\n\n");
+  if ((listen(sSrvSOK, nConnections)) < 0) // MAX number of connections
+  {
+    perror("[-]LISTEN = FAIL");
+  }
+  printf("\n[+]LISTEN = OK\n");
+  printf("\n[+]LISTENING ON PORT = %d\n\n", sPort);
+  printf("\n[+]MAX # CONNECTIONS = %d\n", nConnections);
+  printf("\n[-]Waiting for incoming connections...\n\n");
   
   while (1)
   {
+    // Initialize these local variables in function stack -> per/connection
+    socklen_t   clAddrLen;
+    S_SADDR_IN  cL;
     // Accept connection from an incoming client
-    sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t *)&cL);
-    
-    if (sok < 0)
+    connSOK = accept(sSrvSOK, (S_SADDR *)&cL, (socklen_t *)&cL);
+    // Connection Error Handling
+    if (connSOK < 0)
     {
-      perror("ACCEPT Failed.");
+      perror("[-]INCOMING CONNECTION ACCEPT = FAIL");
     }
-        
-    printf("\nConnection ACCEPTED\n\n");
-    // Buffers
-    uint32_t  DbuffSize = sizeof(DBffr);
-    memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
+    printf("\n[+]INCOMING CONNECTION ACCEPT = OK\n\n");
+    // Buffers (struct data)
+    // uint16_t  DbuffSize = sizeof(DBffr);
+    // memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
+    // Zero-out the receive buffer and null terminate it (no struct data)
+    bzero(buffer, MAX_LEN);
+    bzero(replyLine, MAX_LEN);
     // Receive a reply from the Client
-    if (recv(sok, &SrvDbuff->cPayload, (uint32_t)DbuffSize, 0) < 0)
-    {
-      printf("\nRECEIVE Failed.\n");
-    }
+    // if (recv(sok, &SrvDbuff->cPayload, (uint32_t)DbuffSize, 0) < 0)
+    // {
+    //   printf("\nRECEIVE Failed.\n");
+    // }
       
-    printf("Client Message: %s\n", SrvDbuff->cPayload);
-    // Send some data
-    if(send(sok, &SrvDbuff->cPayload, MAX_STR_SZ, 0) < 0)
+    // printf("Client Message: %s\n", SrvDbuff->cPayload);
+    // // Send some data
+    // if(send(sok, &SrvDbuff->cPayload, MAX_STR_SZ, 0) < 0)
+    // {
+    //   printf("\nSEND Failed.\n");
+    // }
+    while ((sVal = read(connSOK, buffer, MAX_LEN-1)) > 0)
     {
-      printf("\nSEND Failed.\n");
+      fprintf(stdout, "%s\n\n%s\n", convertHex(buffer, sVal), buffer);
+      // Look for end of message
+      if (buffer[n-1] == '\n' || '\0')
+        break;
     }
-      
-    printf("\n<<< Waiting for incoming connections...\n");
+    // Output and prepare server reply
+    printf("\nbuffer: %s\n", buffer);
+    strcpy(replyLine, buffer);
+    // Write and close connection socket
+    write(connSOK, replyLine, strlen(replyLine));
+    close(connSOK);
+    // printf("\n<<< Waiting for incoming connections...\n");
     // // Accept Connection from another incoming Client
     // sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t*)&clLen);
      

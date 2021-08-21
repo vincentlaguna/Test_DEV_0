@@ -19,16 +19,15 @@ Description: Server-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  uint16_t  uSrvSok = 0; 
-  uSrvSok = SokInit_Handlr();
+  int16_t uSrvSok = SokInit_Handlr();
   // Winsock
-  #ifndef   LIN
+  #ifndef LIN
     
     WSADATA wsaData;
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"WSAStartup() failed");
+      fprintf(stderr,"[-]WSAStartup() = FAIL");
       exit(1);
     }
     
@@ -36,15 +35,15 @@ int main(int argc, char *argv[])
   // Error Handling
   if (uSrvSok == -1)
   {
-    printf("\nCreation of SOCKET Failed.\n");
+    printf("\n[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
   
   SLEEP
   
-  printf("\n>>> The SOCKET has been created >>>\n\n");
+  printf("\n[+]Creation of SOCKET = OK\n\n");
 
-  SrvConnection_Hndlr(uSrvSok, MAX_CONN);
+  SrvConnection_Hndlr(uSrvSok, MAX_CONN, REM_SRV_PORT);
   
   return(0);
 
