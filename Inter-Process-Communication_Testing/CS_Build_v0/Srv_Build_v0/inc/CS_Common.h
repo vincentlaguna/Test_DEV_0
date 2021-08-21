@@ -50,7 +50,7 @@ Description: Common header file for Client-Server code
 #define	  IP4 "192.168.135.25"
 #define   REM_CL_PORT 12346 
 #define   REM_SRV_PORT 12345
-#define	  REM_SRV_IP "192.168.143.10"	
+#define	  REM_SRV_IP "192.168.143.20"	
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
@@ -60,35 +60,35 @@ Description: Common header file for Client-Server code
 
 /* Data Sructure Definitions: ***********************************************/
 
-/* Data Buffer **************************************************************/
+/* Data Buffer **************************************************************
 
 struct  DataBuffer
 {
-  char  cPayload[MAX_STR_SZ]; // Storage for string	
-  // uint32_t	uDataSize;	    // Size of data
-  // uint16_t	*pNext;	        // Next node *
-  // uint16_t  *pPrev;	    // Previous node *
+  char cPayload[MAX_STR_SZ]; // Storage for string	
+  // uint32_t	uDataSize; // Size of data
+  // uint16_t	*pNext;	// Next node *
+  // uint16_t *pPrev; // Previous node *
 
 } __attribute__((__packed__));
 
 /****************************************************************************/
 
-/* Typedefs: ****************************************************************/
+/* Typedefs: ****************************************************************
 
-// typedef  DataBuffer_  *pDbuff;
+// typedef  DataBuffer_ *pDbuff;
 typedef	struct DataBuffer DBffr;
 
 /****************************************************************************/
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-char	    *convertHex(const uint8_t *src, size_t len);
-void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
-uint16_t  SokInit_Handlr(void);
-uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
-uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
-uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
-uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
+char	*convertHex(const uint8_t *src, size_t len);
+void	SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort);
+int16_t  SokInit_Handlr(void);
+int16_t  BindSrvSok_Hndlr(int16_t sSrvSOK, uint16_t sPort);
+int16_t  SokConnect_Hndlr(int16_t sClSOK, char* remIP, uint16_t remPort);
+int16_t  SokSend_Hndlr(int16_t sClSOK, char *pRqst, uint16_t pRqstLen);
+int16_t  SokRcv_Hndlr(int16_t sClSOK, char *pRsp, uint16_t rcvSize);
 
 /****************************************************************************/
 #endif // CS_COMMON_H
