@@ -74,6 +74,7 @@ int main(int argc, char *argv[])
   SLEEP
   
   printf("\n[+]Creation of SOCKET = OK\n\n");
+  printf("\n[-]Creation of SOCKET = FAIL\n");
   // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
   if (SokConnect_Hndlr(uClSok, LOCAL_IP, REM_SRV_PORT) < 0)
   {
