@@ -19,7 +19,7 @@ Description: Server-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  int16_t sSrvSOK = SokInit_Handlr();
+  int16_t sSrvSOK = SOKInit_Handlr();
   // Winsock
   #ifndef LIN
     
@@ -41,8 +41,6 @@ int main(int argc, char *argv[])
   
   SLEEP
   
-  printf("[+]Creation of SOCKET = OK\n");
-
   SrvConnection_Hndlr(sSrvSOK, MAX_CONN, REM_SRV_PORT);
   
   return(0);

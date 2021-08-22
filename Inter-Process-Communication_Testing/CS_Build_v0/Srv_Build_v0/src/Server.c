@@ -31,7 +31,7 @@ int16_t  SOKInit_Handlr(void)
   // Local Variables
   int16_t  hSOK;
   // Output
-  printf("[-]SERVER-Side Socket Initialization = in progress...\n");
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   SLEEP
   // Socket System Call
   hSOK = socket(AF_INET, SOCK_STREAM, 0);
@@ -55,7 +55,7 @@ Returns:
 
 *****************************************************************************/
 
-uint32_t	BindSrvSOK_Hndlr(int16_t sSrvSOK, uint16_t sPort)
+int16_t	BindSrvSOK_Hndlr(int16_t sSrvSOK, uint16_t sPort)
 {
   // Local Variables
   int16_t  retVal    = -1;
@@ -97,28 +97,28 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
   // No struct
   uint8_t buffer[MAX_LEN+1];
   uint8_t replyLine[MAX_LEN+1];
-  // Create Socket
-  sSrvSOK = SokInit_Handlr();
   // Bind
   printf("[-]Binding = in progress...\n");
-  if (BindSrvSok_Hndlr(sSrvSOK, sPort) < 0)
+  if (BindSrvSOK_Hndlr(sSrvSOK, sPort) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
-  
   SLEEP
-  
   printf("[+]Bind = OK\n");
+  SLEEP
   // Listen
   if ((listen(sSrvSOK, nConnections)) < 0) // MAX number of connections
   {
     perror("[-]LISTEN = FAIL");
   }
+  printf("[+]# MAX CONNECTIONS = %d\n", nConnections);
+  SLEEP
   printf("[+]LISTEN = OK\n");
+  SLEEP
   printf("[+]LISTENING ON PORT = %d\n", sPort);
-  printf("[+]MAX # CONNECTIONS = %d\n", nConnections);
-  printf("[-]Waiting for incoming connections...\n");
-  
+  SLEEP
+  printf("[-]Waiting for incoming connections...\n\n");
+  SLEEP
   while (1)
   {
     // Initialize these local variables in function stack -> per/connection
@@ -132,6 +132,7 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
       perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
     printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
+    SLEEP
     // Buffers (struct data)
     // uint16_t  DbuffSize = sizeof(DBffr);
     // memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
@@ -154,7 +155,7 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(buffer, sVal), buffer);
       // Look for end of message
-      if (buffer[n-1] == '\n' || '\0')
+      if (buffer[sVal-1] == '\n' || '\0')
         break;
     }
     // Output and prepare server reply
