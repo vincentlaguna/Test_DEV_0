@@ -32,13 +32,12 @@ int main(int argc, char *argv[])
   
   int16_t  sClSOK; 
   int16_t  connSOK; 
-  uint16_t clLen = 0;
   // This is where we fill-in the Server-Side address info
-  S_SADDR_IN  Srv; 
+  // S_SADDR_IN  Srv; 
   // Client connection time-out (s)
   TIME_V       Tv;
   Tv.tv_sec  = TIME_O; // Time-Out in Seconds
-  Tv.tv_usec = 0;
+  Tv.tv_usec = 5;
   // Initialize buffers to store the data (struct data)
   // DBffr  ClDbuff;
   // DBffr  SrvRspDbuff;
@@ -46,7 +45,7 @@ int main(int argc, char *argv[])
   uint8_t sndBuffer[MAX_LEN+1];
   uint8_t rcvBuffer[MAX_LEN+1];
   // Create Socket
-  sClSOK = SokInit_Handlr();
+  sClSOK = SOKInit_Handlr();
   // Winsock
   #ifndef LIN
     
@@ -72,10 +71,8 @@ int main(int argc, char *argv[])
   }
   
   SLEEP
-  
-  printf("[+]Creation of SOCKET = OK\n");
   // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
-  if (SokConnect_Hndlr(sClSOK, LOCAL_IP, REM_SRV_PORT) < 0)
+  if (SOKConnect_Hndlr(sClSOK, LOCAL_IP, REM_SRV_PORT) < 0)
   {
     perror("[-]CONNECT = FAIL\n"); // Print the error message
     return EXIT_FAILURE;
@@ -107,7 +104,7 @@ int main(int argc, char *argv[])
   // Send data to the Remote Server 
   printf("[-]SENDING data in send buffer to server...\n");
   // if (write(sokFD, sndLine, sndBytes) != sndBytes)
-  if (write(connSOK, buffer, strlen(buffer)) != strlen(buffer))
+  if (write(connSOK, sndBuffer, strlen(sndBuffer)) != strlen(sndBuffer))
   {
     printf("[-]WRITE ERROR on socket file descriptor SEND = FAIL\n");
     return EXIT_FAILURE;
@@ -121,7 +118,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   // Read server data into receive buffer
-  read(connSOK, rcvBuffer, MAX_LEN)
+  read(connSOK, rcvBuffer, MAX_LEN);
   // Output server response
   while (rcvBuffer)
   {
@@ -130,14 +127,13 @@ int main(int argc, char *argv[])
     if (rcvBuffer[strlen(rcvBuffer)-1] == '\n')
     break;
   }
-  printf("[+]SERVER RESPONSE: %s\n", rcvBuffer);
-  }
+  printf("[+]SERVER RESPONSE: %s\n\n", rcvBuffer);
   // Close the Client Socket
   #ifndef LIN
     closesocket(sClSOK);
     WSACleanup();
   #else
-    close(uClSok);
+    close(sClSOK);
   #endif
   
   return(0);

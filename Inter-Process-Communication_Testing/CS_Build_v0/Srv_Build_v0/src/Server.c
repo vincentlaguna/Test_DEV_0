@@ -95,8 +95,13 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
   // DBffr  *SrvDbuff;
   // SrvDbuff = (DBffr *)malloc(sizeof(DBffr));
   // No struct
-  uint8_t buffer[MAX_LEN+1];
-  uint8_t replyLine[MAX_LEN+1];
+  // uint8_t buffer[MAX_LEN+1];
+  uint8_t *pRcvBuffer = NULL;
+  pRcvBuffer = (uint8_t *)malloc(MAX_LEN+1 * sizeof(uint8_t));
+  // uint8_t replyLine[MAX_LEN+1];
+  uint8_t *pRplyBuffer = NULL;
+  pRplyBuffer = (uint8_t *)malloc(MAX_LEN+1 * sizeof(uint8_t));
+
   // Bind
   printf("[-]Binding = in progress...\n");
   if (BindSrvSOK_Hndlr(sSrvSOK, sPort) < 0)
@@ -131,14 +136,13 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
     {
       perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
-    printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
-    SLEEP
+    printf("[+]INCOMING CONNECTION ACCEPT = OK\n\n");
     // Buffers (struct data)
     // uint16_t  DbuffSize = sizeof(DBffr);
     // memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
     // Zero-out the receive buffer and null terminate it (no struct data)
-    bzero(buffer, MAX_LEN);
-    bzero(replyLine, MAX_LEN);
+    bzero(pRcvBuffer, MAX_LEN);
+    bzero(pRplyBuffer, MAX_LEN);
     // Receive a reply from the Client
     // if (recv(sok, &SrvDbuff->cPayload, (uint32_t)DbuffSize, 0) < 0)
     // {
@@ -151,18 +155,18 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
     // {
     //   printf("\nSEND Failed.\n");
     // }
-    while ((sVal = read(connSOK, buffer, MAX_LEN-1)) > 0)
+    while ((sVal = read(connSOK, pRcvBuffer, MAX_LEN-1)) > 0)
     {
-      fprintf(stdout, "%s\n\n%s\n", convertHex(buffer, sVal), buffer);
+      fprintf(stdout, "%s\n\n%s\n", convertHex(pRcvBuffer, sVal), pRcvBuffer);
       // Look for end of message
-      if (buffer[sVal-1] == '\n' || '\0')
+      if (pRcvBuffer[sVal-1] == '\n' || '\0')
         break;
     }
     // Output and prepare server reply
-    printf("buffer: %s\n", buffer);
-    strcpy(replyLine, buffer);
+    printf("Receive Buffer: %s\n", pRcvBuffer);
+    strcpy(pRplyBuffer, pRcvBuffer);
     // Write and close connection socket
-    write(connSOK, replyLine, strlen(replyLine));
+    write(connSOK, pRplyBuffer, strlen(pRplyBuffer));
     close(connSOK);
     // printf("\n<<< Waiting for incoming connections...\n");
     // // Accept Connection from another incoming Client

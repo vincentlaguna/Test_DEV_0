@@ -39,6 +39,7 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
+#define   TIME_O 5
 #define   MAX_CONN 5
 #define	  MAX_LEN 4096
 #define	  MAX_STR_SZ 256

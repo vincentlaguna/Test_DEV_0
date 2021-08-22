@@ -37,12 +37,12 @@ int16_t	SOKInit_Handlr(void)
   // Local Variables
   int16_t  hSOK;
   // Output
-  printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n\n");
+  printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n");
   SLEEP
   // Socket System Call
   hSOK = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n[+]CLIENT-Side Socket Initialization = OK\n\n");
+  printf("[+]CLIENT-Side Socket Initialization = OK\n");
   SLEEP
   // Function Return
   return  hSOK;
@@ -89,7 +89,7 @@ int16_t	SOKConnect_Hndlr(int16_t sClSOK, char *remIP, uint16_t remPort)
   // printf("Connected to remote address: %s\n", IPbuffer);
   // Connect System Call
   printf("[-]CONNECTING to remote address: %s...\n", remIP);
-  retVal = connect(uClSok, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
+  retVal = connect(sClSOK, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
   // Function Return
   return  retVal;    
 }
