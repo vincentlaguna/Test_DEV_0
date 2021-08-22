@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"[-]WSAStartup() = FAIL");
+      fprintf(stderr,"[-]WSAStartup() = FAIL\n");
       exit(1);
     }
     
@@ -35,13 +35,13 @@ int main(int argc, char *argv[])
   // Error Handling
   if (sSrvSOK == -1)
   {
-    printf("\n[-]Creation of SOCKET = FAIL\n");
+    printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
   
   SLEEP
   
-  printf("\n[+]Creation of SOCKET = OK\n\n");
+  printf("[+]Creation of SOCKET = OK\n");
 
   SrvConnection_Hndlr(sSrvSOK, MAX_CONN, REM_SRV_PORT);
   

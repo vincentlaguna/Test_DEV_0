@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"[-]WSAStartup() = FAIL");
+      fprintf(stderr,"[-]WSAStartup() = FAIL\n");
       exit(1);
     }
     
@@ -67,24 +67,22 @@ int main(int argc, char *argv[])
   // }
   if (sClSOK == -1)
   {
-    printf("\n[-]Creation of SOCKET = FAIL\n");
+    printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
   
   SLEEP
   
-  printf("\n[+]Creation of SOCKET = OK\n\n");
-  printf("\n[-]Creation of SOCKET = FAIL\n");
+  printf("[+]Creation of SOCKET = OK\n");
   // if (SokConnect_Hndlr(uClSok, SrvAddr, SrvPort) < 0)
   if (SokConnect_Hndlr(uClSok, LOCAL_IP, REM_SRV_PORT) < 0)
   {
-    perror("CONNECT Failed."); // Print the error message
+    perror("[-]CONNECT = FAIL\n"); // Print the error message
     return EXIT_FAILURE;
   }
   
+  printf("[-]CONNECT = OK\n");
   SLEEP
-  
-  printf("Connection to Remote Server = SUCCESS\n\n");
   
   uint32_t  DbuffSize = sizeof(DBffr);
   printf("Please Enter Message to Send: ");

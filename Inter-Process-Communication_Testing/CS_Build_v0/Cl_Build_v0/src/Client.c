@@ -74,12 +74,9 @@ int16_t	SOKConnect_Hndlr(int16_t sClSOK, char *remIP, uint16_t remPort)
   // Get remote server address
   if (inet_pton(AF_INET, remIP, &SrvAddr.sin_addr) <= 0)
   {
-    printf("\nError for remote address: %s\n", REM_SRV_IP);
+    printf("[-]Error for remote address: %s\n", remIP);
     // return EXIT_FAILURE;
   }
-  // Connect to server
-  ...
-  
   // Connect to server
   // if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   // {
@@ -91,7 +88,8 @@ int16_t	SOKConnect_Hndlr(int16_t sClSOK, char *remIP, uint16_t remPort)
   // printf("Connection to Remote Server = SUCCESS\n\n");
   // printf("Connected to remote address: %s\n", IPbuffer);
   // Connect System Call
-  retVal = connect(uClSok, (S_SADDR *)&Cl, sizeof(Cl));
+  printf("[-]CONNECTING to remote address: %s...\n", remIP);
+  retVal = connect(uClSok, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
   // Function Return
   return  retVal;    
 }
@@ -104,9 +102,8 @@ int16_t	SOKConnect_Hndlr(int16_t sClSOK, char *remIP, uint16_t remPort)
 
 Name: SOKSend_Handlr()                                               
 Purpose: Handles sending Data to the Server                             
-Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
-            Request, Unsigned 16-bit integer for Length of the Request     
-Returns: Unsigned 32-bit integer                                        
+Parameters: 
+Returns: 
 
 *****************************************************************************/
 
@@ -120,7 +117,7 @@ uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_SNDTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
-    printf("\nTIME OUT.\n");
+    printf("[-]CONNECTION = TIME OUT\n");
     return EXIT_FAILURE;
   }
   // Send System Call to send request (parameters) to the Server
@@ -137,9 +134,8 @@ uint32_t	SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen)
 
 Name:	SOKRcv_Handlr()                                                
 Purpose: Handles receiving Data form the Server                         
-Parameters: Unsigned 32-bit integer for Client Socket, (char) Pointer to   
-            Response, Unsigned 16-bit integer for Size of the Response     
-Returns: Unsigned 32-bit integer                                        
+Parameters:     
+Returns:                                         
 
 *****************************************************************************/
 
@@ -153,7 +149,7 @@ uint32_t	SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize)
   // Set Socket Options
   if (setsockopt(uClSok, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
-    printf("\nTIME OUT.\n");
+    printf("[-]CONNECTION = TIME OUT\n");
     return EXIT_FAILURE;
   }
   // Receive System Call to  receieve (parameters) from the Server

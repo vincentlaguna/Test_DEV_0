@@ -31,12 +31,12 @@ int16_t  SOKInit_Handlr(void)
   // Local Variables
   int16_t  hSOK;
   // Output
-  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n\n");
+  printf("[-]SERVER-Side Socket Initialization = in progress...\n");
   SLEEP
   // Socket System Call
   hSOK = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n[+]SERVER-Side Socket Initialization = OK\n\n");
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
   SLEEP
   // Function Return
   return  hSOK;
@@ -68,7 +68,7 @@ uint32_t	BindSrvSOK_Hndlr(int16_t sSrvSOK, uint16_t sPort)
   Srv.sin_port        = htons(sPort);
   // Bind System Call
   retVal = bind(sSrvSOK, (S_SADDR *)&Srv, sizeof(Srv));
-  printf("\n[+]Binding to PORT... %d\n\n", sPort);
+  printf("[+]Binding to PORT: %d...\n", sPort);
   // Function Return
   return  retVal;    
 }
@@ -100,24 +100,24 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
   // Create Socket
   sSrvSOK = SokInit_Handlr();
   // Bind
-  printf("\n[-]Binding = in progress...\n\n");
+  printf("[-]Binding = in progress...\n");
   if (BindSrvSok_Hndlr(sSrvSOK, sPort) < 0)
   {
-    perror("[-]BIND = FAIL"); // Print the error message
+    perror("[-]BIND = FAIL\n"); // Print the error message
   }
   
   SLEEP
   
-  printf("\n[+]Bind = OK\n\n");
+  printf("[+]Bind = OK\n");
   // Listen
   if ((listen(sSrvSOK, nConnections)) < 0) // MAX number of connections
   {
     perror("[-]LISTEN = FAIL");
   }
-  printf("\n[+]LISTEN = OK\n");
-  printf("\n[+]LISTENING ON PORT = %d\n\n", sPort);
-  printf("\n[+]MAX # CONNECTIONS = %d\n", nConnections);
-  printf("\n[-]Waiting for incoming connections...\n\n");
+  printf("[+]LISTEN = OK\n");
+  printf("[+]LISTENING ON PORT = %d\n", sPort);
+  printf("[+]MAX # CONNECTIONS = %d\n", nConnections);
+  printf("[-]Waiting for incoming connections...\n");
   
   while (1)
   {
@@ -129,9 +129,9 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
     // Connection Error Handling
     if (connSOK < 0)
     {
-      perror("[-]INCOMING CONNECTION ACCEPT = FAIL");
+      perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
-    printf("\n[+]INCOMING CONNECTION ACCEPT = OK\n\n");
+    printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
     // Buffers (struct data)
     // uint16_t  DbuffSize = sizeof(DBffr);
     // memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
@@ -158,7 +158,7 @@ void  SrvConnection_Hndlr(int16_t sSrvSOK, uint16_t nConnections, uint16_t sPort
         break;
     }
     // Output and prepare server reply
-    printf("\nbuffer: %s\n", buffer);
+    printf("buffer: %s\n", buffer);
     strcpy(replyLine, buffer);
     // Write and close connection socket
     write(connSOK, replyLine, strlen(replyLine));
