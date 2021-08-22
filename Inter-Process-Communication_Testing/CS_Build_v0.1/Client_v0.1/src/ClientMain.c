@@ -68,15 +68,15 @@ int main(int argc, char *argv[])
   SrvAddr.sin_family = AF_INET;
   SrvAddr.sin_port   = htons(REM_SRV_PORT);
   // Get remote server address
-  if (inet_pton(AF_INET, REM_SRV_IP, &SrvAddr.sin_addr) <= 0)
+  if (inet_pton(AF_INET, LOCAL_IP, &SrvAddr.sin_addr) <= 0)
   {
-    printf("\nError for remote address: %s\n", REM_SRV_IP);
+    printf("\nError for remote address: %s\n", LOCAL_IP);
     return EXIT_FAILURE;
   }
   // Connect to server
   if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
-    printf("\nError conecting to remote address: %s\n", REM_SRV_IP);
+    printf("\nError conecting to remote address: %s\n", LOCAL_IP);
     return EXIT_FAILURE;
   }
   IPbuffer = inet_ntoa(SrvAddr.sin_addr);
