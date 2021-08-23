@@ -29,10 +29,13 @@ int main(int argc, char *argv[])
   // int r;
   // int sndBytes;
   char *IPbuffer;
-  // char buffer[MAX_LEN+1];
-  uint8_t buffer[MAX_LEN+1];
+  char buffer[MAX_LEN+1];
+  // char *buffer;
+  // buffer = (char *)malloc(MAX_LEN * sizeof(char));
   // uint8_t sndLine[MAX_LEN+1];
-  uint8_t rcvLine[MAX_LEN+1];
+  char rcvLine[MAX_LEN+1];
+  // char rcvLine;
+  // rcvLine = (char *)malloc(MAX_LEN * sizeof(char));
   
   S_SADDR_IN  SrvAddr;
   
@@ -102,7 +105,7 @@ int main(int argc, char *argv[])
                  "abcdefghijklmnopqrstuvwxyz"							// 156
                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
               	 "abcdefghijklmnopqrstuvwxyz"							// 208
-                // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
                 // "abcdefghijklmnopqrstuvwxyz"							// 260
           	     "\n");
   // strcpy(buffer, 
