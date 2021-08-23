@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"WSAStartup() failed");
+      fprintf(stderr,"[-]WSAStartup() = FAIL\n");
       exit(1);
     }
     
@@ -57,12 +57,14 @@ int main(int argc, char *argv[])
   //   printf("Usage: %s <SERVER ADDRESS>", argv[0]);
   //   return EXIT_FAILURE;
   // }
+  printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n");
   if ((sokFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
-    printf("\nCreation of SOCKET Failed.\n");
+    printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
-  printf("\n>>> The SOCKET has been created >>>\n\n");
+  printf("[+]CLIENT-Side Socket Initialization = OK\n");
+  SLEEP
   // Setup Server struct Info
   bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family = AF_INET;
@@ -70,38 +72,45 @@ int main(int argc, char *argv[])
   // Get remote server address
   if (inet_pton(AF_INET, LOCAL_IP, &SrvAddr.sin_addr) <= 0)
   {
-    printf("\nError for remote address: %s\n", LOCAL_IP);
+    printf("[-]ERROR on remote address: %s\n", LOCAL_IP);
     return EXIT_FAILURE;
   }
   // Connect to server
+  printf("[+]CONNECTION to Remote Server = in progress...\n");
+  SLEEP
   if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
-    printf("\nError conecting to remote address: %s\n", LOCAL_IP);
+    printf("[-]CONNECT to remote address: %s = FAIL\n", LOCAL_IP);
     return EXIT_FAILURE;
   }
   IPbuffer = inet_ntoa(SrvAddr.sin_addr);
   
-  printf("Connection to Remote Server = SUCCESS\n\n");
-  printf("Connected to remote address: %s\n", IPbuffer);
+  printf("[+]CONNECTION to Remote Server = OK\n");
+  SLEEP
+  printf("[+]CONNECTED to remote address: %s\n", IPbuffer);
   // Connected to server -> prepare the message to send
   // sprintf(sndLine, "This is the test string from the client");
   // sndBytes = strlen(sndLine);
   bzero(buffer, MAX_LEN);
   strcpy(buffer, "Test string from client\n");
-  // Send data to the Remote Server 
+  // Send data to the Remote Server
+  SLEEP
+  printf("[-]SENDING data in send buffer to server...\n");
   // if (write(sokFD, sndLine, sndBytes) != sndBytes)
   if (write(sokFD, buffer, strlen(buffer)) != strlen(buffer))
   {
-    printf("\nWRITE ERROR on socket file descriptor.\n");
+    printf("[-]WRITE ERROR on socket file descriptor SEND = FAIL\n");
     return EXIT_FAILURE;
   }
+  printf("[+]DATA sent to server = OK\n");
   bzero(rcvLine, MAX_LEN);
   // Output Server Response
   if (setsockopt(sokFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
-    printf("\nTIME OUT.\n");
+    printf("[-]TIME OUT ERROR\n");
     return EXIT_FAILURE;
   }
+  SLEEP
   // while ((r = read(sokFD, rcvLine, MAX_LEN-1)) > 0)
   // {
   //     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, r), rcvLine);
@@ -117,7 +126,9 @@ int main(int argc, char *argv[])
   //   printf("\nREAD ERROR on socket file descriptor.\n");
   //   return EXIT_FAILURE;
   // }
+  printf("[-]SERVER = RECEIVING DATA... %s\n", rcvLine);
   read(sokFD, rcvLine, MAX_LEN);
+  SLEEP
   // rcvLine[strlen(rcvLine)-1] = '\0';
   while (rcvLine)
   {
@@ -126,7 +137,11 @@ int main(int argc, char *argv[])
     if (rcvLine[strlen(rcvLine)-1] == '\n')
     break;
   }
-  printf("\nServer Reply: %s\n", rcvLine);
+  SLEEP
+  printf("\n[+]SERVER RESPONSE: %s\n", rcvLine);
+  SLEEP
+  printf("[+]DATA RECIEVED = OK\n\n");
+ 
   
   
   #ifndef LIN

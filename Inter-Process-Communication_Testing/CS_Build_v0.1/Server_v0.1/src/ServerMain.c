@@ -33,35 +33,46 @@ int main(int argc, char *argv[])
     
     if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0)
     {
-      fprintf(stderr,"WSAStartup() failed");
+      fprintf(stderr,"[-]WSAStartup() = FAIL\n");
       exit(1);
     }
     
   #endif
   // Create Socket File Descriptor to listen on (Server)
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   if ((listFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
-    printf("\nCreation of SOCKET Failed.\n");
+    printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
+  SLEEP
   // Setup Server Info
   bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family      = AF_INET;
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port        = htons(REM_SRV_PORT);
   // Bind Call
+  printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT);
   if ((bind(listFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
-    perror("BIND Failed."); // Print the error message
+    perror("[-]BIND = FAIL\n"); // Print the error message
   }
-  printf("\n<<< BIND Done >>>\n\n");
+  printf("[+]Bind = OK\n");
   // Listen Call
   if ((listen(listFD, MAX_CONN)) < 0)
   {
-    perror("LISTEN Failed.");
+    perror("[-]LISTEN = FAIL\n");
   }
-  printf("\n>>> Listening on PORT %d\n\n", REM_SRV_PORT);
-  
+  printf("[+]# MAX CONNECTIONS = %d\n", MAX_CONN);
+  SLEEP
+  printf("[+]LISTEN = OK\n");
+  SLEEP
+  printf("[+]LISTENING ON PORT = %d\n", REM_SRV_PORT);
+  SLEEP
+  printf("[-]Waiting for incoming connections...\n\n");
+  SLEEP
+  // While-loop for server to listen on binded port for incoming connections
   while(1)
   {
     // Initialize struct and variable for client info
@@ -69,15 +80,14 @@ int main(int argc, char *argv[])
     socklen_t   clAddrLen;
     // Accept will block until incoming connection arrives,
     // returning Socket File Descriptor to the connection
-    printf("\n\n>>> Waiting for incoming connections...\n");
     fflush(stdout);
     // Accept Call
     connFD = accept(listFD, (S_SADDR *)&ClAddr, (socklen_t *)&ClAddr);
     if (connFD < 0)
     {
-      perror("ACCEPT Failed.");
+      perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
-    printf("\nConnection ACCEPTED\n\n");
+    printf("[+]INCOMING CONNECTION ACCEPT = OK\n\n");
     // Zero-out the receive buffer and null terminate it
     // memset(rcvLine, 0, MAX_LEN);
     bzero(buffer, MAX_LEN);
@@ -100,7 +110,7 @@ int main(int argc, char *argv[])
     }
     // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
     // printf("\nbuffer: %s\n", rcvLine);
-    printf("\nbuffer: %s\n", buffer);
+    printf("\nConfirm Buffer: %s\n", buffer);
     strcpy(replyLine, buffer);
     // replyLine[strlen(replyLine)] = '\0';
     // Reply the message back to the client
@@ -108,6 +118,7 @@ int main(int argc, char *argv[])
     //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
     // Write to socket and close
     // write(connFD, (char *)buffer, strlen((char *)buffer));
+    printf("[-]Waiting for incoming connections...\n\n");
     write(connFD, replyLine, strlen(replyLine));
     close(connFD);
     // Zero-out rcvLine
