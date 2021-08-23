@@ -93,7 +93,33 @@ int main(int argc, char *argv[])
   // sprintf(sndLine, "This is the test string from the client");
   // sndBytes = strlen(sndLine);
   bzero(buffer, MAX_LEN);
-  strcpy(buffer, "Test string from client\n");
+  // strcpy(buffer, "Test string from client\n");
+  strcpy(buffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
+                 "abcdefghijklmnopqrstuvwxyz"							// 52
+                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+                 "abcdefghijklmnopqrstuvwxyz"							// 104
+                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+                 "abcdefghijklmnopqrstuvwxyz"							// 156
+                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+              	 "abcdefghijklmnopqrstuvwxyz"							// 208
+                // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+                // "abcdefghijklmnopqrstuvwxyz"							// 260
+          	     "\n");
+  // strcpy(buffer, 
+  //       // "\xff"													// NUM bytes
+	 //      //"\x02"													// STX
+  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
+  //     	 "abcdefghijklmnopqrstuvwxyz"							// 52
+  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+  //     	 "abcdefghijklmnopqrstuvwxyz"							// 104
+  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+  //     	 "abcdefghijklmnopqrstuvwxyz"							// 156
+  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+  //     	 "abcdefghijklmnopqrstuvwxyz"							// 208
+  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+  //     	 "abcdefghijklmnopqrstuvwxyz"							// 260
+  //     	 //""
+  //     	 "\n"); // \x03
   // Send data to the Remote Server
   SLEEP
   printf("[-]SENDING data in send buffer to server...\n");
