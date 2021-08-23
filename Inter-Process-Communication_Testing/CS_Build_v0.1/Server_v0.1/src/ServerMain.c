@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   printf("[+]SERVER-Side Socket Initialization = OK\n");
   SLEEP
   // Setup Server Info
-  bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
+  memset(&SrvAddr, 0, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family      = AF_INET;
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port        = htons(REM_SRV_PORT);
@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
     SLEEP
     // Zero-out the receive buffer and null terminate it
     // memset(rcvLine, 0, MAX_LEN);
-    bzero(buffer, MAX_LEN);
-    bzero(replyLine, MAX_LEN);
+    memset(buffer, 0, MAX_LEN);
+    memset(replyLine, 0, MAX_LEN);
     // Reading the client's message
     // read(connFD, buffer, MAX_LEN);
     // while ((n = read(connFD, rcvLine, MAX_LEN-1)) > 0)
@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
     //   if (rcvLine[n-1] == '\n')
     //     break;
     // }
+    printf("[-]SERVER = RECEIVING DATA...\n");
     while ((n = read(connFD, buffer, MAX_LEN-1)) > 0)
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(buffer, n), buffer);
@@ -117,6 +118,7 @@ int main(int argc, char *argv[])
     // strncpy((char*)buffer, rcvLine, strlen((char *)buffer));
     // printf("\nbuffer: %s\n", rcvLine);
     printf("\nConfirm Buffer: %s\n", buffer);
+    printf("[+]DATA RECIEVED = OK\n\n");
     strcpy(replyLine, buffer);
     // replyLine[strlen(replyLine)] = '\0';
     // Reply the message back to the client
@@ -124,6 +126,7 @@ int main(int argc, char *argv[])
     //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
     // Write to socket and close
     // write(connFD, (char *)buffer, strlen((char *)buffer));
+    printf("[-]SERVER = Replied data back to client...\n\n");
     printf("[-]Waiting for incoming connections...\n\n");
     write(connFD, replyLine, strlen(replyLine));
     close(connFD);

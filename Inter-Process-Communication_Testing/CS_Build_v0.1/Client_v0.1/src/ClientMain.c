@@ -70,13 +70,13 @@ int main(int argc, char *argv[])
   printf("[+]CLIENT-Side Socket Initialization = OK\n");
   SLEEP
   // Setup Server struct Info
-  bzero(&SrvAddr, sizeof(SrvAddr)); // Zero-out struct values
+  memset(&SrvAddr, 0, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family = AF_INET;
   SrvAddr.sin_port   = htons(REM_SRV_PORT);
   // Get remote server address
-  if (inet_pton(AF_INET, LOCAL_IP, &SrvAddr.sin_addr) <= 0)
+  if (inet_pton(AF_INET, REM_SRV_IP, &SrvAddr.sin_addr) <= 0)
   {
-    printf("[-]ERROR on remote address: %s\n", LOCAL_IP);
+    printf("[-]ERROR on remote address: %s\n", REM_SRV_IP);
     return EXIT_FAILURE;
   }
   // Connect to server
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
   SLEEP
   if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
-    printf("[-]CONNECT to remote address: %s = FAIL\n", LOCAL_IP);
+    printf("[-]CONNECT to remote address: %s = FAIL\n", REM_SRV_IP);
     return EXIT_FAILURE;
   }
   IPbuffer = inet_ntoa(SrvAddr.sin_addr);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
   // Connected to server -> prepare the message to send
   // sprintf(sndLine, "This is the test string from the client");
   // sndBytes = strlen(sndLine);
-  bzero(buffer, MAX_LEN);
+  memset(buffer, 0, MAX_LEN);
   // strcpy(buffer, "Test string from client\n");
   strcpy(buffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
                  "abcdefghijklmnopqrstuvwxyz"							// 52
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   printf("[+]DATA sent to server = OK\n");
-  bzero(rcvLine, MAX_LEN);
+  memset(rcvLine, 0, MAX_LEN);
   // Output Server Response
   if (setsockopt(sokFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
