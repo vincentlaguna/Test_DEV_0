@@ -39,12 +39,14 @@ int main(int argc, char *argv[])
     
   #endif
   // Create Socket File Descriptor to listen on (Server)
+  SLEEP
   printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   if ((listFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
+  SLEEP
   printf("[+]SERVER-Side Socket Initialization = OK\n");
   SLEEP
   // Setup Server Info
@@ -53,13 +55,16 @@ int main(int argc, char *argv[])
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port        = htons(REM_SRV_PORT);
   // Bind Call
+  SLEEP
   printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT);
   if ((bind(listFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
+  SLEEP
   printf("[+]Bind = OK\n");
   // Listen Call
+  SLEEP
   if ((listen(listFD, MAX_CONN)) < 0)
   {
     perror("[-]LISTEN = FAIL\n");
@@ -88,6 +93,7 @@ int main(int argc, char *argv[])
       perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
     printf("[+]INCOMING CONNECTION ACCEPT = OK\n\n");
+    SLEEP
     // Zero-out the receive buffer and null terminate it
     // memset(rcvLine, 0, MAX_LEN);
     bzero(buffer, MAX_LEN);

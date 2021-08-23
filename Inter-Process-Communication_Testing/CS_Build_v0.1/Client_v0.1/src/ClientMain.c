@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
+  SLEEP
   printf("[+]CLIENT-Side Socket Initialization = OK\n");
   SLEEP
   // Setup Server struct Info
