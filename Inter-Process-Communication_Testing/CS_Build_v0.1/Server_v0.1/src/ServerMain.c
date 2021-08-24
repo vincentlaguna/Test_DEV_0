@@ -117,8 +117,9 @@ int main(int argc, char *argv[])
     printf("[-]Waiting for incoming connections...\n\n");
     write(connectSOKFD, rplyBuffer, strlen(rplyBuffer));
     close(connectSOKFD);
-    // Zero-out rcvLine
-    // memset(rcvLine, 0, MAX_LEN);
+    // Zero-out buffers
+    // memset(rcvBuffer, 0, MAX_LEN);
+    // memset(rplyBuffer, 0, MAX_LEN);
   }
   
   return(0);
