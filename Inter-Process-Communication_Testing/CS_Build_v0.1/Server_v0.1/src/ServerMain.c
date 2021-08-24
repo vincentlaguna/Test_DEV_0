@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
   // Initialize Local Variables
   int listenSOKFD, connectSOKFD; 
-  int n;
+  int sVal;
   S_SADDR_IN  SrvAddr; 
   
   uint8_t rcvBuffer[MAX_LEN+1];
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     {
       perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
-    printf("[+]INCOMING CONNECTION ACCEPT = OK\n\n");
+    printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
     SLEEP
     // Zero-out the receive rcvBuffer and null terminate it
     // memset(rcvLine, 0, MAX_LEN);
@@ -106,12 +106,13 @@ int main(int argc, char *argv[])
     //   if (rcvLine[n-1] == '\n')
     //     break;
     // }
-    printf("[-]SERVER = RECEIVING DATA...\n");
-    while ((n = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
+    printf("[-]SERVER = RECEIVING DATA...\n\n");
+    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
     {
-      fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, n), rcvBuffer);
+      fprintf(stdout, "[+]DATA RECEIVED:\n%s\n\n%s\n", 
+              convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
-      if (rcvBuffer[n-1] == '\n' || '\0')
+      if (rcvBuffer[sVal-1] == '\n' || '\0')
         break;
     }
     // strncpy((char*)rcvBuffer, rcvLine, strlen((char *)rcvBuffer));
