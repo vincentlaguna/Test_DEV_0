@@ -25,17 +25,17 @@ Description: Client-side Main
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
-  int sokFD; 
+  int connectSOKFD; 
   // int r;
   // int sndBytes;
   char *IPbuffer;
-  char buffer[MAX_LEN+1];
-  // char *buffer;
-  // buffer = (char *)malloc(MAX_LEN * sizeof(char));
+  char sndBuffer[MAX_LEN+1];
+  // char *sndBuffer;
+  // sndBuffer = (char *)malloc(MAX_LEN * sizeof(char));
   // uint8_t sndLine[MAX_LEN+1];
-  char rcvLine[MAX_LEN+1];
-  // char rcvLine;
-  // rcvLine = (char *)malloc(MAX_LEN * sizeof(char));
+  char rcvBuffer[MAX_LEN+1];
+  // char rcvBuffer;
+  // rcvBuffer = (char *)malloc(MAX_LEN * sizeof(char));
   
   S_SADDR_IN  SrvAddr;
   
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   //   return EXIT_FAILURE;
   // }
   printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n");
-  if ((sokFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+  if ((connectSOKFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   // Connect to server
   printf("[+]CONNECTION to Remote Server = in progress...\n");
   SLEEP
-  if (connect(sokFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
+  if (connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
     printf("[-]CONNECT to remote address: %s = FAIL\n", REM_SRV_IP);
     return EXIT_FAILURE;
@@ -95,20 +95,20 @@ int main(int argc, char *argv[])
   // Connected to server -> prepare the message to send
   // sprintf(sndLine, "This is the test string from the client");
   // sndBytes = strlen(sndLine);
-  memset(buffer, 0, MAX_LEN);
-  // strcpy(buffer, "Test string from client\n");
-  strcpy(buffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
-                 "abcdefghijklmnopqrstuvwxyz"							// 52
-                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
-                 "abcdefghijklmnopqrstuvwxyz"							// 104
-                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
-                 "abcdefghijklmnopqrstuvwxyz"							// 156
-                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
-              	 "abcdefghijklmnopqrstuvwxyz"							// 208
-                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-                // "abcdefghijklmnopqrstuvwxyz"							// 260
-          	     "\n");
-  // strcpy(buffer, 
+  memset(sndBuffer, 0, MAX_LEN);
+  // strcpy(sndBuffer, "Test string from client\n");
+  strcpy(sndBuffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"					    // 26
+                    "abcdefghijklmnopqrstuvwxyz"							// 52
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+                    "abcdefghijklmnopqrstuvwxyz"							// 104
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+                    "abcdefghijklmnopqrstuvwxyz"							// 156
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+                  	"abcdefghijklmnopqrstuvwxyz"							// 208
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+                    // "abcdefghijklmnopqrstuvwxyz"							// 260
+              	    "\n");
+  // strcpy(sndBuffer, 
   //       // "\xff"													// NUM bytes
 	 //      //"\x02"													// STX
   //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
@@ -125,60 +125,62 @@ int main(int argc, char *argv[])
   //     	 "\n"); // \x03
   // Send data to the Remote Server
   SLEEP
-  printf("[-]SENDING data in send buffer to server...\n");
-  // if (write(sokFD, sndLine, sndBytes) != sndBytes)
-  if (write(sokFD, buffer, strlen(buffer)) != strlen(buffer))
+  printf("[-]SENDING data in send sndBuffer to server...\n");
+  // if (write(connectSOKFD, sndLine, sndBytes) != sndBytes)
+  if (write(connectSOKFD, sndBuffer, strlen(sndBuffer)) != strlen(sndBuffer))
   {
     printf("[-]WRITE ERROR on socket file descriptor SEND = FAIL\n");
     return EXIT_FAILURE;
   }
   printf("[+]DATA sent to server = OK\n");
-  memset(rcvLine, 0, MAX_LEN);
+  memset(rcvBuffer, 0, MAX_LEN);
   // Output Server Response
-  if (setsockopt(sokFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   {
     printf("[-]TIME OUT ERROR\n");
     return EXIT_FAILURE;
   }
   SLEEP
-  // while ((r = read(sokFD, rcvLine, MAX_LEN-1)) > 0)
+  // while ((r = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
   // {
-  //     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, r), rcvLine);
+  //     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvBuffer, r), rcvBuffer);
   //     // Look for end of message
-  //     if (rcvLine[r-1] == '\n')
+  //     if (rcvBuffer[r-1] == '\n')
   //       break;
   //   }
-  //   // Zero-out rcvLine
-  //   // memset(rcvLine, 0, MAX_LEN);
+  //   // Zero-out rcvBuffer
+  //   // memset(rcvBuffer, 0, MAX_LEN);
   // // Check for errors and close the socket
   // if (r < 0)
   // {
   //   printf("\nREAD ERROR on socket file descriptor.\n");
   //   return EXIT_FAILURE;
   // }
-  printf("[-]SERVER = RECEIVING DATA... %s\n", rcvLine);
-  read(sokFD, rcvLine, MAX_LEN);
+  printf("[-]SERVER = RECEIVING DATA... %s\n", rcvBuffer);
+  read(connectSOKFD, rcvBuffer, MAX_LEN);
   SLEEP
-  // rcvLine[strlen(rcvLine)-1] = '\0';
-  while (rcvLine)
+  // rcvBuffer[strlen(rcvBuffer)-1] = '\0';
+  while (rcvBuffer)
   {
-    fprintf(stdout, "\n%s\n\n%s", convertHex(rcvLine, strlen(rcvLine)), rcvLine);
+    fprintf(stdout, "\n%s\n\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)), rcvBuffer);
     // Look for end of message
-    if (rcvLine[strlen(rcvLine)-1] == '\n')
+    if (rcvBuffer[strlen(rcvBuffer)-1] == '\n' || '\0')
     break;
   }
   SLEEP
-  printf("\n[+]SERVER RESPONSE: %s\n", rcvLine);
+  printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
   SLEEP
-  printf("[+]DATA RECIEVED = OK\n\n");
- 
-  
+  printf("[+]DATA RECEIVED = OK\n\n");
+  printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
+  printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+  printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 
+         sizeof(char), sizeof(int), sizeof(uint8_t));
   
   #ifndef LIN
-    closesocket(sokFD);
+    closesocket(connectSOKFD);
     WSACleanup();
   #else
-    close(sokFD);
+    close(connectSOKFD);
   #endif
   
   return(0);
