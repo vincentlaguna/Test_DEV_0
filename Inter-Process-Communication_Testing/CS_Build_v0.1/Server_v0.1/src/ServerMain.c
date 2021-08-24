@@ -98,14 +98,6 @@ int main(int argc, char *argv[])
     memset(rcvBuffer, 0, MAX_LEN);
     memset(rplyBuffer, 0, MAX_LEN);
     // Reading the client's message
-    // read(connectSOKFD, rcvBuffer, MAX_LEN);
-    // while ((n = read(connectSOKFD, rcvLine, MAX_LEN-1)) > 0)
-    // {
-    //   fprintf(stdout, "\n%s\n\n%s\n", convertHex(rcvLine, n), rcvLine);
-    //   // Look for end of message
-    //   if (rcvLine[n-1] == '\n')
-    //     break;
-    // }
     printf("[-]SERVER = RECEIVING DATA...\n\n");
     while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
     {
@@ -121,12 +113,6 @@ int main(int argc, char *argv[])
     printf("[+]BYTES RECIEVED = %d\n", sizeof(rcvBuffer));
     printf("[+]DATA RECIEVED = OK\n\n");
     strcpy(rplyBuffer, rcvBuffer);
-    // rplyBuffer[strlen(rplyBuffer)] = '\0';
-    // Reply the message back to the client
-    // snprintf((char *)rcvBuffer, sizeof(rcvBuffer), 
-    //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
-    // Write to socket and close
-    // write(connectSOKFD, (char *)rcvBuffer, strlen((char *)rcvBuffer));
     printf("[-]SERVER = Replied data back to client...\n\n");
     printf("[-]Waiting for incoming connections...\n\n");
     write(connectSOKFD, rplyBuffer, strlen(rplyBuffer));
@@ -134,19 +120,7 @@ int main(int argc, char *argv[])
     // Zero-out rcvLine
     // memset(rcvLine, 0, MAX_LEN);
   }
-  // if (n < 0)
-  // {
-  //   perror("READ Failed.");
-  // }
-  // Copy received data into rcvBuffer
-  // strncpy((char*)rcvBuffer, rcvLine, strlen((char *)rcvBuffer));
-  // Reply the message back to the client
-  // snprintf((char *)rcvBuffer, sizeof(rcvBuffer), 
-  //         "HTTP/1.0 200 OK\r\n\r\n SERVER REPLY SUCCESS");
-  // Write to socket and close
-  // write(connectSOKFD, (char *)rcvBuffer, strlen((char *)rcvBuffer));
-  // close(connectSOKFD);
-           
+  
   return(0);
 
 }
