@@ -93,25 +93,24 @@ int main(int argc, char *argv[])
     }
     printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
     SLEEP
-    // Zero-out the receive rcvBuffer and null terminate it
-    // memset(rcvLine, 0, MAX_LEN);
+    // Zero-out buffers
     memset(rcvBuffer, 0, MAX_LEN);
     memset(rplyBuffer, 0, MAX_LEN);
     // Reading the client's message
     printf("[-]SERVER = RECEIVING DATA...\n\n");
+    printf("[+]DATA RECEIVED: \n");
+    
     while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
     {
-      fprintf(stdout, "[+]DATA RECEIVED:\n%s\n\n%s\n", 
-              convertHex(rcvBuffer, sVal), rcvBuffer);
+      fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
       if (rcvBuffer[sVal-1] == '\n' || '\0')
         break;
     }
-    // strncpy((char*)rcvBuffer, rcvLine, strlen((char *)rcvBuffer));
-    // printf("\nrcvBuffer: %s\n", rcvLine);
-    printf("\nConfirm rcvBuffer: %s\n", rcvBuffer);
-    printf("[+]BYTES RECIEVED = %d\n", sizeof(rcvBuffer));
+    printf("\nConfirm receive buffer: %s\n", rcvBuffer);
     printf("[+]DATA RECIEVED = OK\n\n");
+    printf("[+]BYTES RECIEVED = %d\n", sizeof(rcvBuffer));
+    printf("[+]LENGTH RECEIVED = %d\n", strnlen(rcvBuffer, MAX_LEN));
     strcpy(rplyBuffer, rcvBuffer);
     printf("[-]SERVER = Replied data back to client...\n\n");
     printf("[-]Waiting for incoming connections...\n\n");

@@ -26,19 +26,12 @@ int main(int argc, char *argv[])
 {
   // Initialize Local Variables
   int connectSOKFD; 
-  // int r;
-  // int sndBytes;
-  char *IPbuffer;
-  char sndBuffer[MAX_LEN+1];
-  // char *sndBuffer;
-  // sndBuffer = (char *)malloc(MAX_LEN * sizeof(char));
-  // uint8_t sndLine[MAX_LEN+1];
-  char rcvBuffer[MAX_LEN+1];
-  // char rcvBuffer;
-  // rcvBuffer = (char *)malloc(MAX_LEN * sizeof(char));
-  
+  uint8_t *IPbuffer;
+  uint8_t sndBuffer[MAX_LEN+1];
+  uint8_t rcvBuffer[MAX_LEN+1];
+  // For server data
   S_SADDR_IN  SrvAddr;
-  
+  // Time-out values for socket options
   TIME_V     Tv;
   Tv.tv_sec  = TIME_O; // Time-Out in Seconds
   Tv.tv_usec = 0;
@@ -54,12 +47,7 @@ int main(int argc, char *argv[])
     }
     
   #endif
-  // Error Handling
-  // if (argc != 2)
-  // {
-  //   printf("Usage: %s <SERVER ADDRESS>", argv[0]);
-  //   return EXIT_FAILURE;
-  // }
+ 
   printf("\n[-]CLIENT-Side Socket Initialization = in progress...\n");
   if ((connectSOKFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
@@ -93,10 +81,7 @@ int main(int argc, char *argv[])
   SLEEP
   printf("[+]CONNECTED to remote address: %s\n", IPbuffer);
   // Connected to server -> prepare the message to send
-  // sprintf(sndLine, "This is the test string from the client");
-  // sndBytes = strlen(sndLine);
   memset(sndBuffer, 0, MAX_LEN);
-  // strcpy(sndBuffer, "Test string from client\n");
   strcpy(sndBuffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"					    // 26
                     "abcdefghijklmnopqrstuvwxyz"							// 52
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
@@ -108,21 +93,6 @@ int main(int argc, char *argv[])
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
                     // "abcdefghijklmnopqrstuvwxyz"							// 260
               	    "\n");
-  // strcpy(sndBuffer, 
-  //       // "\xff"													// NUM bytes
-	 //      //"\x02"													// STX
-  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
-  //     	 "abcdefghijklmnopqrstuvwxyz"							// 52
-  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
-  //     	 "abcdefghijklmnopqrstuvwxyz"							// 104
-  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
-  //     	 "abcdefghijklmnopqrstuvwxyz"							// 156
-  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
-  //     	 "abcdefghijklmnopqrstuvwxyz"							// 208
-  //     	 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-  //     	 "abcdefghijklmnopqrstuvwxyz"							// 260
-  //     	 //""
-  //     	 "\n"); // \x03
   // Send data to the Remote Server
   SLEEP
   printf("[-]SENDING data in send sndBuffer to server...\n");
@@ -133,6 +103,7 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   printf("[+]DATA sent to server = OK\n");
+  // Zero-out buffer
   memset(rcvBuffer, 0, MAX_LEN);
   // Output Server Response
   if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
@@ -141,25 +112,10 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   SLEEP
-  // while ((r = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
-  // {
-  //     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvBuffer, r), rcvBuffer);
-  //     // Look for end of message
-  //     if (rcvBuffer[r-1] == '\n')
-  //       break;
-  //   }
-  //   // Zero-out rcvBuffer
-  //   // memset(rcvBuffer, 0, MAX_LEN);
-  // // Check for errors and close the socket
-  // if (r < 0)
-  // {
-  //   printf("\nREAD ERROR on socket file descriptor.\n");
-  //   return EXIT_FAILURE;
-  // }
   printf("[-]SERVER = RECEIVING DATA... %s\n", rcvBuffer);
   read(connectSOKFD, rcvBuffer, MAX_LEN);
   SLEEP
-  // rcvBuffer[strlen(rcvBuffer)-1] = '\0';
+  
   while (rcvBuffer)
   {
     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)), rcvBuffer);
@@ -167,14 +123,15 @@ int main(int argc, char *argv[])
     if (rcvBuffer[strlen(rcvBuffer)-1] == '\n' || '\0')
     break;
   }
+  
   SLEEP
   printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
   SLEEP
   printf("[+]DATA RECEIVED = OK\n\n");
   printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
   printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
-  printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 
-         sizeof(char), sizeof(int), sizeof(uint8_t));
+  // printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 
+        // sizeof(char), sizeof(int), sizeof(uint8_t)); // For debug
   
   #ifndef LIN
     closesocket(connectSOKFD);
