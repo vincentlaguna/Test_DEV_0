@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     socklen_t   clAddrLen;
     // Accept will block until incoming connection arrives,
     // returning Socket File Descriptor to the connection
-    fflush(stdout);
+    // fflush(stdout);
     // Accept Call
     connectSOKFD = accept(listenSOKFD, (S_SADDR *)&ClAddr, (socklen_t *)&ClAddr);
     if (connectSOKFD < 0)
