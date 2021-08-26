@@ -117,8 +117,8 @@ int main(int argc, char *argv[])
     write(connectSOKFD, rplyBuffer, strlen(rplyBuffer));
     close(connectSOKFD);
     // Zero-out buffers
-    // memset(rcvBuffer, 0, MAX_LEN);
-    // memset(rplyBuffer, 0, MAX_LEN);
+    memset(rcvBuffer, 0, MAX_LEN);
+    memset(rplyBuffer, 0, MAX_LEN);
   }
   
   return(0);

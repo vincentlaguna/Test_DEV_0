@@ -130,6 +130,8 @@ int main(int argc, char *argv[])
   printf("[+]DATA RECEIVED = OK\n\n");
   printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
   printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+  // Zero-out receive buffer
+  memset(rcvBuffer, 0, MAX_LEN);
   // printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 
         // sizeof(char), sizeof(int), sizeof(uint8_t)); // For debug
   
