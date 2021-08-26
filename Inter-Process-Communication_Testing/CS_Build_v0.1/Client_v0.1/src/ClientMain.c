@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
   {
     fprintf(stdout, "\n%s\n\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)), rcvBuffer);
     // Look for end of message
-    if (rcvBuffer[strlen(rcvBuffer)-1] == '\n' || '\0')
+    if (rcvBuffer[strlen(rcvBuffer)-1] == ('\n') || ('\0'))
     break;
   }
   

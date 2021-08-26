@@ -190,5 +190,43 @@ char  *convertHex(const char *src, size_t len)
 /****************************************************************************/
 
 
+/*****************************************************************************
+
+Name: bCheckSum()                                               
+Purpose:  Validates the checksum on 2 input buffers                               
+Parameters: const unsigned char pointer and size_t for length                                                             
+Returns:  Boolean                                        
+
+*****************************************************************************
+
+bool  bCheckSum(const char *buff1, const char *buff2)
+{
+  char  *retVal;
+  char  *hexBits = "0123456789ABCDEF";
+  
+  if (src == NULL || len <= 0)
+    return NULL;
+    
+  uint32_t  retValLen = (len * 3) + 1;
+  retVal = malloc(retValLen);
+  // sets the first n bytes of the area starting at retVal 
+  // to zero (bytes containing '\0')
+  bzero(retVal, retValLen);
+  
+  for (uint8_t i = 0; i < len; i++)
+  {
+    retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
+    retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
+    retVal[(i*3)+2] = ' '; // Space each value
+  }
+  
+  return retVal;
+  
+}
+
+// End checkSum()
+/****************************************************************************/
+
+
 /****************************************************************************/
 // End Client.c
