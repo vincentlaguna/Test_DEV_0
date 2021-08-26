@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
-      if (rcvBuffer[sVal-1] == '\n' || '\0')
+      if (rcvBuffer[strlen(rcvBuffer)-1] == '\n' || '\0')
         break;
     }
     printf("\nConfirm receive buffer: %s\n", rcvBuffer);
