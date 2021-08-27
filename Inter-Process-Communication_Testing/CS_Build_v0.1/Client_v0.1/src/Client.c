@@ -199,12 +199,27 @@ Returns:  Boolean
 
 *****************************************************************************
 
-bool  bCheckSum(const char *buff1, const char *buff2)
+bool  bCheckSum(const char *buff1, const char *buff2, size_t sZ)
 {
-  bool 
+  bool bRetVal = false;
   
+  if (buff1 == NULL || buff2 == NULL)
+    return NULL;
+    
+  uint32_t  retValLen = (len * 3) + 1;
+  retVal = malloc(retValLen);
+  // sets the first n bytes of the area starting at retVal 
+  // to zero (bytes containing '\0')
+  bzero(retVal, retValLen);
   
-  return retVal;
+  for (uint8_t i = 0; i < len; i++)
+  {
+    retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
+    retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
+    retVal[(i*3)+2] = ' '; // Space each value
+  }
+  
+  return bRetVal;
   
 }
 
