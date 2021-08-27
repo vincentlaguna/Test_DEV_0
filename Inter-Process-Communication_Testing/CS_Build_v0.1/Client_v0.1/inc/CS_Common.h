@@ -41,9 +41,9 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
-#define   TIME_O 5
+#define   TIME_O 10000
 #define   MAX_CONN 6
-#define	  MAX_LEN 256
+#define	  MAX_LEN 257
 #define	  MAX_STR_SZ 256
 #define   SLEEP	sleep(1);
 #define	  IP0 "192.168.135.21"

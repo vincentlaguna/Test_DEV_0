@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   // For server data
   S_SADDR_IN  SrvAddr;
   // Time-out values for socket options
-  TIME_V     Tv;
+  TIME_V       Tv;
   Tv.tv_sec  = TIME_O; // Time-Out in Seconds
   Tv.tv_usec = 0;
   // Winsock
@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
                   	"abcdefghijklmnopqrstuvwxyz"							// 208
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
                     // "abcdefghijklmnopqrstuvwxyz"							// 260
+              	    "abcdefghijklmnopqrst"
               	    "\n");
   // Send data to the Remote Server
   SLEEP
