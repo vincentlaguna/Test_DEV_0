@@ -197,30 +197,37 @@ Purpose:  Validates the checksum on 2 input buffers
 Parameters: const unsigned char pointer and size_t for length                                                             
 Returns:  Boolean                                        
 
-*****************************************************************************
+*****************************************************************************/
 
-bool  bCheckSum(const char *buff1, const char *buff2, size_t sZ)
+bool  bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ)
 {
-  bool bRetVal = false;
+  bool bRetVal  = false;
+  uint8_t chkBuff1 = 0;
+  uint8_t chkBuff2 = 0;
   
   if (buff1 == NULL || buff2 == NULL)
     return NULL;
-    
-  uint32_t  retValLen = (len * 3) + 1;
-  retVal = malloc(retValLen);
-  // sets the first n bytes of the area starting at retVal 
-  // to zero (bytes containing '\0')
-  bzero(retVal, retValLen);
   
-  for (uint8_t i = 0; i < len; i++)
+  while (sZ-- != 0)
   {
-    retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
-    retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
-    retVal[(i*3)+2] = ' '; // Space each value
+    // For debugging...
+    // printf("%c ", *buff1);
+    // printf("\n");
+    // printf("%c ", *buff2);
+    chkBuff1 -= *buff1++;
+    chkBuff2 -= *buff2++;
   }
-  
-  return bRetVal;
-  
+  // For debugging...
+  // printf("\nChecksum for buffer 1 is: 0x%02x = %d\n", chkBuff1, chkBuff1);
+  // printf("\nChecksum for buffer 2 is: 0x%02x = %d\n\n", chkBuff2, chkBuff2);
+  if (chkBuff1 == chkBuff2)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 // End checkSum()

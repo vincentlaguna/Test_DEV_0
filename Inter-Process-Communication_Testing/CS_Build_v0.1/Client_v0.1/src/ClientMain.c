@@ -54,9 +54,9 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
-  SLEEP
+  // SLEEP
   printf("[+]CLIENT-Side Socket Initialization = OK\n");
-  SLEEP
+  // SLEEP
   // Setup Server struct Info
   memset(&SrvAddr, 0, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family = AF_INET;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
   }
   // Connect to server
   printf("[+]CONNECTION to Remote Server = in progress...\n");
-  SLEEP
+  // SLEEP
   if (connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
     printf("[-]CONNECT to remote address: %s = FAIL\n", REM_SRV_IP);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
   IPbuffer = inet_ntoa(SrvAddr.sin_addr);
   
   printf("[+]CONNECTION to Remote Server = OK\n");
-  SLEEP
+  // SLEEP
   printf("[+]CONNECTED to remote address: %s\n", IPbuffer);
   // Connected to server -> prepare the message to send
   memset(sndBuffer, 0, MAX_LEN);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
               	    "abcdefghijklmnopqrst"
               	    "\n");
   // Send data to the Remote Server
-  SLEEP
+  // SLEEP
   printf("[-]SENDING data in send sndBuffer to server...\n");
   // if (write(connectSOKFD, sndLine, sndBytes) != sndBytes)
   if (write(connectSOKFD, sndBuffer, strlen(sndBuffer)) != strlen(sndBuffer))
@@ -112,10 +112,10 @@ int main(int argc, char *argv[])
     printf("[-]TIME OUT ERROR\n");
     return EXIT_FAILURE;
   }
-  SLEEP
+  // SLEEP
   printf("[-]SERVER = RECEIVING DATA... %s\n", rcvBuffer);
   read(connectSOKFD, rcvBuffer, MAX_LEN);
-  SLEEP
+  // SLEEP
   
   while (rcvBuffer)
   {
@@ -125,12 +125,22 @@ int main(int argc, char *argv[])
     break;
   }
   
-  SLEEP
+  // SLEEP
   printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
-  SLEEP
-  printf("[+]DATA RECEIVED = OK\n\n");
+  // SLEEP
+  printf("[+]DATA RECEIVED = OK\n");
   printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
   printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+  
+  if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
+  {
+    printf("[+]CHECKSUM = PASS\n");
+  }
+  else
+  {
+    printf("[+]CHECKSUM = FAIL\n");
+  }
+  putchar('\n');
   // Zero-out receive buffer
   memset(rcvBuffer, 0, MAX_LEN);
   // printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 

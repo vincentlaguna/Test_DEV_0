@@ -41,7 +41,7 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
-#define   TIME_O 10000
+#define   TIME_O 5
 #define   MAX_CONN 6
 #define	  MAX_LEN 257
 #define	  MAX_STR_SZ 256
@@ -86,6 +86,7 @@ typedef	struct DataBuffer DBffr;
 /* Function Prototypes: *****************************************************/
 // Helper Functions
 char	    *convertHex(const char *src, size_t len);
+bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // uint16_t  SokInit_Handlr(void);
 // uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);

@@ -38,44 +38,44 @@ int main(int argc, char *argv[])
     
   #endif
   // Create Socket File Descriptor to listen on (Server)
-  SLEEP
+  // SLEEP
   printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   if ((listenSOKFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
-  SLEEP
+  // SLEEP
   printf("[+]SERVER-Side Socket Initialization = OK\n");
-  SLEEP
+  // SLEEP
   // Setup Server Info
   memset(&SrvAddr, 0, sizeof(SrvAddr)); // Zero-out struct values
   SrvAddr.sin_family      = AF_INET;
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port        = htons(REM_SRV_PORT);
   // Bind Call
-  SLEEP
+  // SLEEP
   printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT);
   if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
-  SLEEP
+  // SLEEP
   printf("[+]Bind = OK\n");
   // Listen Call
-  SLEEP
+  // SLEEP
   if ((listen(listenSOKFD, MAX_CONN)) < 0)
   {
-    perror("[-]LISTEN = FAIL\n");
+    printf("[-]LISTEN = FAIL\n");
   }
   printf("[+]# MAX CONNECTIONS = %d\n", MAX_CONN);
-  SLEEP
+  // SLEEP
   printf("[+]LISTEN = OK\n");
-  SLEEP
+  // SLEEP
   printf("[+]LISTENING ON PORT = %d\n", REM_SRV_PORT);
-  SLEEP
+  // SLEEP
   printf("[-]Waiting for incoming connections...\n\n");
-  SLEEP
+  // SLEEP
   // While-loop for server to listen on binded port for incoming connections
   while(1)
   {
@@ -89,10 +89,10 @@ int main(int argc, char *argv[])
     connectSOKFD = accept(listenSOKFD, (S_SADDR *)&ClAddr, (socklen_t *)&ClAddr);
     if (connectSOKFD < 0)
     {
-      perror("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
+      printf("[-]INCOMING CONNECTION ACCEPT = FAIL\n");
     }
     printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
-    SLEEP
+    // SLEEP
     // Zero-out buffers
     memset(rcvBuffer, 0, MAX_LEN);
     memset(rplyBuffer, 0, MAX_LEN);
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
         break;
     }
     printf("\nConfirm receive buffer: %s\n", rcvBuffer);
-    printf("[+]DATA RECIEVED = OK\n\n");
+    printf("[+]DATA RECIEVED = OK\n");
     printf("[+]BYTES RECIEVED = %d\n", sizeof(rcvBuffer));
     printf("[+]LENGTH RECEIVED = %d\n", strnlen(rcvBuffer, MAX_LEN));
     strcpy(rplyBuffer, rcvBuffer);
