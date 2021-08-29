@@ -26,15 +26,17 @@ int main(int argc, char *argv[])
 {
   // Initialize Local Variables
   int connectSOKFD; 
+  int optVal;
+  socklen_t optLen = sizeof(optVal);
   uint8_t *IPbuffer;
   uint8_t sndBuffer[MAX_LEN+1];
   uint8_t rcvBuffer[MAX_LEN+1];
   // For server data
   S_SADDR_IN  SrvAddr;
   // Time-out values for socket options
-  TIME_V       Tv;
-  Tv.tv_sec  = TIME_O; // Time-Out in Seconds
-  Tv.tv_usec = 0;
+  // TIME_V       Tv;
+  // Tv.tv_sec  = TIME_O; // Time-Out in Seconds
+  // Tv.tv_usec = 0;
   // Winsock
   #ifndef LIN
     
@@ -92,7 +94,7 @@ int main(int argc, char *argv[])
                   	"abcdefghijklmnopqrstuvwxyz"							// 208
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
                     // "abcdefghijklmnopqrstuvwxyz"							// 260
-              	    "abcdefghijklmnopqrst"
+              	    "abcdefghijklmnopqrstu"
               	    "\n");
   // Send data to the Remote Server
   // SLEEP
@@ -106,8 +108,10 @@ int main(int argc, char *argv[])
   printf("[+]DATA sent to server = OK\n");
   // Zero-out buffer
   memset(rcvBuffer, 0, MAX_LEN);
+  optVal = 1;
   // Output Server Response
-  if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  // if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
+  if (setsockopt(connectSOKFD, SOL_SOCKET, SO_KEEPALIVE, (char *)&optVal, optLen) < 0)
   {
     printf("[-]TIME OUT ERROR\n");
     return EXIT_FAILURE;

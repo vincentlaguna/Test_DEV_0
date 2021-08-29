@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     printf("[-]SERVER = RECEIVING DATA...\n\n");
     printf("[+]DATA RECEIVED: \n");
     
-    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
+    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN)) > 0)
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
