@@ -17,7 +17,23 @@ Description: Client-side Main
 /* Defines: *****************************************************************/
 /****************************************************************************/
 
-/* Typedefs: ****************************************************************/
+/* Globals: *****************************************************************/
+
+static const uint8_t *cStringPayload = 
+{
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
+	"abcdefghijklmnopqrstuvwxyz"							// 52
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+	"abcdefghijklmnopqrstuvwxyz"							// 104
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+	"abcdefghijklmnopqrstuvwxyz"							// 156
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+	"abcdefghijklmnopqrstuvwxyz"							// 208
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+	"abcdefghijklmnopqrs"							// 260
+	"\n",
+};
+
 /****************************************************************************/
 
 /* Main Starts Here: ********************************************************/
@@ -83,19 +99,20 @@ int main(int argc, char *argv[])
   // SLEEP
   printf("[+]CONNECTED to remote address: %s\n", IPbuffer);
   // Connected to server -> prepare the message to send
-  memset(sndBuffer, 0, MAX_LEN);
-  strcpy(sndBuffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"					    // 26
-                    "abcdefghijklmnopqrstuvwxyz"							// 52
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
-                    "abcdefghijklmnopqrstuvwxyz"							// 104
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
-                    "abcdefghijklmnopqrstuvwxyz"							// 156
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
-                  	"abcdefghijklmnopqrstuvwxyz"							// 208
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-                    // "abcdefghijklmnopqrstuvwxyz"							// 260
-              	    "abcdefghijklmnopqrstu"
-              	    "\n");
+  memset(sndBuffer, '\0', MAX_LEN);
+  strcpy(sndBuffer, cStringPayload);
+  // strcpy(sndBuffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"					    // 26
+  //                   "abcdefghijklmnopqrstuvwxyz"							// 52
+  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+  //                   "abcdefghijklmnopqrstuvwxyz"							// 104
+  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+  //                   "abcdefghijklmnopqrstuvwxyz"							// 156
+  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+  //                 	"abcdefghijklmnopqrstuvwxyz"							// 208
+  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+  //                   // "abcdefghijklmnopqrstuvwxyz"							// 260
+  //             	    "abcdefghijklmnopqrst"
+  //             	    "\n");
   // Send data to the Remote Server
   // SLEEP
   printf("[-]SENDING data in send sndBuffer to server...\n");
@@ -107,7 +124,7 @@ int main(int argc, char *argv[])
   }
   printf("[+]DATA sent to server = OK\n");
   // Zero-out buffer
-  memset(rcvBuffer, 0, MAX_LEN);
+  memset(rcvBuffer, '\0', MAX_LEN);
   optVal = 1;
   // Output Server Response
   // if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
@@ -118,7 +135,7 @@ int main(int argc, char *argv[])
   }
   // SLEEP
   printf("[-]SERVER = RECEIVING DATA... %s\n", rcvBuffer);
-  read(connectSOKFD, rcvBuffer, MAX_LEN);
+  read(connectSOKFD, rcvBuffer, MAX_LEN-1);
   // SLEEP
   
   while (rcvBuffer)
@@ -146,7 +163,7 @@ int main(int argc, char *argv[])
   }
   putchar('\n');
   // Zero-out receive buffer
-  memset(rcvBuffer, 0, MAX_LEN);
+  memset(rcvBuffer, '\0', MAX_LEN);
   // printf("[+]SIZE OF CHAR = %d, INT = %d, UINT8_T = %d\n\n", 
         // sizeof(char), sizeof(int), sizeof(uint8_t)); // For debug
   

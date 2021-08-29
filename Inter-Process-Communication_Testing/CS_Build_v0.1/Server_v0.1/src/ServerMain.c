@@ -94,13 +94,13 @@ int main(int argc, char *argv[])
     printf("[+]INCOMING CONNECTION ACCEPT = OK\n");
     // SLEEP
     // Zero-out buffers
-    memset(rcvBuffer, 0, MAX_LEN);
-    memset(rplyBuffer, 0, MAX_LEN);
+    memset(rcvBuffer, '\0', MAX_LEN);
+    memset(rplyBuffer, '\0', MAX_LEN);
     // Reading the client's message
     printf("[-]SERVER = RECEIVING DATA...\n\n");
     printf("[+]DATA RECEIVED: \n");
     
-    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN)) > 0)
+    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
@@ -117,8 +117,8 @@ int main(int argc, char *argv[])
     write(connectSOKFD, rplyBuffer, strlen(rplyBuffer));
     close(connectSOKFD);
     // Zero-out buffers
-    memset(rcvBuffer, 0, MAX_LEN);
-    memset(rplyBuffer, 0, MAX_LEN);
+    memset(rcvBuffer, '\0', MAX_LEN);
+    memset(rplyBuffer, '\0', MAX_LEN);
   }
   
   return(0);
