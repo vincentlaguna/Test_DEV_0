@@ -30,7 +30,7 @@ static const uint8_t *cStringPayload =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
 	"abcdefghijklmnopqrstuvwxyz"							// 208
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-	"abcdefghijklmnopqrs"							// 260
+	"abcdefghijklmnopqrst"							// 260
 	"\n",
 };
 
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
   printf("[+]DATA sent to server = OK\n");
   // Zero-out buffer
   memset(rcvBuffer, '\0', MAX_LEN);
-  optVal = 1;
+  optVal = 5;
   // Output Server Response
   // if (setsockopt(connectSOKFD, SOL_SOCKET, SO_RCVTIMEO, (char *)&Tv, sizeof(Tv)) < 0)
   if (setsockopt(connectSOKFD, SOL_SOCKET, SO_KEEPALIVE, (char *)&optVal, optLen) < 0)
