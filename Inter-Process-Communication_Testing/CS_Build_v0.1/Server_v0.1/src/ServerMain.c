@@ -152,10 +152,10 @@ int main(int argc, char *argv[])
        
   //receive the datagram
   len = sizeof(cliaddr);
-  int n = recvfrom(listenfd, buffer, sizeof(buffer),
+  int n = recvfrom(listenfd, rcvBuffer, sizeof(rcvBuffer),
                    0, (struct sockaddr*)&cliaddr,&len); //receive message from server
-  buffer[n] = '\0';
-  puts(buffer);
+  rcvBuffer[n] = '\0';
+  puts(rcvBuffer);
            
   // send the response
   sendto(listenfd, message, MAXLINE, 0,
