@@ -211,10 +211,10 @@ int main(int argc, char *argv[])
   // request to send datagram
   // no need to specify server address in sendto
   // connect stores the peers IP and port
-  sendto(sockfd, message, MAXLINE, 0, (struct sockaddr*)NULL, sizeof(servaddr));
+  sendto(sockfd, sndBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, sizeof(servaddr));
       
   // waiting for response
-  recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)NULL, NULL);
+  recvfrom(sockfd, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
   puts(buffer);
   
   // close the descriptor

@@ -156,9 +156,9 @@ int main(int argc, char *argv[])
                    0, (struct sockaddr*)&cliaddr,&len); //receive message from server
   rcvBuffer[n] = '\0';
   puts(rcvBuffer);
-           
+  strcpy(rplyBuffer, rcvBuffer);         
   // send the response
-  sendto(listenfd, message, MAXLINE, 0,
+  sendto(listenfd, rplyBuffer, MAX_LEN, 0,
         (struct sockaddr*)&cliaddr, sizeof(cliaddr));
   
   return(0);
