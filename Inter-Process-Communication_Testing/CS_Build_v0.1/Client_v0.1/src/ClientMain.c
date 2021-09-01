@@ -101,18 +101,6 @@ int main(int argc, char *argv[])
   // Connected to server -> prepare the message to send
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cStringPayload);
-  // strcpy(sndBuffer, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"					    // 26
-  //                   "abcdefghijklmnopqrstuvwxyz"							// 52
-  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
-  //                   "abcdefghijklmnopqrstuvwxyz"							// 104
-  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
-  //                   "abcdefghijklmnopqrstuvwxyz"							// 156
-  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
-  //                 	"abcdefghijklmnopqrstuvwxyz"							// 208
-  //                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-  //                   // "abcdefghijklmnopqrstuvwxyz"							// 260
-  //             	    "abcdefghijklmnopqrst"
-  //             	    "\n");
   // Send data to the Remote Server
   // SLEEP
   printf("[-]SENDING data in send sndBuffer to server...\n");
@@ -185,40 +173,36 @@ int main(int argc, char *argv[])
 //
 int main(int argc, char *argv[])
 {
+  // Receive and Reply Buffers
   uint8_t sndBuffer[MAX_LEN];
   uint8_t rcvBuffer[MAX_LEN];
-  
-  int sockfd, n;
-  struct sockaddr_in servaddr;
-      
-  // clear servaddr
-  bzero(&servaddr, sizeof(servaddr));
-  servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-  servaddr.sin_port = htons(REM_SRV_PORT);
-  servaddr.sin_family = AF_INET;
-      
-  // create datagram socket
-  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  // Local Variables
+  int connectSOKFD, n;
+  S_SADDR_IN SrvAddr;
+  // Clear SrvAddr
+  memset(&SrvAddr, 0, sizeof(SrvAddr));
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP);
+  SrvAddr.sin_port = htons(REM_SRV_PORT);
+  SrvAddr.sin_family = AF_INET;
+  // Create datagram socket
+  connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cStringPayload);    
-  // connect to server
-  if(connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
+  // Connect to server
+  if(connect(connectSOKFD, (struct sockaddr *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
       printf("\n Error : Connect Failed \n");
       exit(0);
   }
-  
-  // request to send datagram
-  // no need to specify server address in sendto
-  // connect stores the peers IP and port
-  sendto(sockfd, sndBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, sizeof(servaddr));
-      
-  // waiting for response
-  recvfrom(sockfd, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
+  // Request to send datagram
+  // No need to specify server address in sendto
+  // Connect stores the peers IP and port
+  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, sizeof(SrvAddr));
+  // Waiting for response
+  recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
   puts(rcvBuffer);
-  
-  // close the descriptor
-  close(sockfd);
+  // Close the descriptor
+  close(connectSOKFD);
   
   return(0);
 

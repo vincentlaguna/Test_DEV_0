@@ -143,26 +143,27 @@ int main(int argc, char *argv[])
   S_SADDR_IN SrvAddr, ClAddr;
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
-  
   // Create a UDP Socket
   listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port = htons(REM_SRV_PORT);
   SrvAddr.sin_family = AF_INET; 
-   
   // bind server address to socket descriptor
   bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
-       
-  //receive the datagram
+  //Receive the datagram
   clAddrLen = sizeof(ClAddr);
-  int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
-                   0, (struct sockaddr*)&ClAddr,&clAddrLen); //receive message from server
-  rcvBuffer[n] = '\0';
-  puts(rcvBuffer);
-  strcpy(rplyBuffer, rcvBuffer);         
-  // send the response
-  sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-        (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+  while (1)
+  {
+    // receive message
+    int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
+                     0, (struct sockaddr*)&ClAddr,&clAddrLen);
+    rcvBuffer[n] = '\0';
+    puts(rcvBuffer);
+    strcpy(rplyBuffer, rcvBuffer);         
+    // send the response
+    sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+  }
   
   return(0);
 
