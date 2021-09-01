@@ -30,8 +30,8 @@ static const uint8_t *cStringPayload =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
 	"abcdefghijklmnopqrstuvwxyz"							// 208
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-	"abcdefghijklmnopqrst"							// 260
-	"\n",
+	"abcdefghijklmnopqrstuvwxyz"							// 260
+	"",
 };
 
 /****************************************************************************/
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
       
   // waiting for response
   recvfrom(sockfd, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
-  puts(buffer);
+  puts(rcvBuffer);
   
   // close the descriptor
   close(sockfd);
