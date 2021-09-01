@@ -134,32 +134,35 @@ int main(int argc, char *argv[])
 //
 int main(int argc, char *argv[])
 {
+  // Receive and Reply Buffers
   uint8_t rcvBuffer[MAX_LEN];
   uint8_t rplyBuffer[MAX_LEN];
-  
-  int listenfd, len;
-  struct sockaddr_in servaddr, cliaddr;
-  bzero(&servaddr, sizeof(servaddr));
+  // Local Variables
+  int listenSOKFD, clAddrLen;
+  // Local Structs
+  S_SADDR_IN SrvAddr, ClAddr;
+  // Zero-out struct
+  memset(&SrvAddr, 0, sizeof(SrvAddr));
   
   // Create a UDP Socket
-  listenfd = socket(AF_INET, SOCK_DGRAM, 0);        
-  servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  servaddr.sin_port = htons(REM_SRV_PORT);
-  servaddr.sin_family = AF_INET; 
+  listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+  SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  SrvAddr.sin_port = htons(REM_SRV_PORT);
+  SrvAddr.sin_family = AF_INET; 
    
   // bind server address to socket descriptor
-  bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr));
+  bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
        
   //receive the datagram
-  len = sizeof(cliaddr);
-  int n = recvfrom(listenfd, rcvBuffer, sizeof(rcvBuffer),
-                   0, (struct sockaddr*)&cliaddr,&len); //receive message from server
+  clAddrLen = sizeof(ClAddr);
+  int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
+                   0, (struct sockaddr*)&ClAddr,&clAddrLen); //receive message from server
   rcvBuffer[n] = '\0';
   puts(rcvBuffer);
   strcpy(rplyBuffer, rcvBuffer);         
   // send the response
-  sendto(listenfd, rplyBuffer, MAX_LEN, 0,
-        (struct sockaddr*)&cliaddr, sizeof(cliaddr));
+  sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+        (struct sockaddr*)&ClAddr, sizeof(ClAddr));
   
   return(0);
 
