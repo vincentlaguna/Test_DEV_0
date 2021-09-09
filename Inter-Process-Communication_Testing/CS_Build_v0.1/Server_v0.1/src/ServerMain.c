@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
   // Create a UDP Socket
   listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  SrvAddr.sin_port = htons(REM_SRV_PORT);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
   bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));

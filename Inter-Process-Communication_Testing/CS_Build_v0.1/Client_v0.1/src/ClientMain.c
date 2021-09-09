@@ -19,6 +19,19 @@ Description: Client-side Main
 
 /* Globals: *****************************************************************/
 
+static const uint8_t *cSerialData = 
+{
+	"\xff"													// NUM bytes
+	"\x02"													// STX
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"\x03",													// ETX
+															// 255 total
+};
+
 static const uint8_t *cStringPayload = 
 {
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
@@ -181,8 +194,8 @@ int main(int argc, char *argv[])
   S_SADDR_IN SrvAddr;
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
-  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP);
-  SrvAddr.sin_port = htons(REM_SRV_PORT);
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET;
   // Create datagram socket
   connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);

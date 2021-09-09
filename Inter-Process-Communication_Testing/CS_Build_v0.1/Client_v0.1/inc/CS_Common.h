@@ -46,14 +46,18 @@ Description: Common header file for Client-Server code
 #define	  MAX_LEN 260//257
 #define	  MAXLINE 1000
 #define   SLEEP	sleep(1);
-#define	  IP0 "192.168.135.21"
-#define	  IP1 "192.168.135.22"
-#define	  IP2 "192.168.135.23"
-#define	  IP3 "192.168.135.24"
-#define	  IP4 "192.168.135.25"
-#define   REM_CL_PORT 12346 
-#define   REM_SRV_PORT 12345
-#define	  REM_SRV_IP "127.0.0.1" //"192.168.143.10"
+#define   REM_CL_PORT 11069
+#define   REM_SRV_PORT_0 11000
+#define   REM_SRV_PORT_1 11001
+#define   REM_SRV_PORT_2 11002
+#define   REM_SRV_PORT_3 11003
+#define   REM_SRV_PORT_5 11004
+#define	  REM_SRV_IP_0 "192.168.143.201"
+#define	  REM_SRV_IP_1 "192.168.143.201"
+#define	  REM_SRV_IP_2 "192.168.143.202"
+#define	  REM_SRV_IP_3 "192.168.143.203"
+#define	  REM_SRV_IP_4 "192.168.143.204"
+#define	  REM_SRV_IP_5 "192.168.143.205"
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
