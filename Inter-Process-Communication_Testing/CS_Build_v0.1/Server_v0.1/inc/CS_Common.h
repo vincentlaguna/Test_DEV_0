@@ -52,7 +52,9 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_2 11002
 #define   REM_SRV_PORT_3 11003
 #define   REM_SRV_PORT_4 11004
-#define	  REM_SRV_IP_0 "192.168.143.201"
+#define	  REM_SRV_IP_0 "127.0.0.1"
+// #define	  REM_SRV_IP_0 "192.168.143.20"
+// #define	  REM_SRV_IP_0 "192.168.143.201"
 #define	  REM_SRV_IP_1 "192.168.143.202"
 #define	  REM_SRV_IP_2 "192.168.143.203"
 #define	  REM_SRV_IP_3 "192.168.143.204"
@@ -61,6 +63,28 @@ Description: Common header file for Client-Server code
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
 #define	  S_SADDR_IN struct	sockaddr_in
+
+/****************************************************************************/
+
+/* Globals: *****************************************************************/
+
+static const uint8_t *const uRem_Srv_IP[] =
+{
+  REM_SRV_IP_0,
+  REM_SRV_IP_1,
+  REM_SRV_IP_2,
+  REM_SRV_IP_3,
+  REM_SRV_IP_4
+};
+
+enum
+{
+  eREM_SRV_IP_0,
+  eREM_SRV_IP_1,
+  eREM_SRV_IP_2,
+  eREM_SRV_IP_3,
+  eREM_SRV_IP_4
+};
 
 /****************************************************************************/
 

@@ -13,6 +13,8 @@ Description: Server-side code
 
 /****************************************************************************/
 
+/* Globals: *****************************************************************/
+/****************************************************************************/
 
 /* Function Definitions: ****************************************************/
 // Helper Functions
@@ -175,7 +177,7 @@ Purpose: Handles incoming connections to the server
 Parameters: unsigned uint8_t pointer                                          
 Returns: void                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
 {
@@ -183,18 +185,41 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   uint8_t rcvBuffer[MAX_LEN];
   uint8_t rplyBuffer[MAX_LEN];
   // Local Variables
-  uint8_t remPort;
+  uint16_t remPort;
   int listenSOKFD, clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
   // Assign remPort Port corresponding port number
-  // switch()
+  if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
+  {
+    remPort = REM_SRV_PORT_0;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
+  {
+    remPort = REM_SRV_PORT_1;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
+  {
+    remPort = REM_SRV_PORT_2;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
+  {
+    remPort = REM_SRV_PORT_3;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
+  {
+    remPort = REM_SRV_PORT_4;
+  }
+  else
+  {
+    EXIT_FAILURE;
+  }
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // Create a UDP Socket
   listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
-  SrvAddr.sin_addr.s_addr = htonl(remIP);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+  SrvAddr.sin_addr.s_addr = htonl(*remIP);
+  SrvAddr.sin_port = htons(remPort);
   SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
   bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
@@ -212,8 +237,6 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
   }
-  
-  SLEEP
   
 }
 
@@ -262,7 +285,8 @@ char  *convertHex(const char *src, size_t len)
 /****************************************************************************/
 // End Server.c
 
-void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
-{
-  printf("\n%s\n\n", remIP);
-}
+// void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
+// {
+//   printf("\n%s\n\n", remIP);
+//   printf("\n%s, %s\n\n", *(uRem_Srv_IP), *(uRem_Srv_IP+1));
+// }

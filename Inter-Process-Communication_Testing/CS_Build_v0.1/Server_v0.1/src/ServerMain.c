@@ -18,6 +18,7 @@ Description: Server-side Main
 //
 int main(int argc, char *argv[])
 {
+
   // Initialize Local Variables
   int listenSOKFD, connectSOKFD; 
   int sVal;
@@ -134,6 +135,7 @@ int main(int argc, char *argv[])
 //
 int main(int argc, char *argv[])
 {
+  // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
   uint8_t rcvBuffer[MAX_LEN];
   uint8_t rplyBuffer[MAX_LEN];
@@ -156,7 +158,7 @@ int main(int argc, char *argv[])
   {
     // receive message
     int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
-                     0, (struct sockaddr*)&ClAddr,&clAddrLen);
+                    0, (struct sockaddr*)&ClAddr,&clAddrLen);
     rcvBuffer[n] = '\0';
     puts(rcvBuffer);
     strcpy(rplyBuffer, rcvBuffer);         
