@@ -194,13 +194,15 @@ int main(int argc, char *argv[])
   S_SADDR_IN SrvAddr;
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
+  // SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
   SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET;
   // Create datagram socket
   connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
   memset(sndBuffer, '\0', MAX_LEN);
-  strcpy(sndBuffer, cStringPayload);    
+  strcpy(sndBuffer, cSerialData);    
+  // strcpy(sndBuffer, cStringPayload);    
   // Connect to server
   if(connect(connectSOKFD, (struct sockaddr *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {

@@ -52,7 +52,8 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_2 11002
 #define   REM_SRV_PORT_3 11003
 #define   REM_SRV_PORT_4 11004
-#define	  REM_SRV_IP_0 "192.168.143.201"
+#define	  REM_SRV_IP_0 "192.168.143.20"
+// #define	  REM_SRV_IP_0 "192.168.143.201"
 #define	  REM_SRV_IP_1 "192.168.143.202"
 #define	  REM_SRV_IP_2 "192.168.143.203"
 #define	  REM_SRV_IP_3 "192.168.143.204"
