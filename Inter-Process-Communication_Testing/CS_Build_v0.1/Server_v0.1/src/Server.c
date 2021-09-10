@@ -170,6 +170,99 @@ void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
 
 /*****************************************************************************
 
+Name:	UDP_SrvConnection_Hndlr()                                            
+Purpose: Handles incoming connections to the server                 
+Parameters: signed 32-bit integer                                          
+Returns: void                                        
+
+*****************************************************************************/
+
+void  UDP_SrvConnection_Hndlr(int32_t clSOKFD)
+{
+  // Local Variables
+  // Receive and Reply Buffers
+  uint8_t rcvBuffer[MAX_LEN];
+  uint8_t rplyBuffer[MAX_LEN];
+  
+  uint16_t  sok   = 0; 
+  uint16_t  clLen = 0;
+  
+  S_SADDR   cL;
+  // Initialize buffers to store the data
+  DBffr  *SrvDbuff;
+  SrvDbuff = (DBffr *)malloc(sizeof(DBffr));
+  clLen = sizeof(S_SADDR_IN);
+  // Create Socket
+  uSrvSok = SokInit_Handlr();
+  // Bind
+  if (BindSrvSok_Hndlr(uSrvSok) < 0)
+  {
+    perror("BIND Failed."); // Print the error message
+  }
+  
+  SLEEP
+  
+  printf("\n<<< BIND Done >>>\n\n");
+  // Listen
+  listen(uSrvSok, nConnections); // Number of MAX connections
+  
+  printf("\n>>> Waiting for incoming connections...\n\n");
+  
+  while (1)
+  {
+    // Accept connection from an incoming client
+    sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t *)&cL);
+    
+    if (sok < 0)
+    {
+      perror("ACCEPT Failed.");
+    }
+        
+    printf("\nConnection ACCEPTED\n\n");
+    // Buffers
+    uint32_t  DbuffSize = sizeof(DBffr);
+    memset(&SrvDbuff->cPayload, '\0', MAX_STR_SZ);
+    // Receive a reply from the Client
+    if (recv(sok, &SrvDbuff->cPayload, (uint32_t)DbuffSize, 0) < 0)
+    {
+      printf("\nRECEIVE Failed.\n");
+    }
+      
+    printf("Client Message: %s\n", SrvDbuff->cPayload);
+    // Send some data
+    if(send(sok, &SrvDbuff->cPayload, MAX_STR_SZ, 0) < 0)
+    {
+      printf("\nSEND Failed.\n");
+    }
+      
+    printf("\n<<< Waiting for incoming connections...\n");
+    // // Accept Connection from another incoming Client
+    // sok = accept(uSrvSok, (S_SADDR *)&cL, (socklen_t*)&clLen);
+     
+    // if (sok < 0)
+    // {
+    //   perror("ACCEPT Failed.");
+    // }
+    // printf("\nConnection ACCEPTED\n\n");
+      
+    // #ifndef LIN
+    //   closesocket(uSrvSok);
+    //   WSACleanup();
+    // #else
+    //   close(uSrvSok);
+    // #endif
+  }
+  
+  SLEEP
+  
+}
+
+// End UDP_SrvConnection_Handlr() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
 Name: convertHex()                                               
 Purpose:  Converts binary data to hexadecimal representation                               
 Parameters: const unsigned char pointer and size_t for length                                                             
