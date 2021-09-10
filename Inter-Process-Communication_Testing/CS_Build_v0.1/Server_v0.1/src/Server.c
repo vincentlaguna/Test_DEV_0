@@ -85,22 +85,47 @@ int16_t  UDP_SokInit_Handlr(void)
 
 Name: BindSrvSok_Handlr()                                            
 Purpose: Handles the binding of a Socket to the Server                  
-Parameters: Unsigned 32-bit integer                                          
-Returns: Unsigned 32-bit integer                                        
+Parameters: signed 16-bit integer                                          
+Returns: signed 16-bit integer                                        
 
-*****************************************************************************
+*****************************************************************************/
 
-uint32_t	BindSrvSok_Hndlr(uint32_t uSrvSok)
+int16_t	BindSrvSok_Hndlr(int16_t uSrvSok, const uint8_t *remIP)
 {
   // Local Variables
-  uint32_t  retVal    = -1;
-  uint32_t  sPort     = REM_SRV_PORT;
+  int16_t   retVal   = -1;
+  uint16_t  remPort;
+  // Assign remPort Port to corresponding port number
+  if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
+  {
+    remPort = REM_SRV_PORT_0;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
+  {
+    remPort = REM_SRV_PORT_1;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
+  {
+    remPort = REM_SRV_PORT_2;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
+  {
+    remPort = REM_SRV_PORT_3;
+  }
+  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
+  {
+    remPort = REM_SRV_PORT_4;
+  }
+  else
+  {
+    EXIT_FAILURE;
+  }
   // sock_addr_in initialization
   S_SADDR_IN  Srv     = {0};
   // Struct Member Init
   Srv.sin_family      = AF_INET;
-  Srv.sin_addr.s_addr = htonl(INADDR_ANY);
-  Srv.sin_port        = htons(sPort);
+  Srv.sin_addr.s_addr = htonl(*remIP);
+  Srv.sin_port        = htons(remPort);
   // Bind System Call
   retVal = bind(uSrvSok, (S_SADDR *)&Srv, sizeof(Srv));
   // Function Return
@@ -219,44 +244,44 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  uint16_t remPort;
+  // uint16_t remPort;
   int16_t listenSOKFD; 
   int clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
-  // Assign remPort Port corresponding port number
-  if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
-  {
-    remPort = REM_SRV_PORT_0;
-  }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
-  {
-    remPort = REM_SRV_PORT_1;
-  }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
-  {
-    remPort = REM_SRV_PORT_2;
-  }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
-  {
-    remPort = REM_SRV_PORT_3;
-  }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
-  {
-    remPort = REM_SRV_PORT_4;
-  }
-  else
-  {
-    EXIT_FAILURE;
-  }
-  // Zero-out struct
-  memset(&SrvAddr, 0, sizeof(SrvAddr));
+  // Assign remPort Port to corresponding port number
+  // if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
+  // {
+  //   remPort = REM_SRV_PORT_0;
+  // }
+  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
+  // {
+  //   remPort = REM_SRV_PORT_1;
+  // }
+  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
+  // {
+  //   remPort = REM_SRV_PORT_2;
+  // }
+  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
+  // {
+  //   remPort = REM_SRV_PORT_3;
+  // }
+  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
+  // {
+  //   remPort = REM_SRV_PORT_4;
+  // }
+  // else
+  // {
+  //   EXIT_FAILURE;
+  // }
   // Create a UDP Socket
   if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     // return EXIT_FAILURE;
   }
+  // Zero-out struct values
+  memset(&SrvAddr, 0, sizeof(SrvAddr));
   
   SrvAddr.sin_addr.s_addr = htonl(*remIP);
   SrvAddr.sin_port = htons(remPort);

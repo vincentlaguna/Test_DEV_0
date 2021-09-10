@@ -99,7 +99,7 @@ void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
 int16_t   UDP_SokInit_Handlr(void);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);
-// uint32_t  BindSrvSok_Hndlr(uint32_t uSrvSok);
+// int16_t  BindSrvSok_Hndlr(int16_t uSrvSok);
 // uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
 // uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
 // uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);

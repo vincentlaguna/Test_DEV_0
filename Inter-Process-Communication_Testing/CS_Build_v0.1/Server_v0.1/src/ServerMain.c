@@ -148,9 +148,8 @@ int main(int argc, char *argv[])
   int16_t listenSOKFD;
   int clAddrLen;
   // Local Structs
-  S_SADDR_IN SrvAddr, ClAddr;
-  // Zero-out struct
-  memset(&SrvAddr, 0, sizeof(SrvAddr));
+  // S_SADDR_IN SrvAddr, ClAddr;
+  S_SADDR_IN ClAddr;
   // Create a UDP Socket
   // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
   if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
@@ -158,13 +157,30 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
-  SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
-  SrvAddr.sin_family = AF_INET; 
-  // bind server address to socket descriptor
-  bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
+  // Zero-out struct
+  // memset(&SrvAddr, 0, sizeof(SrvAddr));
+  // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  // SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+  // SrvAddr.sin_family = AF_INET; 
+  // // bind server address to socket descriptor
+  // bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
+  // Bind Call
+  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+  // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT);
+  // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+  // {
+  //   perror("[-]BIND = FAIL\n"); // Print the error message
+  // }
+  // SLEEP
+  printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+  if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
+  {
+    perror("[-]BIND = FAIL\n"); // Print the error message
+  }
+  printf("[+]Bind = OK\n");
   //Receive the datagram
   clAddrLen = sizeof(ClAddr);
+  // While-Loop to receive data from incomming connections
   while (1)
   {
     // receive message
