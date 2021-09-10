@@ -144,13 +144,20 @@ int main(int argc, char *argv[])
   rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  int listenSOKFD, clAddrLen;
+  // int listenSOKFD, clAddrLen;
+  int16_t listenSOKFD;
+  int clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // Create a UDP Socket
-  listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+  // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+  if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+  {
+    printf("[-]Creation of SOCKET = FAIL\n");
+    return EXIT_FAILURE;
+  }
   SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET; 
@@ -161,9 +168,9 @@ int main(int argc, char *argv[])
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN,
-    // int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
-                    0, (struct sockaddr*)&ClAddr,&clAddrLen);
+    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    // int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer), 0,
+                        (struct sockaddr*)&ClAddr,&clAddrLen);
     rcvBuffer[n] = '\0';
     puts(rcvBuffer);
     strcpy(rplyBuffer, rcvBuffer);         

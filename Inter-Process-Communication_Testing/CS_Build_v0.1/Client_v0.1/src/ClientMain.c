@@ -194,16 +194,22 @@ int main(int argc, char *argv[])
   sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  int connectSOKFD, n;
+  int16_t connectSOKFD;
+  int n;
   S_SADDR_IN SrvAddr;
+  // Create datagram socket
+  // connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
+  if ((connectSOKFD = UDP_SokInit_Handlr()) < 0) 
+  {
+    printf("[-]Creation of SOCKET = FAIL\n");
+    return EXIT_FAILURE;
+  }
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
   // SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET;
-  // Create datagram socket
-  connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cSerialData);    
   // strcpy(sndBuffer, cStringPayload);    

@@ -25,33 +25,63 @@ Description: Client-side code
 
 /*****************************************************************************
 
-Name: SokInit_Handlr()                                               
-Purpose:  Handles the creation of a Socket                               
+Name:	SokInit_Handlr()                                               
+Purpose: Handles the creation of a Socket                               
 Parameters: None                                                             
-Returns:  Unsigned 16-bit integer                                        
+Returns: signed 16-bit integer                                        
 
 *****************************************************************************
 
-uint16_t	SokInit_Handlr(void)
+int16_t  SokInit_Handlr(void)
 {
   // Local Variables
-  uint32_t  hSok;
+  int16_t  hSok;
   // Output
-  printf("\n>>> Client-Side Socket Initialization >>>\n\n");
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   
   SLEEP
   
   // Socket System Call
   hSok = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n<<< Client-Side Socket Init Success <<<\n\n");
-  
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
+
   SLEEP
   // Function Return
   return  hSok;
 }
 
 // End SokInit_Handlr()
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	UDP_SokInit_Handlr()                                               
+Purpose: Handles the creation of a UDP Socket                               
+Parameters: None                                                             
+Returns: signed 16-bit integer                                        
+
+*****************************************************************************/
+
+int16_t  UDP_SokInit_Handlr(void)
+{
+  // Local Variables
+  int16_t  hSok;
+  // Output
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
+  // SLEEP
+  // Socket System Call
+  hSok = socket(AF_INET, SOCK_DGRAM, 0);        
+  // Output Validation
+  // SLEEP
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
+  // SLEEP
+  // Function Return
+  return  hSok;
+}
+
+// End UDP_SokInit_Handlr()
 /****************************************************************************/
 
 

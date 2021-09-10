@@ -24,30 +24,60 @@ Description: Server-side code
 Name:	SokInit_Handlr()                                               
 Purpose: Handles the creation of a Socket                               
 Parameters: None                                                             
-Returns: Unsigned 16-bit integer                                        
+Returns: signed 16-bit integer                                        
 
 *****************************************************************************
 
-uint16_t  SokInit_Handlr(void)
+int16_t  SokInit_Handlr(void)
 {
   // Local Variables
-  uint32_t  hSok;
+  int16_t  hSok;
   // Output
-  printf("\n>>> Server-Side Socket Initialization >>>\n\n");
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   
   SLEEP
   
   // Socket System Call
   hSok = socket(AF_INET, SOCK_STREAM, 0);
   // Output Validation
-  printf("\n<<< Server-Side Socket Init Success <<<\n\n");
-  
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
+
   SLEEP
   // Function Return
   return  hSok;
 }
 
 // End SokInit_Handlr()
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	UDP_SokInit_Handlr()                                               
+Purpose: Handles the creation of a UDP Socket                               
+Parameters: None                                                             
+Returns: signed 16-bit integer                                        
+
+*****************************************************************************/
+
+int16_t  UDP_SokInit_Handlr(void)
+{
+  // Local Variables
+  int16_t  hSok;
+  // Output
+  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
+  // SLEEP
+  // Socket System Call
+  hSok = socket(AF_INET, SOCK_DGRAM, 0);        
+  // Output Validation
+  // SLEEP
+  printf("[+]SERVER-Side Socket Initialization = OK\n");
+  // SLEEP
+  // Function Return
+  return  hSok;
+}
+
+// End UDP_SokInit_Handlr()
 /****************************************************************************/
 
 
@@ -177,7 +207,7 @@ Purpose: Handles incoming connections to the server
 Parameters: unsigned uint8_t pointer                                          
 Returns: void                                        
 
-*****************************************************************************
+*****************************************************************************/
 
 void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
 {
@@ -190,7 +220,8 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   uint16_t remPort;
-  int listenSOKFD, clAddrLen;
+  int16_t listenSOKFD; 
+  int clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
   // Assign remPort Port corresponding port number
@@ -221,7 +252,12 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // Create a UDP Socket
-  listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+  if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+  {
+    printf("[-]Creation of SOCKET = FAIL\n");
+    // return EXIT_FAILURE;
+  }
+  
   SrvAddr.sin_addr.s_addr = htonl(*remIP);
   SrvAddr.sin_port = htons(remPort);
   SrvAddr.sin_family = AF_INET; 
@@ -232,8 +268,9 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
-                     0, (struct sockaddr*)&ClAddr,&clAddrLen);
+    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    // int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer), 0,
+                    (struct sockaddr*)&ClAddr,&clAddrLen);
     rcvBuffer[n] = '\0';
     puts(rcvBuffer);
     strcpy(rplyBuffer, rcvBuffer);         
