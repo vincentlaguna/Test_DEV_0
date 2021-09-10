@@ -182,8 +182,12 @@ Returns: void
 void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
 {
   // Receive and Reply Buffers
-  uint8_t rcvBuffer[MAX_LEN];
-  uint8_t rplyBuffer[MAX_LEN];
+  // uint8_t rcvBuffer[MAX_LEN];
+  // uint8_t rplyBuffer[MAX_LEN];
+  uint8_t *rcvBuffer = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   uint16_t remPort;
   int listenSOKFD, clAddrLen;
@@ -237,7 +241,8 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
   }
-  
+  free(rcvBuffer);
+  free(rplyBuffer);
 }
 
 // End UDP_SrvConnection_Handlr() 

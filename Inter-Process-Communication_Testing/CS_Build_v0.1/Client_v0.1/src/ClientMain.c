@@ -187,8 +187,12 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   // Receive and Reply Buffers
-  uint8_t sndBuffer[MAX_LEN];
-  uint8_t rcvBuffer[MAX_LEN];
+  // uint8_t sndBuffer[MAX_LEN];
+  // uint8_t rcvBuffer[MAX_LEN];
+  uint8_t *sndBuffer = NULL;
+  uint8_t *rcvBuffer = NULL;
+  sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   int connectSOKFD, n;
   S_SADDR_IN SrvAddr;
@@ -214,7 +218,8 @@ int main(int argc, char *argv[])
   // Connect stores the peers IP and port
   sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, sizeof(SrvAddr));
   // Waiting for response
-  recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
+  recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, NULL);
+  // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
   puts(rcvBuffer);
   // Close the descriptor
   close(connectSOKFD);

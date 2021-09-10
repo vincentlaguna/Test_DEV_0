@@ -137,8 +137,12 @@ int main(int argc, char *argv[])
 {
   // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
-  uint8_t rcvBuffer[MAX_LEN];
-  uint8_t rplyBuffer[MAX_LEN];
+  // uint8_t rcvBuffer[MAX_LEN];
+  // uint8_t rplyBuffer[MAX_LEN];
+  uint8_t *rcvBuffer  = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   int listenSOKFD, clAddrLen;
   // Local Structs
@@ -157,7 +161,8 @@ int main(int argc, char *argv[])
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
+    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN,
+    // int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer),
                     0, (struct sockaddr*)&ClAddr,&clAddrLen);
     rcvBuffer[n] = '\0';
     puts(rcvBuffer);
