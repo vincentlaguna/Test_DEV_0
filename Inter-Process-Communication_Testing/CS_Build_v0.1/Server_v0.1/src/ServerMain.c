@@ -146,6 +146,7 @@ int main(int argc, char *argv[])
   // Local Variables
   // int listenSOKFD, clAddrLen;
   int16_t listenSOKFD;
+  int sVal;
   int clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
@@ -163,14 +164,14 @@ int main(int argc, char *argv[])
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
-  printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
+  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+  // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
   if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
   // SLEEP
-  // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
   // {
   //   printf("[-]BIND = FAIL\n"); // Print the error message
