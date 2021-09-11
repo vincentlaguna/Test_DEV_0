@@ -100,7 +100,7 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   Srv = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   printf("\nStruct Memory Allocation = PASS\n\n");
   // Assign remPort Port to corresponding port number
-  if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
+  if (strcmp(remIP, uRem_Srv_IP[eREM_SRV_IP_0]) == 0)
   {
     remPort = REM_SRV_PORT_0;
   }
@@ -125,6 +125,7 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   //   EXIT_FAILURE;
   // }
   //remPort = REM_SRV_PORT_0;
+  printf("\nremIP = %s uRem = %s\n\n", remIP, uRem_Srv_IP[eREM_SRV_IP_0]);
   printf("\nREM_SRV_PORT_0 = %d size = %d\n\n", REM_SRV_PORT_0, sizeof(REM_SRV_PORT_0));
   printf("\nremPort = %d size = %d\n\n", remPort, sizeof(remPort));
   // sock_addr_in initialization
@@ -135,7 +136,7 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   // Struct Member Init
   Srv->sin_family      = AF_INET;
   printf("\n\nsin_family = OK\n\n");
-  Srv->sin_addr.s_addr = htonl(remIP);
+  Srv->sin_addr.s_addr = htonl(*remIP);
   printf("\n\ns_addr (remIP) = OK\n\n");
   Srv->sin_port        = htons(remPort);
   printf("\n\nsin_port (remPort) = OK\n\n");
