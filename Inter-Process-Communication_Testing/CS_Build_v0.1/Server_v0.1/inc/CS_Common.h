@@ -68,7 +68,7 @@ Description: Common header file for Client-Server code
 
 /* Globals: *****************************************************************/
 
-static const uint8_t *const uRem_Srv_IP[] =
+static const uint8_t *const szRem_Srv_IP[] =
 {
   REM_SRV_IP_0,
   REM_SRV_IP_1,
@@ -116,7 +116,7 @@ char	    *convertHex(const char *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
 int16_t   UDP_SokInit_Handlr(void);
-int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP);
+int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);
 // uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);

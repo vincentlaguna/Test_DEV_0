@@ -90,7 +90,7 @@ Returns: signed 16-bit integer
 
 *****************************************************************************/
 
-int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
+int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP)
 {
   printf("\nBind Call\n\n");
   // Local Variables
@@ -100,34 +100,34 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   Srv = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   printf("\nStruct Memory Allocation = PASS\n\n");
   // Assign remPort Port to corresponding port number
-  if (strcmp(remIP, uRem_Srv_IP[eREM_SRV_IP_0]) == 0)
+  if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_0]) == 0)
   {
     remPort = REM_SRV_PORT_0;
   }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
+  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_1]) == 0)
   {
     remPort = REM_SRV_PORT_1;
   }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
+  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_2]) == 0)
   {
     remPort = REM_SRV_PORT_2;
   }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
+  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_3]) == 0)
   {
     remPort = REM_SRV_PORT_3;
   }
-  else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
+  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_4]) == 0)
   {
     remPort = REM_SRV_PORT_4;
   }
-  // else
-  // {
-  //   EXIT_FAILURE;
-  // }
-  //remPort = REM_SRV_PORT_0;
-  printf("\nremIP = %s uRem = %s\n\n", remIP, uRem_Srv_IP[eREM_SRV_IP_0]);
+  else
+  {
+    EXIT_FAILURE;
+  }
+  printf("\nszRempIP = %s uRem = %s\n\n", szRemIP, szRem_Srv_IP[eREM_SRV_IP_0]);
   printf("\nREM_SRV_PORT_0 = %d size = %d\n\n", REM_SRV_PORT_0, sizeof(REM_SRV_PORT_0));
   printf("\nremPort = %d size = %d\n\n", remPort, sizeof(remPort));
+  printf("\nSrvSOK = %d\n\n", SrvSok);
   // sock_addr_in initialization
   // S_SADDR_IN  Srv;
   // Zero-out struct
@@ -136,15 +136,15 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   // Struct Member Init
   Srv->sin_family      = AF_INET;
   printf("\n\nsin_family = OK\n\n");
-  Srv->sin_addr.s_addr = htonl(*remIP);
-  printf("\n\ns_addr (remIP) = OK\n\n");
+  Srv->sin_addr.s_addr = htonl(*szRemIP);
+  printf("\n\ns_addr (szRempIP) = OK\n\n");
   Srv->sin_port        = htons(remPort);
   printf("\n\nsin_port (remPort) = OK\n\n");
 
-  printf("[+]Binding to IP: %s on PORT: %d...\n", remIP, remPort);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", szRemIP, remPort);
   // Bind System Call
   // retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
-  retVal = bind(SrvSok, (S_SADDR *)Srv, sizeof(Srv));
+  retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
   printf("\n\nretVal = %d\n\n", retVal);
   // Function Return
   return  retVal;    
@@ -252,7 +252,7 @@ Returns: void
 
 *****************************************************************************
 
-void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
+void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
 {
   // Receive and Reply Buffers
   // uint8_t rcvBuffer[MAX_LEN];
@@ -268,23 +268,23 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
   // Assign remPort Port to corresponding port number
-  // if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
+  // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
   // {
   //   remPort = REM_SRV_PORT_0;
   // }
-  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_1])
+  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_1])
   // {
   //   remPort = REM_SRV_PORT_1;
   // }
-  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_2])
+  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_2])
   // {
   //   remPort = REM_SRV_PORT_2;
   // }
-  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_3])
+  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_3])
   // {
   //   remPort = REM_SRV_PORT_3;
   // }
-  // else if (remIP == uRem_Srv_IP[eREM_SRV_IP_4])
+  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_4])
   // {
   //   remPort = REM_SRV_PORT_4;
   // }
@@ -300,7 +300,7 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
   }
   // Zero-out struct values
   // memset(&SrvAddr, 0, sizeof(SrvAddr));
-  // SrvAddr.sin_addr.s_addr = htonl(*remIP);
+  // SrvAddr.sin_addr.s_addr = htonl(*szRempIP);
   // SrvAddr.sin_port = htons(remPort);
   // SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
@@ -376,8 +376,8 @@ char  *convertHex(const char *src, size_t len)
 /****************************************************************************/
 // End Server.c
 
-// void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
+// void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
 // {
-//   printf("\n%s\n\n", remIP);
-//   printf("\n%s, %s\n\n", *(uRem_Srv_IP), *(uRem_Srv_IP+1));
+//   printf("\n%s\n\n", szRempIP);
+//   printf("\n%s, %s\n\n", *(szRem_Srv_IP), *(szRem_Srv_IP+1));
 // }
