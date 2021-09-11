@@ -172,10 +172,10 @@ int main(int argc, char *argv[])
   //   perror("[-]BIND = FAIL\n"); // Print the error message
   // }
   // SLEEP
-  printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+  // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT);
   if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
   {
-    perror("[-]BIND = FAIL\n"); // Print the error message
+    printf("[-]BIND = FAIL\n"); // Print the error message
   }
   printf("[+]Bind = OK\n");
   //Receive the datagram

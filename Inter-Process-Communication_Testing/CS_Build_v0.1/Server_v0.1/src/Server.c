@@ -90,11 +90,15 @@ Returns: signed 16-bit integer
 
 *****************************************************************************/
 
-int16_t	BindSrvSok_Hndlr(int16_t uSrvSok, const uint8_t *remIP)
+int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
 {
+  printf("\nBind Call\n\n");
   // Local Variables
-  int16_t   retVal   = -1;
-  uint16_t  remPort;
+  int32_t   retVal;//   = -1;
+  uint32_t  remPort  =  0;
+  S_SADDR_IN *Srv = NULL;
+  Srv = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  printf("\nStruct Memory Allocation = PASS\n\n");
   // Assign remPort Port to corresponding port number
   if (remIP == uRem_Srv_IP[eREM_SRV_IP_0])
   {
@@ -120,14 +124,27 @@ int16_t	BindSrvSok_Hndlr(int16_t uSrvSok, const uint8_t *remIP)
   {
     EXIT_FAILURE;
   }
+  remPort = REM_SRV_PORT_0;
+  printf("\nREM_SRV_PORT_0 = %d size = %d\n\n", REM_SRV_PORT_0, sizeof(REM_SRV_PORT_0));
+  printf("\nremPort = %d size = %d\n\n", remPort, sizeof(remPort));
   // sock_addr_in initialization
-  S_SADDR_IN  Srv     = {0};
+  // S_SADDR_IN  Srv;
+  // Zero-out struct
+  memset(Srv, 0, sizeof(S_SADDR_IN));
+  printf("\n\nZero-out allocated struct = PASS\n\n");
   // Struct Member Init
-  Srv.sin_family      = AF_INET;
-  Srv.sin_addr.s_addr = htonl(*remIP);
-  Srv.sin_port        = htons(remPort);
+  Srv->sin_family      = AF_INET;
+  printf("\n\nsin_family = OK\n\n");
+  Srv->sin_addr.s_addr = htonl(remIP);
+  printf("\n\ns_addr (remIP) = OK\n\n");
+  Srv->sin_port        = htons(remPort);
+  printf("\n\nsin_port (remPort) = OK\n\n");
+
+  printf("[+]Binding to IP: %s on PORT: %d...\n", remIP, remPort);
   // Bind System Call
-  retVal = bind(uSrvSok, (S_SADDR *)&Srv, sizeof(Srv));
+  // retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
+  retVal = bind(SrvSok, (S_SADDR *)Srv, sizeof(Srv));
+  printf("\n\nretVal = %d\n\n", retVal);
   // Function Return
   return  retVal;    
 }
@@ -232,7 +249,7 @@ Purpose: Handles incoming connections to the server
 Parameters: unsigned uint8_t pointer                                          
 Returns: void                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
 {
@@ -281,15 +298,21 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *remIP)
     // return EXIT_FAILURE;
   }
   // Zero-out struct values
-  memset(&SrvAddr, 0, sizeof(SrvAddr));
-  
-  SrvAddr.sin_addr.s_addr = htonl(*remIP);
-  SrvAddr.sin_port = htons(remPort);
-  SrvAddr.sin_family = AF_INET; 
+  // memset(&SrvAddr, 0, sizeof(SrvAddr));
+  // SrvAddr.sin_addr.s_addr = htonl(*remIP);
+  // SrvAddr.sin_port = htons(remPort);
+  // SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
-  bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
+  // bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
+  printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+  if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
+  {
+    perror("[-]BIND = FAIL\n"); // Print the error message
+  }
+  printf("[+]Bind = OK\n");
   //Receive the datagram
   clAddrLen = sizeof(ClAddr);
+  // While-Loop to receive data from incomming connections
   while (1)
   {
     // receive message
