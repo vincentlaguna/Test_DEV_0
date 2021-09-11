@@ -120,11 +120,11 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *remIP)
   {
     remPort = REM_SRV_PORT_4;
   }
-  else
-  {
-    EXIT_FAILURE;
-  }
-  remPort = REM_SRV_PORT_0;
+  // else
+  // {
+  //   EXIT_FAILURE;
+  // }
+  //remPort = REM_SRV_PORT_0;
   printf("\nREM_SRV_PORT_0 = %d size = %d\n\n", REM_SRV_PORT_0, sizeof(REM_SRV_PORT_0));
   printf("\nremPort = %d size = %d\n\n", remPort, sizeof(remPort));
   // sock_addr_in initialization
