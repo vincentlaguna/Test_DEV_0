@@ -88,7 +88,7 @@ Purpose: Handles the binding of a Socket to the Server
 Parameters: signed 16-bit integer                                          
 Returns: signed 16-bit integer                                        
 
-*****************************************************************************/
+*****************************************************************************
 
 int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP)
 {
@@ -96,6 +96,7 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP)
   // Local Variables
   int32_t   retVal;//   = -1;
   uint32_t  remPort  =  0;
+  socklen_t SOKsz;
   S_SADDR_IN *Srv = NULL;
   Srv = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   printf("\nStruct Memory Allocation = PASS\n\n");
@@ -140,11 +141,11 @@ int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP)
   printf("\n\ns_addr (szRempIP) = OK\n\n");
   Srv->sin_port        = htons(remPort);
   printf("\n\nsin_port (remPort) = OK\n\n");
-
+  SOKsz = sizeof(Srv);
   printf("[+]Binding to IP: %s on PORT: %d...\n", szRemIP, remPort);
   // Bind System Call
   // retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
-  retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
+  retVal = bind(SrvSok, (S_SADDR *)Srv, SOKsz);
   printf("\n\nretVal = %d\n\n", retVal);
   // Function Return
   return  retVal;    
