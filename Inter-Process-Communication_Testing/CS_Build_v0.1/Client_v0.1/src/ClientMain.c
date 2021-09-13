@@ -204,21 +204,24 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
+  
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
-  SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
-  // SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+  // SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   SrvAddr.sin_family = AF_INET;
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cSerialData);    
   // strcpy(sndBuffer, cStringPayload);    
   // Connect to server
+  printf("[-]CONNECTING TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   if(connect(connectSOKFD, (struct sockaddr *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
-      printf("\n Error : Connect Failed \n");
+      printf("\n[-]CONNECT TO SERVER Error: Connect Failed \n");
       exit(0);
   }
+  printf("[-]CONNECTION TO SERVER: OK\n\n");
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
@@ -228,6 +231,7 @@ int main(int argc, char *argv[])
   // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
   puts(rcvBuffer);
   // Close the descriptor
+  printf("[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   close(connectSOKFD);
   
   return(0);
