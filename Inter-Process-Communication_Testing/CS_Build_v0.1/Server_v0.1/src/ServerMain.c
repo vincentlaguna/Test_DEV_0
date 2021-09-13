@@ -166,17 +166,17 @@ int main(int argc, char *argv[])
   // bind server address to socket descriptor
   // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
   // SLEEP
-  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
   // {
   //   printf("[-]BIND = FAIL\n"); // Print the error message
   // }
-  // printf("[+]Bind = OK\n");
+  printf("[+]Bind = OK\n");
   //Receive the datagram
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
