@@ -17,7 +17,7 @@ Description: Client-side Main
 /* Defines: *****************************************************************/
 /****************************************************************************/
 
-/* Globals: *****************************************************************/
+/* Globals: *****************************************************************
 
 static const uint8_t *cSerialData = 
 {
@@ -229,9 +229,30 @@ int main(int argc, char *argv[])
   // Waiting for response
   recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, NULL);
   // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
-  puts(rcvBuffer);
+  // puts(rcvBuffer);
+  // SLEEP
+  printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
+  // SLEEP
+  printf("\n[-]Confirming receive values...\n");
+  printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+  
+  printf("[+]DATA RECEIVED = OK\n");
+  printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
+  printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+  
+  if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
+  {
+    printf("[+]CHECKSUM = PASS\n");
+  }
+  else
+  {
+    printf("[+]CHECKSUM = FAIL\n");
+  }
+  putchar('\n');
+  // Zero-out receive buffer
+  memset(rcvBuffer, '\0', MAX_LEN);
   // Close the descriptor
-  printf("[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+  printf("\n[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   close(connectSOKFD);
   
   return(0);

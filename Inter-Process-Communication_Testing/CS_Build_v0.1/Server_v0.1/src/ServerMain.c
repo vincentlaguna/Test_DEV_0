@@ -180,6 +180,7 @@ int main(int argc, char *argv[])
   //Receive the datagram
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
+  printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
   while (1)
   {
     // receive message
@@ -187,10 +188,25 @@ int main(int argc, char *argv[])
                     (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[n] = '\0';
     puts(rcvBuffer);
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    
+    puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    {
+      printf("[+]CHECKSUM = PASS\n");
+    }
+    else
+    {
+      printf("[+]CHECKSUM = FAIL\n");
+    }
+    puts("\n");
+    // Zero-out receive buffer
+    memset(rcvBuffer, '\0', MAX_LEN);
   }
   
   return(0);

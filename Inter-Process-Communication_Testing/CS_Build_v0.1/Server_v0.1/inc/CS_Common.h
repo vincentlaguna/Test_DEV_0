@@ -86,6 +86,34 @@ enum
   eREM_SRV_IP_4
 };
 
+static const uint8_t *cSerialData = 
+{
+	"\xff"													// NUM bytes
+	"\x02"													// STX
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"01234567890123456789012345678901234567890123456789"	// 50 chrs
+	"\x03",													// ETX
+															// 255 total
+};
+
+static const uint8_t *cStringPayload = 
+{
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
+	"abcdefghijklmnopqrstuvwxyz"							// 52
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
+	"abcdefghijklmnopqrstuvwxyz"							// 104
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
+	"abcdefghijklmnopqrstuvwxyz"							// 156
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
+	"abcdefghijklmnopqrstuvwxyz"							// 208
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
+	"abcdefghijklmnopqrstuvwxyz"							// 260
+	"",
+};
+
 /****************************************************************************/
 
 /* Data Sructure Definitions: ***********************************************/
@@ -112,7 +140,7 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-char	    *convertHex(const char *src, size_t len);
+uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
 int16_t   UDP_SokInit_Handlr(void);

@@ -345,7 +345,7 @@ Returns:  Unsigned char pointer
 
 *****************************************************************************/
 
-char  *convertHex(const char *src, size_t len)
+uint8_t  *convertHex(uint8_t *src, size_t len)
 {
   char  *retVal;
   char  *hexBits = "0123456789ABCDEF";
@@ -374,11 +374,49 @@ char  *convertHex(const char *src, size_t len)
 /****************************************************************************/
 
 
+/*****************************************************************************
+
+Name: bCheckSum()                                               
+Purpose:  Validates the checksum on 2 input buffers                               
+Parameters: const unsigned char pointer and size_t for length                                                             
+Returns:  Boolean                                        
+
+*****************************************************************************/
+
+bool  bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ)
+{
+  bool bRetVal  = false;
+  uint8_t chkBuff1 = 0;
+  uint8_t chkBuff2 = 0;
+  
+  if (buff1 == NULL || buff2 == NULL)
+    return NULL;
+  
+  while (sZ-- != 0)
+  {
+    // For debugging...
+    // printf("%c ", *buff1);
+    // printf("\n");
+    // printf("%c ", *buff2);
+    chkBuff1 -= *buff1++;
+    chkBuff2 -= *buff2++;
+  }
+  // For debugging...
+  // printf("\nChecksum for buffer 1 is: 0x%02x = %d\n", chkBuff1, chkBuff1);
+  // printf("\nChecksum for buffer 2 is: 0x%02x = %d\n\n", chkBuff2, chkBuff2);
+  if (chkBuff1 == chkBuff2)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+// End checkSum()
+/****************************************************************************/
+
+
 /****************************************************************************/
 // End Server.c
-
-// void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
-// {
-//   printf("\n%s\n\n", szRempIP);
-//   printf("\n%s, %s\n\n", *(szRem_Srv_IP), *(szRem_Srv_IP+1));
-// }
