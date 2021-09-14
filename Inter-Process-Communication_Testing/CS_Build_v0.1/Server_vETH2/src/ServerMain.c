@@ -161,12 +161,13 @@ int main(int argc, char *argv[])
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   SrvAddr.sin_family = AF_INET;
-  SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+  // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_1);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_1);
   // bind server address to socket descriptor
   // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
-  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_1, REM_SRV_PORT_1);
   if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
