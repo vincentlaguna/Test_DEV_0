@@ -146,7 +146,6 @@ int main(int argc, char *argv[])
   // Local Variables
   // int listenSOKFD, clAddrLen;
   int16_t listenSOKFD;
-  int sVal;
   int clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
@@ -161,7 +160,8 @@ int main(int argc, char *argv[])
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   SrvAddr.sin_family = AF_INET;
-  SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
   SrvAddr.sin_port = htons(REM_SRV_PORT_0);
   // bind server address to socket descriptor
   // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
@@ -187,9 +187,9 @@ int main(int argc, char *argv[])
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
-    rcvBuffer[n] = '\0';
+    rcvBuffer[sVal] = '\0';
     puts(rcvBuffer);
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
