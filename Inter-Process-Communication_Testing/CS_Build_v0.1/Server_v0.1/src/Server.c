@@ -246,28 +246,27 @@ void  SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections)
 
 /*****************************************************************************
 
-Name:	UDP_SrvConnection_Hndlr()                                            
+Name:	UDP_SrvConnection_Hndlr() thread version                                         
 Purpose: Handles incoming connections to the server                 
 Parameters: unsigned uint8_t pointer                                          
 Returns: void                                        
 
 *****************************************************************************
 
-void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
+void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
 {
   // Receive and Reply Buffers
-  // uint8_t rcvBuffer[MAX_LEN];
-  // uint8_t rplyBuffer[MAX_LEN];
   uint8_t *rcvBuffer = NULL;
   uint8_t *rplyBuffer = NULL;
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
+  int sVal
   // uint16_t remPort;
-  int16_t listenSOKFD; 
-  int clAddrLen;
+  // int16_t listenSOKFD; 
+  // int clAddrLen;
   // Local Structs
-  S_SADDR_IN SrvAddr, ClAddr;
+  // S_SADDR_IN SrvAddr, ClAddr;
   // Assign remPort Port to corresponding port number
   // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
   // {
@@ -294,11 +293,11 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
   //   EXIT_FAILURE;
   // }
   // Create a UDP Socket
-  if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
-  {
-    printf("[-]Creation of SOCKET = FAIL\n");
-    // return EXIT_FAILURE;
-  }
+  // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+  // {
+  //   printf("[-]Creation of SOCKET = FAIL\n");
+  //   // return EXIT_FAILURE;
+  // }
   // Zero-out struct values
   // memset(&SrvAddr, 0, sizeof(SrvAddr));
   // SrvAddr.sin_addr.s_addr = htonl(*szRempIP);
@@ -306,27 +305,41 @@ void  UDP_SrvConnection_Hndlr(const uint8_t *szRempIP)
   // SrvAddr.sin_family = AF_INET; 
   // bind server address to socket descriptor
   // bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
-  printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
-  if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
-  {
-    perror("[-]BIND = FAIL\n"); // Print the error message
-  }
-  printf("[+]Bind = OK\n");
-  //Receive the datagram
-  clAddrLen = sizeof(ClAddr);
+  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+  // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
+  // {
+  //   perror("[-]BIND = FAIL\n"); // Print the error message
+  // }
+  // printf("[+]Bind = OK\n");
+  // //Receive the datagram
+  // clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-    // int n = recvfrom(listenSOKFD, rcvBuffer, sizeof(rcvBuffer), 0,
-                    (struct sockaddr*)&ClAddr,&clAddrLen);
-    rcvBuffer[n] = '\0';
+    int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                    (S_SADDR *)&ClAddr, &clAddrLen);
+    rcvBuffer[sVal] = '\0';
     puts(rcvBuffer);
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    
+    puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    {
+      printf("[+]CHECKSUM = PASS\n");
+    }
+    else
+    {
+      printf("[+]CHECKSUM = FAIL\n");
+    }
+    puts("\n");
+    // Zero-out receive buffer
+    memset(rcvBuffer, '\0', MAX_LEN);
   }
   free(rcvBuffer);
   free(rplyBuffer);

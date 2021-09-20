@@ -137,8 +137,6 @@ int main(int argc, char *argv[])
 {
   // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
-  // uint8_t rcvBuffer[MAX_LEN];
-  // uint8_t rplyBuffer[MAX_LEN];
   uint8_t *rcvBuffer  = NULL;
   uint8_t *rplyBuffer = NULL;
   rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
@@ -146,7 +144,7 @@ int main(int argc, char *argv[])
   // Local Variables
   // int listenSOKFD, clAddrLen;
   int16_t listenSOKFD;
-  int clAddrLen;
+  socklen_t clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
   // S_SADDR_IN ClAddr;
