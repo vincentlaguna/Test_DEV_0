@@ -261,7 +261,7 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  int sVal
+  int sVal;
   // uint16_t remPort;
   // int16_t listenSOKFD; 
   // int clAddrLen;
@@ -329,6 +329,7 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
     // send the response
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+          
     if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
     {
       printf("[+]CHECKSUM = PASS\n");
@@ -341,6 +342,7 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
     // Zero-out receive buffer
     memset(rcvBuffer, '\0', MAX_LEN);
   }
+  
   free(rcvBuffer);
   free(rplyBuffer);
 }

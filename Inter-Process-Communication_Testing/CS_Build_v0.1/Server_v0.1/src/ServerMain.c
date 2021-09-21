@@ -184,30 +184,32 @@ int main(int argc, char *argv[])
   printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
   while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
   {
-    // receive message
-    int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                    (S_SADDR *)&ClAddr, &clAddrLen);
-    rcvBuffer[sVal] = '\0';
-    puts(rcvBuffer);
-    printf("\n[-]Confirming receive values...\n");
-    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    // // receive message
+    // int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    //                 (S_SADDR *)&ClAddr, &clAddrLen);
+    // rcvBuffer[sVal] = '\0';
+    // puts(rcvBuffer);
+    // printf("\n[-]Confirming receive values...\n");
+    // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
     
-    puts("\n");
-    strcpy(rplyBuffer, rcvBuffer);         
-    // send the response
-    sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
-    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-    {
-      printf("[+]CHECKSUM = PASS\n");
-    }
-    else
-    {
-      printf("[+]CHECKSUM = FAIL\n");
-    }
-    puts("\n");
-    // Zero-out receive buffer
-    memset(rcvBuffer, '\0', MAX_LEN);
+    // puts("\n");
+    // strcpy(rplyBuffer, rcvBuffer);         
+    // // send the response
+    // sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+    //       (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+          
+    // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    // {
+    //   printf("[+]CHECKSUM = PASS\n");
+    // }
+    // else
+    // {
+    //   printf("[+]CHECKSUM = FAIL\n");
+    // }
+    // puts("\n");
+    // // Zero-out receive buffer
+    // memset(rcvBuffer, '\0', MAX_LEN);
+    UDP_SrvConnection_Hndlr(listenSOKFD);
   }
   
   return(0);
