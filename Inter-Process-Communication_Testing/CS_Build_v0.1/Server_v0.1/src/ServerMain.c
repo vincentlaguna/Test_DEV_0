@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
   printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-  while (1)
+  while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
   {
     // receive message
     int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
