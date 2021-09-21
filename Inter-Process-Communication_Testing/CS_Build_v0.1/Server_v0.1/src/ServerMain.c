@@ -137,10 +137,10 @@ int main(int argc, char *argv[])
 {
   // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
-  uint8_t *rcvBuffer  = NULL;
-  uint8_t *rplyBuffer = NULL;
-  rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // uint8_t *rcvBuffer  = NULL;
+  // uint8_t *rplyBuffer = NULL;
+  // rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   // int listenSOKFD, clAddrLen;
   int16_t listenSOKFD;
