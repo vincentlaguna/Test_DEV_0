@@ -317,7 +317,7 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
   while (1)
   {
     // receive message
-    int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    int sVal = recvfrom(clSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[sVal] = '\0';
     puts(rcvBuffer);
@@ -327,7 +327,7 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
     puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
-    sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+    sendto(clSOKFD, rplyBuffer, MAX_LEN, 0,
           (struct sockaddr*)&ClAddr, sizeof(ClAddr));
           
     if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))

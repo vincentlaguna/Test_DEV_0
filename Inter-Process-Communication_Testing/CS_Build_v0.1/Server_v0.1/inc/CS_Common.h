@@ -143,7 +143,7 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
+void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
 int16_t   UDP_SokInit_Handlr(void);
 int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
