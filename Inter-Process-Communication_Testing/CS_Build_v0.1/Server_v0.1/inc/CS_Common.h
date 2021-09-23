@@ -28,6 +28,7 @@ Description: Common header file for Client-Server code
 #endif
 #include  <stdio.h>
 #include  <stdlib.h>
+#include  <time.h>
 #include  <stdint.h>
 #include  <string.h>
 #include  <strings.h>
@@ -141,6 +142,7 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
+int 			rID_Gen(void);
 uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);

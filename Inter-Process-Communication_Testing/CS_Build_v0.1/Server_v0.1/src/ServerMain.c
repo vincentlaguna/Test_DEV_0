@@ -143,7 +143,8 @@ int main(int argc, char *argv[])
   // rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   // int listenSOKFD, clAddrLen;
-  int16_t listenSOKFD;
+  // int16_t listenSOKFD;
+  int listenSOKFD;
   socklen_t clAddrLen;
   // Local Structs
   S_SADDR_IN SrvAddr, ClAddr;
@@ -182,8 +183,8 @@ int main(int argc, char *argv[])
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
   printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-  while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
-  {
+  // while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
+  // {
     // // receive message
     // int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
     //                 (S_SADDR *)&ClAddr, &clAddrLen);
@@ -209,8 +210,20 @@ int main(int argc, char *argv[])
     // puts("\n");
     // // Zero-out receive buffer
     // memset(rcvBuffer, '\0', MAX_LEN);
-    UDP_SrvConnection_Hndlr(listenSOKFD);
-  }
+    // UDP_SrvConnection_Hndlr(listenSOKFD);
+    // pthread_t thread;
+    // int *pCl = (int *)malloc(sizeof(int));
+    // *pCl = listenSOKFD;
+    // pthread_create(&thread, NULL, UDP_SrvConnection_Hndlr, pCl)
+  // }
+  
+  int rID;
+  
+  srand(time(0));
+  
+  rID = rID_Gen();
+  
+  printf("%d\n\n", rID);
   
   return(0);
 

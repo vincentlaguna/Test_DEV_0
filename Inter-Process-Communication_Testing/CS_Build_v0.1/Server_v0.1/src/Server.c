@@ -257,6 +257,8 @@ Returns: void
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
 void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 {
+  int pClSOKFD = *clSOKFD
+  free(clSOKFD);
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
   // uint8_t *rplyBuffer = NULL;
@@ -316,8 +318,8 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   // //Receive the datagram
   // clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
-  while (1)
-  {
+  // while (1)
+  // {
     // // receive message
     // int sVal = recvfrom(clSOKFD, rcvBuffer, MAX_LEN, 0,
     //                 (S_SADDR *)&ClAddr, &clAddrLen);
@@ -343,11 +345,12 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     // puts("\n");
     // // Zero-out receive buffer
     // memset(rcvBuffer, '\0', MAX_LEN);
-    printf("This is where the magic would happen...\n");
-  }
+    // printf("This is where the magic would happen...\n");
+  // }
   
   // free(rcvBuffer);
   // free(rplyBuffer);
+  printf("%d\n", rID_Gen());
 }
 
 // End UDP_SrvConnection_Handlr() 
@@ -382,7 +385,7 @@ uint8_t  *convertHex(uint8_t *src, size_t len)
     retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
     retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
     retVal[(i*3)+2] = ' '; // Space each value
-  }+
+  }
   
   return retVal;
   
@@ -433,6 +436,38 @@ bool  bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ)
 }
 
 // End checkSum()
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name: rID_Gen()                                               
+Purpose:  Random number generator                               
+Parameters: None                                                             
+Returns:  Random integer
+
+*****************************************************************************/
+
+int rID_Gen(void)
+{
+  int i;
+  int retVal;
+  int l  = 10;
+  int u  = 1000;
+  
+  for (i = 0; i < 10; i++) 
+  {
+    int ct = (rand() % (u - l + 1)) + l;
+    printf("%d ", ct);
+    retVal = ct;
+  }
+  
+  puts("\n\n");
+  
+  return retVal;
+}
+
+// End rID_Gen()
 /****************************************************************************/
 
 
