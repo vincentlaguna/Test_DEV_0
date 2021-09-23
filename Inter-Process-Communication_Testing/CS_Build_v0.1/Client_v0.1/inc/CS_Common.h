@@ -33,7 +33,7 @@ Description: Common header file for Client-Server code
 #include  <strings.h>
 #include  <stdbool.h>
 #include  <stddef.h>
-// #include  <pthreads.h>
+#include  <pthread.h>
 #include  <sys/time.h>
 #include  <sys/types.h>
 #include  <sys/ioctl.h>
@@ -143,8 +143,9 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 char	    *convertHex(const char *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
-int16_t   UDP_SokInit_Handlr(void);
+// void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
+// void      *UDP_SrvConnection_Hndlr(void *clSOKFD);
+// int16_t   UDP_SokInit_Handlr(void);
 // int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);

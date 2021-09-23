@@ -33,7 +33,7 @@ Description: Common header file for Client-Server code
 #include  <strings.h>
 #include  <stdbool.h>
 #include  <stddef.h>
-// #include  <pthreads.h>
+#include  <pthread.h>
 #include  <sys/time.h>
 #include  <sys/types.h>
 #include  <sys/ioctl.h>

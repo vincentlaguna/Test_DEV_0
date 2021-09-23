@@ -382,7 +382,7 @@ uint8_t  *convertHex(uint8_t *src, size_t len)
     retVal[i*3]     = hexBits[src[i] >> 4]; // Right shift all bits 4 places
     retVal[(i*3)+1] = hexBits[src[i] & 0x0F];
     retVal[(i*3)+2] = ' '; // Space each value
-  }
+  }+
   
   return retVal;
   
