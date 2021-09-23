@@ -62,7 +62,7 @@ $(PATHB)%.o:: $(PATHS)%.c
 #	$(CC) -c $(CFLAGS) $< -o $@
 
 $(TGT): $(OBJ)
-	gcc -o $@ $^
+	gcc -o $@ $^ -lpthread
 
 clean:
 	$(CLEANUP) $(PATHB)*.o

@@ -257,8 +257,11 @@ Returns: void
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
 void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 {
-  int pClSOKFD = *clSOKFD
+  int pClSOKFD = *((int *)clSOKFD);
   free(clSOKFD);
+  SLEEP;
+  printf("Socket = %d\n\n", pClSOKFD);
+  SLEEP;
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
   // uint8_t *rplyBuffer = NULL;
@@ -350,7 +353,15 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   
   // free(rcvBuffer);
   // free(rplyBuffer);
-  printf("%d\n", rID_Gen());
+  int rID;
+  
+  srand(time(0));
+  
+  rID = rID_Gen();
+  
+  printf("Thread #%d\n\n", rID);
+  SLEEP;
+  return NULL;
 }
 
 // End UDP_SrvConnection_Handlr() 

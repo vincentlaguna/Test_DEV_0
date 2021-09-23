@@ -211,19 +211,18 @@ int main(int argc, char *argv[])
     // // Zero-out receive buffer
     // memset(rcvBuffer, '\0', MAX_LEN);
     // UDP_SrvConnection_Hndlr(listenSOKFD);
-    // pthread_t thread;
-    // int *pCl = (int *)malloc(sizeof(int));
-    // *pCl = listenSOKFD;
-    // pthread_create(&thread, NULL, UDP_SrvConnection_Hndlr, pCl)
+    pthread_t thread1;
+    pthread_t thread2;
+    int *pCl = (int *)malloc(sizeof(int));
+    *pCl = listenSOKFD;
+    int *pCl1 = (int *)malloc(sizeof(int));
+    *pCl1 = 10;
+    pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+    pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl);
+    SLEEP
+    pthread_join(thread2, NULL);
+    pthread_join(thread2, NULL);
   // }
-  
-  int rID;
-  
-  srand(time(0));
-  
-  rID = rID_Gen();
-  
-  printf("%d\n\n", rID);
   
   return(0);
 
