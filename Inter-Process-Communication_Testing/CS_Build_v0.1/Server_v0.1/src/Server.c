@@ -253,15 +253,17 @@ Returns: void
 
 *****************************************************************************/
 
-void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
+
+// void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
+void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 {
   // Receive and Reply Buffers
-  uint8_t *rcvBuffer = NULL;
-  uint8_t *rplyBuffer = NULL;
-  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // Local Variables
-  int sVal;
+  // uint8_t *rcvBuffer = NULL;
+  // uint8_t *rplyBuffer = NULL;
+  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // // Local Variables
+  // int sVal;
   // uint16_t remPort;
   // int16_t listenSOKFD; 
   // int clAddrLen;
@@ -316,35 +318,36 @@ void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
   // While-Loop to receive data from incomming connections
   while (1)
   {
-    // receive message
-    int sVal = recvfrom(clSOKFD, rcvBuffer, MAX_LEN, 0,
-                    (S_SADDR *)&ClAddr, &clAddrLen);
-    rcvBuffer[sVal] = '\0';
-    puts(rcvBuffer);
-    printf("\n[-]Confirming receive values...\n");
-    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    // // receive message
+    // int sVal = recvfrom(clSOKFD, rcvBuffer, MAX_LEN, 0,
+    //                 (S_SADDR *)&ClAddr, &clAddrLen);
+    // rcvBuffer[sVal] = '\0';
+    // puts(rcvBuffer);
+    // printf("\n[-]Confirming receive values...\n");
+    // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
     
-    puts("\n");
-    strcpy(rplyBuffer, rcvBuffer);         
-    // send the response
-    sendto(clSOKFD, rplyBuffer, MAX_LEN, 0,
-          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+    // puts("\n");
+    // strcpy(rplyBuffer, rcvBuffer);         
+    // // send the response
+    // sendto(clSOKFD, rplyBuffer, MAX_LEN, 0,
+    //       (struct sockaddr*)&ClAddr, sizeof(ClAddr));
           
-    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-    {
-      printf("[+]CHECKSUM = PASS\n");
-    }
-    else
-    {
-      printf("[+]CHECKSUM = FAIL\n");
-    }
-    puts("\n");
-    // Zero-out receive buffer
-    memset(rcvBuffer, '\0', MAX_LEN);
+    // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    // {
+    //   printf("[+]CHECKSUM = PASS\n");
+    // }
+    // else
+    // {
+    //   printf("[+]CHECKSUM = FAIL\n");
+    // }
+    // puts("\n");
+    // // Zero-out receive buffer
+    // memset(rcvBuffer, '\0', MAX_LEN);
+    printf("This is where the magic would happen...\n");
   }
   
-  free(rcvBuffer);
-  free(rplyBuffer);
+  // free(rcvBuffer);
+  // free(rplyBuffer);
 }
 
 // End UDP_SrvConnection_Handlr() 
