@@ -260,7 +260,14 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   int pClSOKFD = *((int *)clSOKFD);
   free(clSOKFD);
   SLEEP;
-  printf("Socket = %d\n\n", pClSOKFD);
+  if (pClSOKFD == 10)
+  {
+    printf("Socket 10 = %d\n\n", pClSOKFD);
+  }
+  else if (pClSOKFD == 20)
+  {
+    printf("Socket 20 = %d\n\n", pClSOKFD);
+  }
   SLEEP;
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;

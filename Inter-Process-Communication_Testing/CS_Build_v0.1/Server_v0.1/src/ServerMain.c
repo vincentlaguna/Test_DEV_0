@@ -213,14 +213,17 @@ int main(int argc, char *argv[])
     // UDP_SrvConnection_Hndlr(listenSOKFD);
     pthread_t thread1;
     pthread_t thread2;
+    pthread_mutex_t SOKlock;
     int *pCl = (int *)malloc(sizeof(int));
     *pCl = listenSOKFD;
     int *pCl1 = (int *)malloc(sizeof(int));
-    *pCl1 = 10;
+    *pCl = 10;
+    *pCl1 = 20;
     pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
-    pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl);
+    pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
     SLEEP
-    pthread_join(thread2, NULL);
+    pthread_join(thread1, NULL);
+    SLEEP
     pthread_join(thread2, NULL);
   // }
   
