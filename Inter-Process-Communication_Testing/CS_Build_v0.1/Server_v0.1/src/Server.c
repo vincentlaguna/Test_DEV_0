@@ -259,16 +259,37 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 {
   int pClSOKFD = *((int *)clSOKFD);
   free(clSOKFD);
-  SLEEP;
+  
+  int rID;
+  
+  pthread_mutex_t SOKlock;
+  pthread_mutex_init(&SOKlock, NULL);
+  
+  pthread_mutex_lock(&SOKlock);
   if (pClSOKFD == 10)
   {
     printf("Socket 10 = %d\n\n", pClSOKFD);
+    srand(time(0));
+  
+    rID = rID_Gen();
+  
+    printf("Thread #%d\n\n", rID);
+  
   }
   else if (pClSOKFD == 20)
   {
     printf("Socket 20 = %d\n\n", pClSOKFD);
+  
+    srand(time(0));
+  
+    rID = rID_Gen();
+  
+    printf("Thread #%d\n\n", rID);
   }
-  SLEEP;
+  
+  pthread_mutex_unlock(&SOKlock);
+  
+  return NULL;
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
   // uint8_t *rplyBuffer = NULL;
@@ -360,15 +381,6 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   
   // free(rcvBuffer);
   // free(rplyBuffer);
-  int rID;
-  
-  srand(time(0));
-  
-  rID = rID_Gen();
-  
-  printf("Thread #%d\n\n", rID);
-  SLEEP;
-  return NULL;
 }
 
 // End UDP_SrvConnection_Handlr() 

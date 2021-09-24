@@ -213,7 +213,8 @@ int main(int argc, char *argv[])
     // UDP_SrvConnection_Hndlr(listenSOKFD);
     pthread_t thread1;
     pthread_t thread2;
-    pthread_mutex_t SOKlock;
+    // pthread_mutex_t SOKlock;
+    // pthread_mutex_init(&SOKlock);
     int *pCl = (int *)malloc(sizeof(int));
     *pCl = listenSOKFD;
     int *pCl1 = (int *)malloc(sizeof(int));
