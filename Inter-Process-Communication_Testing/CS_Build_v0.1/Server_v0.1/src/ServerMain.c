@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
   //Receive the datagram
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
-  printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+  // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
   // while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
   // {
     // // receive message
@@ -222,9 +222,9 @@ int main(int argc, char *argv[])
     *pCl1 = 20;
     pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
     pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
-    SLEEP
+    // SLEEP
     pthread_join(thread1, NULL);
-    SLEEP
+    // SLEEP
     pthread_join(thread2, NULL);
   // }
   

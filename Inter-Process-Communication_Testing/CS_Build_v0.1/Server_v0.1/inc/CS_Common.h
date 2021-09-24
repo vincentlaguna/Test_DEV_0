@@ -45,6 +45,7 @@ Description: Common header file for Client-Server code
 
 #define   TIME_O 5
 #define   MAX_CONN 6
+#define		THREAD_TEST
 #define	  MAX_LEN 260//257
 #define	  MAXLINE 1000
 #define   SLEEP	sleep(1);

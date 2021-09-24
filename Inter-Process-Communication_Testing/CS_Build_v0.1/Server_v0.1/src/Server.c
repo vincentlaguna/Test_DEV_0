@@ -257,37 +257,45 @@ Returns: void
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
 void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 {
-  int pClSOKFD = *((int *)clSOKFD);
-  free(clSOKFD);
+  #ifdef THREAD_TEST
   
-  int rID;
+    int pClSOKFD = *((int *)clSOKFD);
+    free(clSOKFD);
+    
+    int rID;
+    
+    pthread_mutex_t SOKlock;
+    pthread_mutex_init(&SOKlock, NULL);
+    
+    pthread_mutex_lock(&SOKlock);
+    
+    if (pClSOKFD == 10)
+    {
+      printf("\nSocket 10 = %d\n\n", pClSOKFD);
+      
+      srand(time(0));
+    
+      rID = rID_Gen();
+    
+      printf("Thread #%d\n\n", rID);
+    
+    }
+    else if (pClSOKFD == 20)
+    {
+      printf("\nSocket 20 = %d\n\n", pClSOKFD);
+      
+      SLEEP
+      
+      srand(time(0));
+    
+      rID = rID_Gen();
+    
+      printf("Thread #%d\n\n", rID++);
+    }
+    
+    pthread_mutex_unlock(&SOKlock);
   
-  pthread_mutex_t SOKlock;
-  pthread_mutex_init(&SOKlock, NULL);
-  
-  pthread_mutex_lock(&SOKlock);
-  if (pClSOKFD == 10)
-  {
-    printf("Socket 10 = %d\n\n", pClSOKFD);
-    srand(time(0));
-  
-    rID = rID_Gen();
-  
-    printf("Thread #%d\n\n", rID);
-  
-  }
-  else if (pClSOKFD == 20)
-  {
-    printf("Socket 20 = %d\n\n", pClSOKFD);
-  
-    srand(time(0));
-  
-    rID = rID_Gen();
-  
-    printf("Thread #%d\n\n", rID);
-  }
-  
-  pthread_mutex_unlock(&SOKlock);
+  #endif  
   
   return NULL;
   // Receive and Reply Buffers
