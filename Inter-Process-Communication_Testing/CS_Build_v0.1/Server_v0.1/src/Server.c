@@ -299,12 +299,12 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   
   return NULL;
   // Receive and Reply Buffers
-  // uint8_t *rcvBuffer = NULL;
-  // uint8_t *rplyBuffer = NULL;
-  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  uint8_t *rcvBuffer = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // // Local Variables
-  // int sVal;
+  int sVal;
   // uint16_t remPort;
   // int16_t listenSOKFD; 
   // int clAddrLen;
