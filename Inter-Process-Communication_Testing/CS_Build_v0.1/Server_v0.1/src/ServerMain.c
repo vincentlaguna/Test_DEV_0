@@ -144,11 +144,11 @@ int main(int argc, char *argv[])
   // Local Variables
   // int listenSOKFD, clAddrLen;
   // int16_t listenSOKFD;
-  int listenSOKFD[4];
-  socklen_t clAddrLen;
+  int listenSOKFD[2];
+  socklen_t clAddrLen[2];
   // Local Structs
-  S_SADDR_IN SrvAddr, ClAddr;
-  // S_SADDR_IN ClAddr;
+  S_SADDR_IN SrvAddr[2];
+  S_SADDR_IN ClAddr[2];
   // Create a UDP Socket - for-loop this one somehow?
   // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
   if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
   //   printf("[-]BIND = FAIL\n"); // Print the error message
   // }
   //Receive the datagram
-  clAddrLen = sizeof(ClAddr);
+  clAddrLen[0] = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
   // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
   // while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
