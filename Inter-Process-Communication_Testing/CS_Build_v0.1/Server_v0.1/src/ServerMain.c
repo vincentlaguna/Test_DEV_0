@@ -151,22 +151,22 @@ int main(int argc, char *argv[])
   S_SADDR_IN ClAddr[2];
   // Create a UDP Socket - for-loop this one somehow?
   // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
-  if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+  if ((listenSOKFD[0] = UDP_SokInit_Handlr()) < 0) 
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
   // Zero-out struct
-  memset(&SrvAddr, 0, sizeof(SrvAddr));
-  SrvAddr.sin_family = AF_INET;
+  memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
+  SrvAddr[0].sin_family = AF_INET;
   // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+  SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+  SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
   // bind server address to socket descriptor
   // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
   printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  if ((bind(listenSOKFD[0], (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+  if ((bind(listenSOKFD[0], (S_SADDR *)&SrvAddr[0], sizeof(SrvAddr[0]))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
     // pthread_mutex_t SOKlock;
     // pthread_mutex_init(&SOKlock);
     int *pCl = (int *)malloc(sizeof(int));
-    *pCl = listenSOKFD;
+    *pCl = listenSOKFD[0];
     int *pCl1 = (int *)malloc(sizeof(int));
     *pCl = 10;
     *pCl1 = 20;
