@@ -139,8 +139,8 @@ int main(int argc, char *argv[])
   // Receive and Reply Buffers
   uint8_t *rcvBuffer  = NULL;
   uint8_t *rplyBuffer = NULL;
-  rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   // int listenSOKFD, clAddrLen;
   // int16_t listenSOKFD;
@@ -156,17 +156,27 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
+  
+  if ((listenSOKFD[1] = UDP_SokInit_Handlr()) < 0) 
+  {
+    printf("[-]Creation of SOCKET = FAIL\n");
+    return EXIT_FAILURE;
+  }
   // Zero-out struct
   memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
   SrvAddr[0].sin_family = AF_INET;
   // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
   SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
   SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
+  // Zero-out struct
+  memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
+  SrvAddr[1].sin_family = AF_INET;
+  // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+  SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
   // bind server address to socket descriptor
-  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
   printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  if ((bind(listenSOKFD[0], (S_SADDR *)&SrvAddr[0], sizeof(SrvAddr[0]))) < 0)
+  if ((bind(listenSOKFD[0], (S_SADDR *)&SrvAddr[0], sizeof(SrvAddr[1]))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message
   }
@@ -174,11 +184,15 @@ int main(int argc, char *argv[])
   {
     printf("[+]Bind = OK\n");
   }
-  // SLEEP
-  // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
-  // {
-  //   printf("[-]BIND = FAIL\n"); // Print the error message
-  // }
+  
+  if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+  {
+    perror("[-]BIND = FAIL\n"); // Print the error message
+  }
+  else
+  {
+    printf("[+]Bind = OK\n");
+  }
   //Receive the datagram
   clAddrLen[0] = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
