@@ -191,7 +191,7 @@ Returns:  Unsigned char pointer
 
 *****************************************************************************/
 
-char  *convertHex(const char *src, size_t len)
+uint8_t  *convertHex(uint8_t *src, size_t len)
 {
   char  *retVal;
   char  *hexBits = "0123456789ABCDEF";
