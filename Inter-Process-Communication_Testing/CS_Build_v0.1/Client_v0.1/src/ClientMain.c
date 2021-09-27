@@ -187,8 +187,6 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   // Receive and Reply Buffers
-  // uint8_t sndBuffer[MAX_LEN];
-  // uint8_t rcvBuffer[MAX_LEN];
   uint8_t *sndBuffer = NULL;
   uint8_t *rcvBuffer = NULL;
   sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);

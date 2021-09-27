@@ -137,10 +137,10 @@ int main(int argc, char *argv[])
 {
   // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
-  // uint8_t *rcvBuffer  = NULL;
-  // uint8_t *rplyBuffer = NULL;
-  // rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  uint8_t *rcvBuffer  = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   // int listenSOKFD, clAddrLen;
   // int16_t listenSOKFD;
@@ -183,50 +183,53 @@ int main(int argc, char *argv[])
   clAddrLen[0] = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
   // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-  // while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
-  // {
-    // // receive message
-    // int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-    //                 (S_SADDR *)&ClAddr, &clAddrLen);
-    // rcvBuffer[sVal] = '\0';
-    // puts(rcvBuffer);
-    // printf("\n[-]Confirming receive values...\n");
-    // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+  while (1) // Need to run a dummy thread function just so that we can see it's can spawn 5 different threads...
+  {
+    // receive message
+    int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
+                    (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
+    rcvBuffer[sVal] = '\0';
+    puts(rcvBuffer);
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
     
-    // puts("\n");
-    // strcpy(rplyBuffer, rcvBuffer);         
-    // // send the response
-    // sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-    //       (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+    puts("\n");
+    strcpy(rplyBuffer, rcvBuffer);         
+    // send the response
+    sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
+          (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
           
-    // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-    // {
-    //   printf("[+]CHECKSUM = PASS\n");
-    // }
-    // else
-    // {
-    //   printf("[+]CHECKSUM = FAIL\n");
-    // }
-    // puts("\n");
-    // // Zero-out receive buffer
-    // memset(rcvBuffer, '\0', MAX_LEN);
+    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    {
+      printf("[+]CHECKSUM = PASS\n");
+    }
+    else
+    {
+      printf("[+]CHECKSUM = FAIL\n");
+    }
+    puts("\n");
+    // Zero-out receive buffer
+    memset(rcvBuffer, '\0', MAX_LEN);
     // UDP_SrvConnection_Hndlr(listenSOKFD);
-    pthread_t thread1;
-    pthread_t thread2;
-    // pthread_mutex_t SOKlock;
-    // pthread_mutex_init(&SOKlock);
-    int *pCl = (int *)malloc(sizeof(int));
-    *pCl = listenSOKFD[0];
-    int *pCl1 = (int *)malloc(sizeof(int));
-    *pCl = 10;
-    *pCl1 = 20;
-    pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
-    pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
-    // SLEEP
-    pthread_join(thread1, NULL);
-    // SLEEP
-    pthread_join(thread2, NULL);
-  // }
+    #ifdef THREAD_TEST
+    
+      pthread_t thread1;
+      pthread_t thread2;
+      int *pCl = (int *)malloc(sizeof(int));
+      *pCl = listenSOKFD[0];
+      int *pCl1 = (int *)malloc(sizeof(int));
+      *pCl = 10;
+      *pCl1 = 20;
+      pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+      pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      // SLEEP
+      pthread_join(thread1, NULL);
+      // SLEEP
+      pthread_join(thread2, NULL);
+  
+  #endif
+    
+  }
   
   return(0);
 
