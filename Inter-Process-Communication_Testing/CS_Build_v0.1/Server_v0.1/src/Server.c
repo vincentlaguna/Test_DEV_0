@@ -312,7 +312,7 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   
   socklen_t clAddrLen;
   // Local Structs
-  // S_SADDR_IN SrvAddr, ClAddr;
+  S_SADDR_IN SrvAddr, ClAddr;
   // Assign remPort Port to corresponding port number
   // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
   // {
