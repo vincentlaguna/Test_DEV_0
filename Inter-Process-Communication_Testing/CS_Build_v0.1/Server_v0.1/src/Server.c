@@ -294,10 +294,11 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     }
     
     pthread_mutex_unlock(&SOKlock);
+    
+    return NULL;
   
   #endif  
   
-  return NULL;
   // Receive and Reply Buffers
   uint8_t *rcvBuffer = NULL;
   uint8_t *rplyBuffer = NULL;
@@ -306,7 +307,9 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   // // Local Variables
   int sVal;
   // uint16_t remPort;
-  // int16_t listenSOKFD; 
+  int pClSOKFD = *((int *)clSOKFD);
+  free(clSOKFD);
+  
   socklen_t clAddrLen;
   // Local Structs
   // S_SADDR_IN SrvAddr, ClAddr;
@@ -357,10 +360,14 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
   // //Receive the datagram
   clAddrLen = sizeof(ClAddr);
   // While-Loop to receive data from incomming connections
+  pthread_mutex_t SOKlock;
+  pthread_mutex_init(&SOKlock, NULL);
+    
+  pthread_mutex_lock(&SOKlock);
   // while (1)
   // {
-    // // receive message
-    int sVal = recvfrom(clSOKFD, rcvBuffer, MAX_LEN, 0,
+    // receive message
+    sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[sVal] = '\0';
     puts(rcvBuffer);
@@ -371,7 +378,7 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
     sendto(clSOKFD, rplyBuffer, MAX_LEN, 0,
-          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+          (struct sockaddr*)&ClAddr, sizeof(clAddrLen));
           
     if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
     {
@@ -386,9 +393,12 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     memset(rcvBuffer, '\0', MAX_LEN);
     printf("This is where the magic would happen...\n");
   // }
+  pthread_mutex_unlock(&SOKlock);
   
   free(rcvBuffer);
   free(rplyBuffer);
+  
+  return NULL;
 }
 
 // End UDP_SrvConnection_Handlr() 
