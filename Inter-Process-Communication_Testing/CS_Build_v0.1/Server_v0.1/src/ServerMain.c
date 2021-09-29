@@ -135,7 +135,6 @@ int main(int argc, char *argv[])
 //
 int main(int argc, char *argv[])
 {
-  // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer  = NULL;
   // uint8_t *rplyBuffer = NULL;
