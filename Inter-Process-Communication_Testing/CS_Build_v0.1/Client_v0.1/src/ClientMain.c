@@ -234,10 +234,10 @@ int main(int argc, char *argv[])
   printf("\n[-]Confirming receive values...\n");
   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
   
-  // if (rcvBuffer != NULL)
-  // {
-  //   printf("[+]DATA RECEIVED = OK\n");
-  // }
+  if (rcvBuffer != NULL)
+  {
+    printf("[+]DATA RECEIVED = OK\n");
+  }
   
   printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
   printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
