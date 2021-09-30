@@ -136,18 +136,29 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   // Receive and Reply Buffers
-  // uint8_t *rcvBuffer  = NULL;
-  // uint8_t *rplyBuffer = NULL;
-  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // Local Variables
-  // int listenSOKFD, clAddrLen;
-  // int16_t listenSOKFD;
-  int listenSOKFD[2];
-  socklen_t clAddrLen[2];
-  // Local Structs
-  S_SADDR_IN SrvAddr[2];
-  S_SADDR_IN ClAddr[2];
+  #ifndef M_THREADED_SOKETS
+    
+    uint8_t *rcvBuffer  = NULL;
+    uint8_t *rplyBuffer = NULL;
+    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    // Local Variables
+    int listenSOKFD, clAddrLen;
+    socklen_t clAddrLen;
+    // Local Structs
+    S_SADDR_IN SrvAddr;
+    S_SADDR_IN ClAddr;
+  
+  #else
+    
+    int16_t listenSOKFD;
+    int listenSOKFD[2];
+    socklen_t clAddrLen[2];
+    // Local Structs
+    S_SADDR_IN SrvAddr[2];
+    S_SADDR_IN ClAddr[2];
+  
+  #endif
   // Create a UDP Socket - for-loop this one somehow?
   // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
   if ((listenSOKFD[0] = UDP_SokInit_Handlr()) < 0) 
