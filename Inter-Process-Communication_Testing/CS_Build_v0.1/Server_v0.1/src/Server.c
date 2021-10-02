@@ -377,8 +377,8 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
-    sendto(clSOKFD, rplyBuffer, MAX_LEN, 0,
-          (struct sockaddr*)&ClAddr, sizeof(clAddrLen));
+    sendto(pClSOKFD, rplyBuffer, MAX_LEN, 0,
+          (S_SADDR *)&ClAddr, sizeof(clAddrLen));
           
     if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
     {

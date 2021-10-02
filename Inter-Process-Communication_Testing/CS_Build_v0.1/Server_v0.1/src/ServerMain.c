@@ -14,11 +14,11 @@ Description: Server-side Main
 
 /****************************************************************************/
 
-/* Main Starts Here: ********************************************************
-//
+/* Main Starts Here: ********************************************************/
+
 int main(int argc, char *argv[])
 {
-
+#ifdef USE_TCP
   // Initialize Local Variables
   int listenSOKFD, connectSOKFD; 
   int sVal;
@@ -123,7 +123,200 @@ int main(int argc, char *argv[])
     memset(rcvBuffer, '\0', MAX_LEN);
     memset(rplyBuffer, '\0', MAX_LEN);
   }
+
+#else // UDP
   
+  #ifdef M_THREADED_SOKETS
+    // Local Variables
+    int listenSOKFD[2];
+    socklen_t clAddrLen[2];
+    // Local Structs
+    S_SADDR_IN SrvAddr[2];
+    S_SADDR_IN ClAddr[2];
+
+  #else // Non Multi-threaded code
+    
+    uint8_t *rcvBuffer  = NULL;
+    uint8_t *rplyBuffer = NULL;
+    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    // Local Variables
+    int listenSOKFD;
+    socklen_t clAddrLen;
+    // Local Structs
+    S_SADDR_IN SrvAddr;
+    S_SADDR_IN ClAddr;
+  
+  #endif // M_THREADED_SOKETS
+  
+  #ifdef M_THREADED_SOKETS
+    // Create a UDP Socket #1
+    // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+    if ((listenSOKFD[0] = UDP_SokInit_Handlr()) < 0) 
+    {
+      printf("[-]Creation of SOCKET = FAIL\n");
+      return EXIT_FAILURE;
+    }
+    // Create a UDP Socket #2
+    if ((listenSOKFD[1] = UDP_SokInit_Handlr()) < 0) 
+    {
+      printf("[-]Creation of SOCKET = FAIL\n");
+      return EXIT_FAILURE;
+    }
+    // Zero-out struct (1st socket)
+    memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
+    SrvAddr[0].sin_family = AF_INET;
+    SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
+    
+    // Zero-out struct (2nd Socket)
+    memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
+    SrvAddr[1].sin_family = AF_INET;
+    SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
+    // bind server address to socket descriptor
+    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+    if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+    {
+      perror("[-]BIND = FAIL\n"); // Print the error message
+    }
+    else
+    {
+      printf("[+]Bind = OK\n");
+    }
+    // Second Socket
+    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_1);
+    if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+    {
+      perror("[-]BIND = FAIL\n"); // Print the error message
+    }
+    else
+    {
+    printf("[+]Bind = OK\n");
+    }
+    //Receive the datagram
+    clAddrLen[0] = sizeof(ClAddr);
+    
+  #else // Non-Thread code
+    // Create a UDP Socket #1
+    // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    {
+      printf("[-]Creation of SOCKET = FAIL\n");
+      return EXIT_FAILURE;
+    }
+    // Zero-out struct (1st socket)
+    memset(&SrvAddr, 0, sizeof(SrvAddr));
+    SrvAddr.sin_family = AF_INET;
+    SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+      
+  #endif // M_THREADED_SOKETS
+     
+  #ifdef M_THREADED_SOKETS
+    // Multi-threaded code
+    // While-Loop to receive data from incomming connections
+    // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+    while (1)
+    {
+      // // receive message
+      // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
+      //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
+      // rcvBuffer[sVal] = '\0';
+      // puts(rcvBuffer);
+      // printf("\n[-]Confirming receive values...\n");
+      // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      
+      // puts("\n");
+      // strcpy(rplyBuffer, rcvBuffer);         
+      // // send the response
+      // sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
+      //       (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
+            
+      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      // {
+      //   printf("[+]CHECKSUM = PASS\n");
+      // }
+      // else
+      // {
+      //   printf("[+]CHECKSUM = FAIL\n");
+      // }
+      // puts("\n");
+      // // Zero-out receive buffer
+      // memset(rcvBuffer, '\0', MAX_LEN);
+    #ifdef THREAD_TEST
+     
+      pthread_t thread1;
+      pthread_t thread2;
+      int *pCl = (int *)malloc(sizeof(int));
+      *pCl = listenSOKFD[0];
+      int *pCl1 = (int *)malloc(sizeof(int));
+      *pCl = 10;
+      *pCl1 = 20;
+      pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+      pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      // SLEEP
+      pthread_join(thread1, NULL);
+      // SLEEP
+      pthread_join(thread2, NULL);
+    
+    #else // Real Multi-threaded code
+      
+      pthread_t thread1;
+      pthread_t thread2;
+      int *pCl = (int *)malloc(sizeof(int));
+      *pCl = listenSOKFD[0];
+      int *pCl1 = (int *)malloc(sizeof(int));
+      *pCl1 = listenSOKFD[0];
+      pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+      pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      // SLEEP
+      pthread_join(thread1, NULL);
+      // SLEEP
+      pthread_join(thread2, NULL);
+    
+    #endif // THREAD_TEST
+      
+    }
+    
+  #else 
+    // Non-Multi-threaded code
+    clAddrLen = sizeof(ClAddr);
+    
+    while (1)
+    {
+      // receive message
+      int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                      (S_SADDR *)&ClAddr, &clAddrLen);
+      rcvBuffer[sVal] = '\0';
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      memset(rcvBuffer, '\0', MAX_LEN);
+      // UDP_SrvConnection_Hndlr(listenSOKFD);  
+    }
+    
+  #endif // M_THREADED_SOKETS
+
+#endif // TCP/UDP
+
   return(0);
 
 }
@@ -131,13 +324,13 @@ int main(int argc, char *argv[])
 /****************************************************************************/
 
 
-/* Main Starts Here: ********************************************************/
+/* Main Starts Here: ********************************************************
 //
 int main(int argc, char *argv[])
 {
-  // Receive and Reply Buffers
+  
   #ifdef M_THREADED_SOKETS
-    
+    // Receive and Reply Buffers
     uint8_t *rcvBuffer  = NULL;
     uint8_t *rplyBuffer = NULL;
     rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
