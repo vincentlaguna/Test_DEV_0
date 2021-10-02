@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
     SrvAddr[1].sin_family = AF_INET;
     SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
     SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
-    // bind server address to socket descriptor
+    // Bind Server address to socket descriptor
     printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
     if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
     {
@@ -210,7 +210,17 @@ int main(int argc, char *argv[])
     SrvAddr.sin_family = AF_INET;
     SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
     SrvAddr.sin_port = htons(REM_SRV_PORT_0);
-      
+    // Bind Server address to socket descriptor
+    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    {
+      perror("[-]BIND = FAIL\n"); // Print the error message
+    }
+    else
+    {
+      printf("[+]Bind = OK\n");
+    }
+    
   #endif // M_THREADED_SOKETS
      
   #ifdef M_THREADED_SOKETS
@@ -297,7 +307,7 @@ int main(int argc, char *argv[])
       strcpy(rplyBuffer, rcvBuffer);         
       // send the response
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            (S_SADDR *)&ClAddr, (int)clAddrLen);
             
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {

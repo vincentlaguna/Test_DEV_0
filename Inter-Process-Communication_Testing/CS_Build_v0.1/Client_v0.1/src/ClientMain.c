@@ -219,15 +219,15 @@ int main(int argc, char *argv[])
       printf("\n[-]CONNECT TO SERVER Error: Connect Failed \n");
       exit(0);
   }
-  printf("[-]CONNECTION TO SERVER: OK\n\n");
+  printf("[+]CONNECTION TO SERVER: OK\n\n");
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
-  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, sizeof(SrvAddr));
+  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
   // Waiting for response
-  recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr*)NULL, NULL);
-  // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (struct sockaddr*)NULL, NULL);
-  // puts(rcvBuffer);
+  // recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
+  recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (S_SADDR *)NULL, NULL);
+  puts(rcvBuffer);
   // SLEEP
   printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
   // SLEEP
