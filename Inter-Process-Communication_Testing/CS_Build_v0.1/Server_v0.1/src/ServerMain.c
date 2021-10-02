@@ -295,31 +295,31 @@ int main(int argc, char *argv[])
     while (1)
     {
       // receive message
-      int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
-                      (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
-      rcvBuffer[sVal] = '\0';
-      puts(rcvBuffer);
-      printf("\n[-]Confirming receive values...\n");
-      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
+      //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
+      // rcvBuffer[sVal] = '\0';
+      // puts(rcvBuffer);
+      // printf("\n[-]Confirming receive values...\n");
+      // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-      puts("\n");
-      strcpy(rplyBuffer, rcvBuffer);         
-      // send the response
-      sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
-            (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
+      // puts("\n");
+      // strcpy(rplyBuffer, rcvBuffer);         
+      // // send the response
+      // sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
+      //       (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
             
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      {
-        printf("[+]CHECKSUM = PASS\n");
-      }
-      else
-      {
-        printf("[+]CHECKSUM = FAIL\n");
-      }
-      puts("\n");
-      // Zero-out receive buffer
-      memset(rcvBuffer, '\0', MAX_LEN);
-      // UDP_SrvConnection_Hndlr(listenSOKFD);  
+      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      // {
+      //   printf("[+]CHECKSUM = PASS\n");
+      // }
+      // else
+      // {
+      //   printf("[+]CHECKSUM = FAIL\n");
+      // }
+      // puts("\n");
+      // // Zero-out receive buffer
+      // memset(rcvBuffer, '\0', MAX_LEN);
+      UDP_SrvConnection_Hndlr(listenSOKFD);  
     }
     
   #endif // M_THREADED_SOKETS
