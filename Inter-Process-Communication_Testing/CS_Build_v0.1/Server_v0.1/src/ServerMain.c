@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   // Receive and Reply Buffers
-  #ifndef M_THREADED_SOKETS
+  #ifdef M_THREADED_SOKETS
     
     uint8_t *rcvBuffer  = NULL;
     uint8_t *rplyBuffer = NULL;
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
     S_SADDR_IN SrvAddr;
     S_SADDR_IN ClAddr;
   
-  #else
+  #else // Non Multi-threaded code
     
     int16_t listenSOKFD;
     int listenSOKFD[2];
@@ -173,21 +173,20 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   // Zero-out struct
-  #ifndef M_THREADED_SOKETS
-    memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
-    SrvAddr[0].sin_family = AF_INET;
+    memset(&SrvAddr, 0, sizeof(SrvAddr));
+    SrvAddr.sin_family = AF_INET;
     // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
+    SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    SrvAddr.sin_port = htons(REM_SRV_PORT_0);
     // Zero-out struct
-    memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
-    SrvAddr[1].sin_family = AF_INET;
+    memset(&SrvAddr, 0, sizeof(SrvAddr));
+    SrvAddr.sin_family = AF_INET;
     // SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
+    SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    SrvAddr.sin_port = htons(REM_SRV_PORT_1);
     // bind server address to socket descriptor
     printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-    if ((bind(listenSOKFD[0], (S_SADDR *)&SrvAddr[0], sizeof(SrvAddr[1]))) < 0)
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
       perror("[-]BIND = FAIL\n"); // Print the error message
     }
@@ -196,7 +195,7 @@ int main(int argc, char *argv[])
       printf("[+]Bind = OK\n");
     }
     printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_1);
-    if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
       perror("[-]BIND = FAIL\n"); // Print the error message
     }
@@ -207,11 +206,36 @@ int main(int argc, char *argv[])
     //Receive the datagram
     clAddrLen[0] = sizeof(ClAddr);
   
-  #else
-  
-    // Non-Thread code
-    // To be completed... 10012021
-  
+  #else // Non-Thread code
+    
+    while (1)
+    {
+      // receive message
+      int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
+                      (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
+      rcvBuffer[sVal] = '\0';
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
+            (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
+            
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      memset(rcvBuffer, '\0', MAX_LEN);
+    
   #endif
   // While-Loop to receive data from incomming connections
   // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
