@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
   sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  int16_t connectSOKFD;
-  int n;
+  int sVal;
+  int connectSOKFD;
   S_SADDR_IN SrvAddr;
   // Create datagram socket
   // connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
@@ -202,7 +202,6 @@ int main(int argc, char *argv[])
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
   }
-  
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
@@ -214,7 +213,7 @@ int main(int argc, char *argv[])
   // strcpy(sndBuffer, cStringPayload);    
   // Connect to server
   printf("[-]CONNECTING TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  if(connect(connectSOKFD, (struct sockaddr *)&SrvAddr, sizeof(SrvAddr)) < 0)
+  if(connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
       printf("\n[-]CONNECT TO SERVER Error: Connect Failed \n");
       exit(0);
@@ -225,8 +224,8 @@ int main(int argc, char *argv[])
   // Connect stores the peers IP and port
   sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
   // Waiting for response
-  // recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
-  recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (S_SADDR *)NULL, NULL);
+  recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
+  // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (S_SADDR *)NULL, NULL);
   puts(rcvBuffer);
   // SLEEP
   printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);

@@ -188,9 +188,9 @@ int main(int argc, char *argv[])
   while (1)
   {
     // receive message
-    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
-    rcvBuffer[n] = '\0';
+    rcvBuffer[sVal] = '\0';
     puts(rcvBuffer);
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+          (S_SADDR *)&ClAddr, sizeof(ClAddr));
     if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
     {
       printf("[+]CHECKSUM = PASS\n");

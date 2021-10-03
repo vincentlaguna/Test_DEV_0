@@ -142,6 +142,7 @@ int main(int argc, char *argv[])
     rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     // Local Variables
     int listenSOKFD;
+    int sVal;
     socklen_t clAddrLen;
     // Local Structs
     S_SADDR_IN SrvAddr;
@@ -198,14 +199,13 @@ int main(int argc, char *argv[])
     clAddrLen[0] = sizeof(ClAddr);
     
   #else // Non-Thread code
-    // Create a UDP Socket #1
     // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
     if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     {
       printf("[-]Creation of SOCKET = FAIL\n");
       return EXIT_FAILURE;
     }
-    // Zero-out struct (1st socket)
+    // Zero-out struct
     memset(&SrvAddr, 0, sizeof(SrvAddr));
     SrvAddr.sin_family = AF_INET;
     SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
   #ifdef M_THREADED_SOKETS
     // Multi-threaded code
     // While-Loop to receive data from incomming connections
-    // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+    printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
     while (1)
     {
       // // receive message
@@ -295,23 +295,28 @@ int main(int argc, char *argv[])
     
     while (1)
     {
-      // receive message
-      int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+      // Receive message
+      sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
+      
+      puts("[+]Displaying Recieve Buffer:\n");
       puts(rcvBuffer);
+      
       printf("\n[-]Confirming receive values...\n");
       printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
       puts("\n");
       strcpy(rplyBuffer, rcvBuffer);         
-      // send the response
+      // Send the response
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, (int)clAddrLen);
+            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
             
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]CHECKSUM = PASS\n");
+        printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer[0]) * strlen(rcvBuffer));
+        // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
       }
       else
       {
