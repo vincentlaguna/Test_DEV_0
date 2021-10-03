@@ -309,9 +309,10 @@ int main(int argc, char *argv[])
       puts("\n");
       strcpy(rplyBuffer, rcvBuffer);         
       // Send the response
+      printf("[-]Sending Response to Client...\n");
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-            
+      printf("[+]RESPONSE = SENT\n");      
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]CHECKSUM = PASS\n");

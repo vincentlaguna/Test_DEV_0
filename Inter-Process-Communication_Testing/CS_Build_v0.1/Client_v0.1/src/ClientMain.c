@@ -222,24 +222,35 @@ int main(int argc, char *argv[])
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
-  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
+  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, sizeof(SrvAddr));
   // Waiting for response
-  recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
-  // recvfrom(connectSOKFD, rcvBuffer, sizeof(rcvBuffer), 0, (S_SADDR *)NULL, NULL);
-  puts(rcvBuffer);
-  // SLEEP
-  printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
-  // SLEEP
-  printf("\n[-]Confirming receive values...\n");
-  printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-  
-  if (rcvBuffer != NULL)
+  while (1)
   {
-    printf("[+]DATA RECEIVED = OK\n");
+  sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, NULL);
+    // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                        // (S_SADDR *)&ClAddr, &clAddrLen);
+    rcvBuffer[sVal] = '\0';
+        
+    puts("[+]Displaying Recieve Buffer:\n");
+    puts(rcvBuffer);
+        
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    puts(rcvBuffer);
+    // SLEEP
+    printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
+    // SLEEP
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
   }
   
-  printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
-  printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+    if (rcvBuffer != NULL)
+    {
+      printf("[+]DATA RECEIVED = OK\n");
+    }
+    
+    printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
+    printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
   
   if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
   {
