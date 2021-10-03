@@ -325,7 +325,7 @@ int main(int argc, char *argv[])
       }
       puts("\n");
       // Zero-out receive buffer
-      memset(rcvBuffer, '\0', MAX_LEN);
+      // memset(rcvBuffer, '\0', MAX_LEN);
       // UDP_SrvConnection_Hndlr(listenSOKFD);  
     }
     
