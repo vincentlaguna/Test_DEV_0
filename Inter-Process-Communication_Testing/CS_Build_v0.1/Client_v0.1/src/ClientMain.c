@@ -224,9 +224,9 @@ int main(int argc, char *argv[])
   // Connect stores the peers IP and port
   sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, sizeof(SrvAddr));
   // Waiting for response
-  while (1)
-  {
-  sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, NULL);
+  // while (1)
+  // {
+    sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                         // (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[sVal] = '\0';
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
     // SLEEP
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-  }
+  // }
   
     if (rcvBuffer != NULL)
     {
