@@ -10,6 +10,8 @@ when not testing locally)
 - Create pthread test branch
 
 Updates:
+- CS_Build_v0.1 (master) -> Created a branch to revert to working version - 100421
+- CS_Build_v0.1 (master) -> Problems with pre-compile conditionals - 100321
 - CS_Build_v0.1 (master) -> Creating Multithreaded Client approach - 100121
 - CS_Build_v0.1 (master) -> Creating Multithreaded Server approach - 100121
 - CS_Build_v0.1 (master) -> Tested w/latest updates - 08262021
