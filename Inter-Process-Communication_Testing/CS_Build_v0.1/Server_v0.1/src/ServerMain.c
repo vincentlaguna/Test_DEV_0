@@ -14,7 +14,7 @@ Description: Server-side Main
 
 /****************************************************************************/
 
-/* Main Starts Here: ********************************************************/
+/* Main Starts Here: ********************************************************
 
 int main(int argc, char *argv[])
 {
@@ -340,32 +340,31 @@ int main(int argc, char *argv[])
 /****************************************************************************/
 
 
-/* Main Starts Here: ********************************************************
+/* Main Starts Here: ********************************************************/
 //
 int main(int argc, char *argv[])
 {
+  // Receive and Reply Buffers
+  uint8_t *rcvBuffer  = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   
   #ifdef M_THREADED_SOKETS
-    // Receive and Reply Buffers
-    uint8_t *rcvBuffer  = NULL;
-    uint8_t *rplyBuffer = NULL;
-    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     // Local Variables
-    int listenSOKFD, clAddrLen;
-    socklen_t clAddrLen;
-    // Local Structs
-    S_SADDR_IN SrvAddr;
-    S_SADDR_IN ClAddr;
-  
-  #else // Non Multi-threaded code
-    
-    int16_t listenSOKFD;
     int listenSOKFD[2];
     socklen_t clAddrLen[2];
     // Local Structs
     S_SADDR_IN SrvAddr[2];
     S_SADDR_IN ClAddr[2];
+    
+  #else // Non Multi-threaded code
+    
+    int16_t listenSOKFD;
+    socklen_t clAddrLen;
+    // Local Structs
+    S_SADDR_IN SrvAddr;
+    S_SADDR_IN ClAddr;
   
   #endif // M_THREADED_SOKETS
   
@@ -504,31 +503,31 @@ int main(int argc, char *argv[])
     while (1)
     {
       // receive message
-      // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
-      //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
-      // rcvBuffer[sVal] = '\0';
-      // puts(rcvBuffer);
-      // printf("\n[-]Confirming receive values...\n");
-      // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                      (S_SADDR *)&ClAddr, &clAddrLen);
+      rcvBuffer[sVal] = '\0';
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-      // puts("\n");
-      // strcpy(rplyBuffer, rcvBuffer);         
-      // // send the response
-      // sendto(listenSOKFD[0], rplyBuffer, MAX_LEN, 0,
-      //       (struct sockaddr*)&ClAddr[0], sizeof(ClAddr));
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+            (struct sockaddr*)&ClAddr, sizeof(ClAddr));
             
-      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      // {
-      //   printf("[+]CHECKSUM = PASS\n");
-      // }
-      // else
-      // {
-      //   printf("[+]CHECKSUM = FAIL\n");
-      // }
-      // puts("\n");
-      // // Zero-out receive buffer
-      // memset(rcvBuffer, '\0', MAX_LEN);
-      UDP_SrvConnection_Hndlr(listenSOKFD);  
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      memset(rcvBuffer, '\0', MAX_LEN);
+      // UDP_SrvConnection_Hndlr(listenSOKFD);  
     }
     
   #endif // M_THREADED_SOKETS
