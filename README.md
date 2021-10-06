@@ -10,6 +10,7 @@ when not testing locally)
 - Create pthread test branch
 
 Updates:
+- CS_Build_v0.1 (master) -> Reminder: Pass in structure as arg to thread handler - 100521
 - CS_Build_v0.1 (revert-working-branch) -> Works...  - 100521
 - CS_Build_v0.1 (master) -> Created a branch to revert to working version - 100421
 - CS_Build_v0.1 (master) -> Problems with pre-compile conditionals - 100321
