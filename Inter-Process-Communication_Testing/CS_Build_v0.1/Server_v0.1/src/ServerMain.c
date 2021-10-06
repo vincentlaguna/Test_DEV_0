@@ -340,7 +340,7 @@ int main(int argc, char *argv[])
 /****************************************************************************/
 
 
-/* Main Starts Here: ********************************************************/
+/* Main Starts Here: ********************************************************
 //
 int main(int argc, char *argv[])
 {
@@ -546,6 +546,85 @@ int main(int argc, char *argv[])
 
 /****************************************************************************/
 
+int main(int argc, char *argv[])
+{
+  // UDP_SrvConnection_Hndlr(REM_SRV_IP_0);
+  // Receive and Reply Buffers
+  // uint8_t rcvBuffer[MAX_LEN];
+  // uint8_t rplyBuffer[MAX_LEN];
+  uint8_t *rcvBuffer  = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer   = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // Local Variables
+  // int listenSOKFD, clAddrLen;
+  int16_t listenSOKFD;
+  int sVal;
+  int clAddrLen;
+  // Local Structs
+  S_SADDR_IN SrvAddr, ClAddr;
+  // S_SADDR_IN ClAddr;
+  // Create a UDP Socket
+  // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+  if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+  {
+    printf("[-]Creation of SOCKET = FAIL\n");
+    return EXIT_FAILURE;
+  }
+  // Zero-out struct
+  memset(&SrvAddr, 0, sizeof(SrvAddr));
+  SrvAddr.sin_family = AF_INET;
+  SrvAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+  // bind server address to socket descriptor
+  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+  // printf("[+]Binding to PORT: %d...\n", REM_SRV_PORT_0);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+  if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+  {
+    perror("[-]BIND = FAIL\n"); // Print the error message
+  }
+  // SLEEP
+  // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
+  // {
+  //   printf("[-]BIND = FAIL\n"); // Print the error message
+  // }
+  printf("[+]Bind = OK\n");
+  //Receive the datagram
+  clAddrLen = sizeof(ClAddr);
+  // While-Loop to receive data from incomming connections
+  printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+  while (1)
+  {
+    // receive message
+    int n = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                    (S_SADDR *)&ClAddr, &clAddrLen);
+    rcvBuffer[n] = '\0';
+    puts(rcvBuffer);
+    printf("\n[-]Confirming receive values...\n");
+    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    
+    puts("\n");
+    strcpy(rplyBuffer, rcvBuffer);         
+    // send the response
+    sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+          (struct sockaddr*)&ClAddr, sizeof(ClAddr));
+    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    {
+      printf("[+]CHECKSUM = PASS\n");
+    }
+    else
+    {
+      printf("[+]CHECKSUM = FAIL\n");
+    }
+    puts("\n");
+    // Zero-out receive buffer
+    memset(rcvBuffer, '\0', MAX_LEN);
+  }
+  
+  return(0);
+
+}
 
 /****************************************************************************/
 // End ServerMain.c
