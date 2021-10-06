@@ -22,3 +22,6 @@ Updates:
 
 Installation:
 - Instructions in progress - 082021
+
+Quick Notes:
+- The data is replied only after running the Client code more than once?... 100521-0947
