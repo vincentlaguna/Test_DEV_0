@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
   // SLEEP
   printf("\n[+]SERVER RESPONSE: %s\n", rcvBuffer);
   // SLEEP
-  printf("[+]DATA RECEIVED = OK\n");
+  printf("\n[+]DATA RECEIVED = OK\n");
   printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
   printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
   
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
   
     if (rcvBuffer != NULL)
     {
-      printf("[+]DATA RECEIVED = OK\n");
+      printf("\n\n[+]DATA RECEIVED = OK\n");
     }
     
     printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
