@@ -17,40 +17,8 @@ Description: Client-side Main
 /* Defines: *****************************************************************/
 /****************************************************************************/
 
-/* Globals: *****************************************************************
-
-static const uint8_t *cSerialData = 
-{
-	"\xff"													// NUM bytes
-	"\x02"													// STX
-	"01234567890123456789012345678901234567890123456789"	// 50 chrs
-	"01234567890123456789012345678901234567890123456789"	// 50 chrs
-	"01234567890123456789012345678901234567890123456789"	// 50 chrs
-	"01234567890123456789012345678901234567890123456789"	// 50 chrs
-	"01234567890123456789012345678901234567890123456789"	// 50 chrs
-	"\x03",													// ETX
-															// 255 total
-};
-
-static const uint8_t *cStringPayload = 
-{
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 26
-	"abcdefghijklmnopqrstuvwxyz"							// 52
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 78
-	"abcdefghijklmnopqrstuvwxyz"							// 104
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 130
-	"abcdefghijklmnopqrstuvwxyz"							// 156
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 182
-	"abcdefghijklmnopqrstuvwxyz"							// 208
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"							// 234
-	"abcdefghijklmnopqrstuvwxyz"							// 260
-	"",
-};
-
-/****************************************************************************/
-
 /* Main Starts Here: ********************************************************
-//
+// TCP
 int main(int argc, char *argv[])
 {
   // Initialize Local Variables
@@ -183,7 +151,7 @@ int main(int argc, char *argv[])
 
 
 /* Main Starts Here: ********************************************************/
-//
+// UDP
 int main(int argc, char *argv[])
 {
   // Receive and Reply Buffers

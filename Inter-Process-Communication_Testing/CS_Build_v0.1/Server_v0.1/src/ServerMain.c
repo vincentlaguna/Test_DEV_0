@@ -14,7 +14,7 @@ Description: Server-side Main
 
 /****************************************************************************/
 
-/* Main Starts Here: ********************************************************
+/* Main Starts Here: ********************************************************/
 
 int main(int argc, char *argv[])
 {
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
       exit(1);
     }
     
-  #endif
+  #endif // LIN
   // Create Socket File Descriptor to listen on (Server)
   // SLEEP
   printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
@@ -141,12 +141,14 @@ int main(int argc, char *argv[])
     rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     // Local Variables
-    int listenSOKFD;
-    int sVal;
-    socklen_t clAddrLen;
+    // int listenSOKFD;
+    // int sVal;
+    // socklen_t clAddrLen;
+    int16_t listenSOKFD;
+    // int sVal;
+    int clAddrLen;
     // Local Structs
-    S_SADDR_IN SrvAddr;
-    S_SADDR_IN ClAddr;
+    S_SADDR_IN SrvAddr, ClAddr;
   
   #endif // M_THREADED_SOKETS
   
@@ -292,11 +294,12 @@ int main(int argc, char *argv[])
   #else 
     // Non-Multi-threaded code
     clAddrLen = sizeof(ClAddr);
-    
+    printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+    // While-Loop to receive data from incomming connections
     while (1)
     {
       // Receive message
-      sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+      int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       
@@ -311,13 +314,15 @@ int main(int argc, char *argv[])
       // Send the response
       printf("[-]Sending Response to Client...\n");
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-      printf("[+]RESPONSE = SENT\n");      
+            (S_SADDR *)&ClAddr, sizeof(ClAddr));
+      printf("[+]RESPONSE = SENT\n"); 
+      
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]CHECKSUM = PASS\n");
-        printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer[0]) * strlen(rcvBuffer));
-        // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+        // printf("[+]BYTES RECEIVED = %d\n", strlen(rcvBuffer)/sizeof(uint8_t));
+        printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+        printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
       }
       else
       {
@@ -325,7 +330,7 @@ int main(int argc, char *argv[])
       }
       puts("\n");
       // Zero-out receive buffer
-      // memset(rcvBuffer, '\0', MAX_LEN);
+      memset(rcvBuffer, '\0', MAX_LEN);
       // UDP_SrvConnection_Hndlr(listenSOKFD);  
     }
     
@@ -544,7 +549,7 @@ int main(int argc, char *argv[])
 
 }
 
-/****************************************************************************/
+/****************************************************************************
 
 int main(int argc, char *argv[])
 {
