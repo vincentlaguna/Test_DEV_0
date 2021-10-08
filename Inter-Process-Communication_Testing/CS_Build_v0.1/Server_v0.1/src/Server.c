@@ -297,106 +297,107 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     
     return NULL;
   
-  #endif  
-  
-  // Receive and Reply Buffers
-  uint8_t *rcvBuffer = NULL;
-  uint8_t *rplyBuffer = NULL;
-  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // // Local Variables
-  int sVal;
-  // uint16_t remPort;
-  int pClSOKFD = *((int *)clSOKFD);
-  free(clSOKFD);
-  
-  socklen_t clAddrLen;
-  // Local Structs
-  S_SADDR_IN ClAddr;
-  // Assign remPort Port to corresponding port number
-  // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
-  // {
-  //   remPort = REM_SRV_PORT_0;
-  // }
-  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_1])
-  // {
-  //   remPort = REM_SRV_PORT_1;
-  // }
-  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_2])
-  // {
-  //   remPort = REM_SRV_PORT_2;
-  // }
-  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_3])
-  // {
-  //   remPort = REM_SRV_PORT_3;
-  // }
-  // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_4])
-  // {
-  //   remPort = REM_SRV_PORT_4;
-  // }
-  // else
-  // {
-  //   EXIT_FAILURE;
-  // }
-  // Create a UDP Socket
-  // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
-  // {
-  //   printf("[-]Creation of SOCKET = FAIL\n");
-  //   // return EXIT_FAILURE;
-  // }
-  // Zero-out struct values
-  // memset(&SrvAddr, 0, sizeof(SrvAddr));
-  // SrvAddr.sin_addr.s_addr = htonl(*szRempIP);
-  // SrvAddr.sin_port = htons(remPort);
-  // SrvAddr.sin_family = AF_INET; 
-  // bind server address to socket descriptor
-  // bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
-  // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
-  // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
-  // {
-  //   perror("[-]BIND = FAIL\n"); // Print the error message
-  // }
-  // printf("[+]Bind = OK\n");
-  // //Receive the datagram
-  clAddrLen = sizeof(ClAddr);
-  // While-Loop to receive data from incomming connections
-  pthread_mutex_t SOKlock;
-  pthread_mutex_init(&SOKlock, NULL);
+  #else 
+    // Receive and Reply Buffers
+    uint8_t *rcvBuffer = NULL;
+    uint8_t *rplyBuffer = NULL;
+    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    // // Local Variables
+    int sVal;
+    // uint16_t remPort;
+    int pClSOKFD = *((int *)clSOKFD);
+    free(clSOKFD);
     
-  pthread_mutex_lock(&SOKlock);
-  // while (1)
-  // {
-    // receive message
-    sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
-                    (S_SADDR *)&ClAddr, &clAddrLen);
-    rcvBuffer[sVal] = '\0';
-    puts(rcvBuffer);
-    printf("\n[-]Confirming receive values...\n");
-    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    socklen_t clAddrLen;
+    // Local Structs
+    S_SADDR_IN ClAddr;
+    // Assign remPort Port to corresponding port number
+    // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
+    // {
+    //   remPort = REM_SRV_PORT_0;
+    // }
+    // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_1])
+    // {
+    //   remPort = REM_SRV_PORT_1;
+    // }
+    // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_2])
+    // {
+    //   remPort = REM_SRV_PORT_2;
+    // }
+    // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_3])
+    // {
+    //   remPort = REM_SRV_PORT_3;
+    // }
+    // else if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_4])
+    // {
+    //   remPort = REM_SRV_PORT_4;
+    // }
+    // else
+    // {
+    //   EXIT_FAILURE;
+    // }
+    // Create a UDP Socket
+    // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    // {
+    //   printf("[-]Creation of SOCKET = FAIL\n");
+    //   // return EXIT_FAILURE;
+    // }
+    // Zero-out struct values
+    // memset(&SrvAddr, 0, sizeof(SrvAddr));
+    // SrvAddr.sin_addr.s_addr = htonl(*szRempIP);
+    // SrvAddr.sin_port = htons(remPort);
+    // SrvAddr.sin_family = AF_INET; 
+    // bind server address to socket descriptor
+    // bind(listenSOKFD, (struct sockaddr*)&SrvAddr, sizeof(SrvAddr));
+    // printf("[+]Binding to IP: %s on PORT: %d\n", REM_SRV_IP_0, REM_SRV_PORT);
+    // if ((BindSrvSok_Hndlr(listenSOKFD, REM_SRV_IP_0)) < 0)
+    // {
+    //   perror("[-]BIND = FAIL\n"); // Print the error message
+    // }
+    // printf("[+]Bind = OK\n");
+    // //Receive the datagram
+    clAddrLen = sizeof(ClAddr);
+    // While-Loop to receive data from incomming connections
+    pthread_mutex_t SOKlock;
+    pthread_mutex_init(&SOKlock, NULL);
+      
+    pthread_mutex_lock(&SOKlock);
+    // while (1)
+    // {
+      // receive message
+      sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
+                      (S_SADDR *)&ClAddr, &clAddrLen);
+      rcvBuffer[sVal] = '\0';
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(pClSOKFD, rplyBuffer, MAX_LEN, 0,
+            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      memset(rcvBuffer, '\0', MAX_LEN);
+      printf("This is where the magic would happen...\n");
+    // }
+    pthread_mutex_unlock(&SOKlock);
     
-    puts("\n");
-    strcpy(rplyBuffer, rcvBuffer);         
-    // send the response
-    sendto(pClSOKFD, rplyBuffer, MAX_LEN, 0,
-          (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-          
-    if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-    {
-      printf("[+]CHECKSUM = PASS\n");
-    }
-    else
-    {
-      printf("[+]CHECKSUM = FAIL\n");
-    }
-    puts("\n");
-    // Zero-out receive buffer
-    memset(rcvBuffer, '\0', MAX_LEN);
-    printf("This is where the magic would happen...\n");
-  // }
-  pthread_mutex_unlock(&SOKlock);
+    free(rcvBuffer);
+    free(rplyBuffer);
   
-  free(rcvBuffer);
-  free(rplyBuffer);
+  #endif
   
   return NULL;
 }
