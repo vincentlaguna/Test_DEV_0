@@ -319,10 +319,9 @@ int main(int argc, char *argv[])
       
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
-        printf("[+]CHECKSUM = PASS\n");
-        // printf("[+]BYTES RECEIVED = %d\n", strlen(rcvBuffer)/sizeof(uint8_t));
         printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-        printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+        // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+        printf("[+]CHECKSUM = PASS\n");
       }
       else
       {

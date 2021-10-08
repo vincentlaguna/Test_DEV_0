@@ -217,8 +217,8 @@ int main(int argc, char *argv[])
       printf("\n\n[+]DATA RECEIVED = OK\n");
     }
     
-    printf("[+]BYTES RECEIVED = %d\n", sizeof(rcvBuffer));
-    printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+    printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+    // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
   
   if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
   {
