@@ -46,10 +46,10 @@ Description: Common header file for Client-Server code
 #define   TIME_O 5
 #define   MAX_CONN 6
 // #define		USE_TCP
-#define		THREAD_TEST
-#define		M_THREADED_SOKETS
-#define	  MAX_LEN 260//257
-#define	  MAXLINE 1000
+// #define		THREAD_TEST
+// #define		M_THREADED_SOKETS
+#define	  MAX_LEN 1024
+#define	  MAX_STR_SZ 128
 #define   SLEEP	sleep(1);
 #define   REM_CL_PORT 11069
 #define   REM_SRV_PORT_0 11000
@@ -123,16 +123,25 @@ static const uint8_t *cStringPayload =
 
 /* Data Sructure Definitions: ***********************************************/
 
-/* Data Buffer **************************************************************
+/* Data Buffer **************************************************************/
 
-struct  DataBuffer
+typedef struct  SOKData
 {
-  char  cPayload[MAX_STR_SZ]; // Storage for string	
-  // uint32_t	uDataSize;	    // Size of data
-  // uint16_t	*pNext;	        // Next node *
-  // uint16_t  *pPrev;	    // Previous node *
+  // Data to pass as argument to thread handler
+  uint8_t 	cSOKid[MAX_STR_SZ];  // Storage SOK ID
+  uint8_t 	*cIP;								 // IP (c-String)
+	uint16_t	uPort;	             // Port Number
+	
+} SOKData;
 
-} __attribute__((__packed__));
+// struct  DataBuffer
+// {
+//   char  cPayload[MAX_STR_SZ]; // Storage for string	
+//   // uint32_t	uDataSize;	    // Size of data
+//   // uint16_t	*pNext;	        // Next node *
+//   // uint16_t  *pPrev;	    // Previous node *
+
+// } __attribute__((__packed__));
 
 /****************************************************************************/
 
