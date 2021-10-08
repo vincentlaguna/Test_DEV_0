@@ -17,10 +17,11 @@ Description: Client-side Main
 /* Defines: *****************************************************************/
 /****************************************************************************/
 
-/* Main Starts Here: ********************************************************
-// TCP
+/* Main Starts Here: ********************************************************/
+
 int main(int argc, char *argv[])
 {
+#ifdef USE_TCP
   // Initialize Local Variables
   int connectSOKFD; 
   int optVal;
@@ -142,18 +143,8 @@ int main(int argc, char *argv[])
   #else
     close(connectSOKFD);
   #endif
-  
-  return(0);
 
-}
-
-/****************************************************************************/
-
-
-/* Main Starts Here: ********************************************************/
-// UDP
-int main(int argc, char *argv[])
-{
+#else // UDP
   // Receive and Reply Buffers
   uint8_t *sndBuffer = NULL;
   uint8_t *rcvBuffer = NULL;
@@ -212,14 +203,16 @@ int main(int argc, char *argv[])
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
   // }
   
-    if (rcvBuffer != NULL)
-    {
-      printf("\n\n[+]DATA RECEIVED = OK\n");
-    }
-    
-    printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-    // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
-  
+  if (rcvBuffer != NULL)
+  {
+    printf("\n\n[+]DATA RECEIVED = OK\n");
+  }
+  else
+  {
+    printf("\n\n[-]DATA RECEIVED = FAIL\n");
+  }
+  printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+  // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
   if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
   {
     printf("[+]CHECKSUM = PASS\n");
@@ -235,8 +228,10 @@ int main(int argc, char *argv[])
   printf("\n[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   close(connectSOKFD);
   
-  return(0);
+#endif // TCP/UDP  
 
+  return(0);
+  
 }
 
 /****************************************************************************/
