@@ -10,6 +10,7 @@ when not testing locally)
 - Create pthread test branch
 
 Updates:
+- CS_Build_v0.1 (master) -> Pass in struct as arg for thread handler (start) - 100821
 - CS_Build_v0.1 (master) -> Start copying code from working branch works now - 100621
 - CS_Build_v0.1 (master) -> Reminder: Pass in structure as arg to thread handler - 100521
 - CS_Build_v0.1 (revert-working-branch) -> Works...  - 100521
