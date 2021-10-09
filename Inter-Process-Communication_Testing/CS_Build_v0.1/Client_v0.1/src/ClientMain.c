@@ -21,14 +21,18 @@ Description: Client-side Main
 
 int main(int argc, char *argv[])
 {
+  // Receive and Reply Buffers
+  uint8_t *sndBuffer = NULL;
+  uint8_t *rcvBuffer = NULL;
+  sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  
 #ifdef USE_TCP
   // Initialize Local Variables
   int connectSOKFD; 
   int optVal;
   socklen_t optLen = sizeof(optVal);
   uint8_t *IPbuffer;
-  uint8_t sndBuffer[MAX_LEN];
-  uint8_t rcvBuffer[MAX_LEN];
   // For server data
   S_SADDR_IN  SrvAddr;
   // Time-out values for socket options
@@ -145,11 +149,6 @@ int main(int argc, char *argv[])
   #endif
 
 #else // UDP
-  // Receive and Reply Buffers
-  uint8_t *sndBuffer = NULL;
-  uint8_t *rcvBuffer = NULL;
-  sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   int sVal;
   int connectSOKFD;
@@ -181,11 +180,11 @@ int main(int argc, char *argv[])
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
-  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, sizeof(SrvAddr));
+  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
   // Waiting for response
   // while (1)
   // {
-    sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (struct sockaddr *)NULL, NULL);
+    sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                         // (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[sVal] = '\0';

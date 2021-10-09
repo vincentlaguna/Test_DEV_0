@@ -18,15 +18,18 @@ Description: Server-side Main
 
 int main(int argc, char *argv[])
 {
+  // Receive and Reply Buffers
+  uint8_t *rcvBuffer  = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+
 #ifdef USE_TCP
   // Initialize Local Variables
   int listenSOKFD, connectSOKFD; 
   int sVal;
   S_SADDR_IN  SrvAddr; 
   S_SADDR_IN  ClAddr;
-  
-  uint8_t rcvBuffer[MAX_LEN];
-  uint8_t rplyBuffer[MAX_LEN];
   // Winsock
   #ifndef   LIN
     
@@ -135,11 +138,6 @@ int main(int argc, char *argv[])
     S_SADDR_IN ClAddr[2];
 
   #else // Non Multi-threaded code
-    
-    uint8_t *rcvBuffer  = NULL;
-    uint8_t *rplyBuffer = NULL;
-    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     // Local Variables
     // int listenSOKFD;
     // int sVal;
