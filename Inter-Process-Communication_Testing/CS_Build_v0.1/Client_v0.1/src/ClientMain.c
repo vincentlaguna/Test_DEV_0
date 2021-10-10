@@ -150,8 +150,7 @@ int main(int argc, char *argv[])
 
 #else // UDP
   // Local Variables
-  int sVal;
-  int connectSOKFD;
+  uint16_t connectSOKFD;
   S_SADDR_IN SrvAddr;
   // Create datagram socket
   // connectSOKFD = socket(AF_INET, SOCK_DGRAM, 0);
@@ -184,7 +183,7 @@ int main(int argc, char *argv[])
   // Waiting for response
   // while (1)
   // {
-    sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
+    uint16_t sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                         // (S_SADDR *)&ClAddr, &clAddrLen);
     rcvBuffer[sVal] = '\0';

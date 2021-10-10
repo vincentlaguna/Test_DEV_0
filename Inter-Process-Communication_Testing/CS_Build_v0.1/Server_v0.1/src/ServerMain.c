@@ -18,6 +18,13 @@ Description: Server-side Main
 
 int main(int argc, char *argv[])
 {
+#ifndef M_THREADED_SOKETS  
+  // Initialize Local Variables
+  socklen_t clAddrLen;
+  int16_t listenSOKFD;
+  S_SADDR_IN SrvAddr, ClAddr;
+
+#endif
   // Receive and Reply Buffers
   uint8_t *rcvBuffer  = NULL;
   uint8_t *rplyBuffer = NULL;
@@ -137,17 +144,8 @@ int main(int argc, char *argv[])
     S_SADDR_IN SrvAddr[2];
     S_SADDR_IN ClAddr[2];
 
-  #else // Non Multi-threaded code
-    // Local Variables
-    // int listenSOKFD;
-    // int sVal;
-    // socklen_t clAddrLen;
-    int16_t listenSOKFD;
-    // int sVal;
-    int clAddrLen;
-    // Local Structs
-    S_SADDR_IN SrvAddr, ClAddr;
-  
+  // #else // Non Multi-threaded code
+    
   #endif // M_THREADED_SOKETS
   
   #ifdef M_THREADED_SOKETS
@@ -199,7 +197,7 @@ int main(int argc, char *argv[])
     clAddrLen[0] = sizeof(ClAddr);
     
   #else // Non-Thread code
-    // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+    // Initialize Socket
     if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     {
       printf("[-]Creation of SOCKET = FAIL\n");
@@ -297,7 +295,7 @@ int main(int argc, char *argv[])
     while (1)
     {
       // Receive message
-      int sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       
@@ -314,7 +312,7 @@ int main(int argc, char *argv[])
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(ClAddr));
       printf("[+]RESPONSE = SENT\n"); 
-      
+      // Checksum Validation
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
