@@ -46,8 +46,8 @@ Description: Common header file for Client-Server code
 #define   TIME_O 5
 #define   MAX_CONN 6
 // #define		USE_TCP
-#define		THREAD_TEST
-#define		M_THREADED_SOKETS
+// #define		THREAD_TEST
+// #define		M_THREADED_SOKETS
 #define	  MAX_LEN 1024
 #define	  MAX_STR_SZ 128
 #define   SLEEP	sleep(1);

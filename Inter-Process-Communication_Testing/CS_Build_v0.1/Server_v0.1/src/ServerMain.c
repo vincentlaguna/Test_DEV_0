@@ -298,10 +298,10 @@ int main(int argc, char *argv[])
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
-      
+      // Display Receive Buffer
       puts("[+]Displaying Recieve Buffer:\n");
       puts(rcvBuffer);
-      
+      // Validate
       printf("\n[-]Confirming receive values...\n");
       printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
@@ -316,7 +316,6 @@ int main(int argc, char *argv[])
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-        // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
         printf("[+]CHECKSUM = PASS\n");
       }
       else
