@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     // puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         
     // send the response
-    printf("[-]Sending Response to Client...\n");
+    // printf("[-]Sending Response to Client...\n");
     sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
           (S_SADDR *)&ClAddr, sizeof(ClAddr));
     // Checksum Validation (for debugging)
