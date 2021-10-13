@@ -50,6 +50,7 @@ Description: Common header file for Client-Server code
 // #define		M_THREADED_SOKETS
 #define	  MAX_LEN 1024
 #define	  MAX_STR_SZ 128
+#define	  IP_STR_SZ 16
 #define   SLEEP	sleep(1);
 #define   REM_CL_PORT 11069
 #define   REM_SRV_PORT_0 11000
@@ -128,9 +129,9 @@ static const uint8_t *cStringPayload =
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t 	cSOKid[MAX_STR_SZ];  // Storage SOK ID
-  uint8_t 	*cIP;								 // IP (c-String)
-	uint16_t	uPort;	             // Port Number
+  uint8_t 	*cIP[];	// IP (c-String)
+	uint16_t	uPort;	// Port Number
+	uint16_t 	SOKid;	// SOK ID
 	
 } SOKData;
 

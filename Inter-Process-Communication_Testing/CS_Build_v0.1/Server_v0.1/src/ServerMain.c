@@ -254,19 +254,29 @@ int main(int argc, char *argv[])
       // memset(rcvBuffer, '\0', MAX_LEN);
     #ifdef THREAD_TEST
      
-      pthread_t thread1;
-      pthread_t thread2;
-      int *pCl = (int *)malloc(sizeof(int));
-      *pCl = listenSOKFD[0];
-      int *pCl1 = (int *)malloc(sizeof(int));
-      *pCl = 10;
-      *pCl1 = 20;
-      pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
-      pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      pthread_t SOKthread1;
+      pthread_t SOKthread2;
+      
+      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, );
+      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, );
       // SLEEP
       pthread_join(thread1, NULL);
       // SLEEP
       pthread_join(thread2, NULL);
+      
+      // pthread_t thread1;
+      // pthread_t thread2;
+      // int *pCl = (int *)malloc(sizeof(int));
+      // *pCl = listenSOKFD[0];
+      // int *pCl1 = (int *)malloc(sizeof(int));
+      // *pCl = 10;
+      // *pCl1 = 20;
+      // pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+      // pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      // // SLEEP
+      // pthread_join(thread1, NULL);
+      // // SLEEP
+      // pthread_join(thread2, NULL);
     
     #else // Real Multi-threaded code
       
