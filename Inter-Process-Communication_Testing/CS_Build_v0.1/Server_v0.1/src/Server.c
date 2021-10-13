@@ -255,7 +255,8 @@ Returns: void
 
 
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
-void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
+// void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
+void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   #ifdef THREAD_TEST
   
