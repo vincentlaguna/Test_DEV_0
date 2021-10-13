@@ -225,8 +225,8 @@ int main(int argc, char *argv[])
     // Multi-threaded code
     // While-Loop to receive data from incomming connections
     printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    // while (1)
-    // {
+    while (1)
+    {
       // // receive message
       // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
       //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
@@ -254,18 +254,26 @@ int main(int argc, char *argv[])
       // memset(rcvBuffer, '\0', MAX_LEN);
     #ifdef THREAD_TEST
      
-      SOKData sokData;
-      sokData.SOKid = 10;
+      SOKData sokData0;
+      SOKData sokData1;
+      
+      sokData0.SOKid = 10;
+      sokData1.SOKid = 20;
       
       pthread_t SOKthread1;
       pthread_t SOKthread2;
       
-      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData);
-      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData);
+      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
+      SLEEP
+      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
       // SLEEP
+      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       pthread_join(SOKthread1, NULL);
-      // SLEEP
+      SLEEP
       pthread_join(SOKthread2, NULL);
+      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       
       // pthread_t thread1;
       // pthread_t thread2;
@@ -283,22 +291,22 @@ int main(int argc, char *argv[])
     
     #else // Real Multi-threaded code
       
-      pthread_t thread1;
-      pthread_t thread2;
-      int *pCl = (int *)malloc(sizeof(int));
-      *pCl = listenSOKFD[0];
-      int *pCl1 = (int *)malloc(sizeof(int));
-      *pCl1 = listenSOKFD[0];
-      pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
-      pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
-      // SLEEP
-      pthread_join(thread1, NULL);
-      // SLEEP
-      pthread_join(thread2, NULL);
+      // pthread_t thread1;
+      // pthread_t thread2;
+      // int *pCl = (int *)malloc(sizeof(int));
+      // *pCl = listenSOKFD[0];
+      // int *pCl1 = (int *)malloc(sizeof(int));
+      // *pCl1 = listenSOKFD[0];
+      // pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
+      // pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
+      // // SLEEP
+      // pthread_join(thread1, NULL);
+      // // SLEEP
+      // pthread_join(thread2, NULL);
     
     #endif // THREAD_TEST
       
-    // }
+    } // End of while-loop
     
   #else 
     // Non-Multi-threaded code

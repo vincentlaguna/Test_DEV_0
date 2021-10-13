@@ -262,10 +262,21 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   
     SOKData *lData;
     
-    uint16_t lSOKid = 0;
+    // pthread_mutex_t SOKlock;
+    // pthread_mutex_init(&SOKlock, NULL);
+    
+    // pthread_mutex_lock(&SOKlock);
+    
     lData = (SOKData *)sokData;
-    lSOKid = lData->SOKid;
-    printf("\nIn Thread Handler: SOKid = %d\n", lSOKid);
+    printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
+    SLEEP
+    srand(time(0));
+    lData->SOKid = rID_Gen();
+    printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
+    
+    // pthread_mutex_unlock(&SOKlock);
+    
+    
     // int pClSOKFD = *((int *)clSOKFD);
     // free(clSOKFD);
     
@@ -514,11 +525,11 @@ int rID_Gen(void)
   for (i = 0; i < 10; i++) 
   {
     int ct = (rand() % (u - l + 1)) + l;
-    printf("%d ", ct);
+    // printf("%d ", ct);
     retVal = ct;
   }
   
-  puts("\n\n");
+  // puts("\n\n");
   
   return retVal;
 }
