@@ -225,8 +225,8 @@ int main(int argc, char *argv[])
     // Multi-threaded code
     // While-Loop to receive data from incomming connections
     printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    while (1)
-    {
+    // while (1)
+    // {
       // // receive message
       // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
       //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
@@ -254,15 +254,18 @@ int main(int argc, char *argv[])
       // memset(rcvBuffer, '\0', MAX_LEN);
     #ifdef THREAD_TEST
      
+      SOKData sokData;
+      sokData.SOKid = 10;
+      
       pthread_t SOKthread1;
       pthread_t SOKthread2;
       
-      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, );
-      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, );
+      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData);
+      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData);
       // SLEEP
-      pthread_join(thread1, NULL);
+      pthread_join(SOKthread1, NULL);
       // SLEEP
-      pthread_join(thread2, NULL);
+      pthread_join(SOKthread2, NULL);
       
       // pthread_t thread1;
       // pthread_t thread2;
@@ -295,7 +298,7 @@ int main(int argc, char *argv[])
     
     #endif // THREAD_TEST
       
-    }
+    // }
     
   #else 
     // Non-Multi-threaded code

@@ -129,9 +129,9 @@ static const uint8_t *cStringPayload =
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t 	*cIP[];	// IP (c-String)
-	uint16_t	uPort;	// Port Number
-	uint16_t 	SOKid;	// SOK ID
+  uint8_t 	*cIP[IP_STR_SZ];	// IP (c-String)
+	uint16_t	uPort;	          // Port Number
+	uint16_t 	SOKid;	          // SOK ID
 	
 } SOKData;
 

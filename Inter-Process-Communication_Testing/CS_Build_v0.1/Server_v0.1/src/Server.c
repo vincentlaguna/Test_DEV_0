@@ -260,6 +260,12 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   #ifdef THREAD_TEST
   
+    SOKData *lData;
+    
+    uint16_t lSOKid = 0;
+    lData = (SOKData *)sokData;
+    lSOKid = lData->SOKid;
+    printf("\nIn Thread Handler: SOKid = %d\n", lSOKid);
     // int pClSOKFD = *((int *)clSOKFD);
     // free(clSOKFD);
     
@@ -294,7 +300,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     //   printf("Thread #%d\n\n", rID++);
     // }
     
-    pthread_mutex_unlock(&SOKlock);
+    // pthread_mutex_unlock(&SOKlock);
     
     return NULL;
   
