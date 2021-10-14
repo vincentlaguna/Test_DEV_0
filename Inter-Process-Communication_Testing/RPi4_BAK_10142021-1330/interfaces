@@ -1,0 +1,43 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+
+auto eth0
+iface eth0 inet static
+	address 192.168.143.10
+	netmask 255.255.240.0
+	gateway 192.168.143.100
+
+auto eth1
+iface eth1 inet static
+	address 192.168.143.201
+	netmask 255.255.240.0
+	gateway 192.168.143.100
+
+auto eth2
+iface eth2 inet static
+	address 192.168.143.202
+	netmask 255.255.240.0
+	gateway 192.168.143.100
+
+auto eth3
+iface eth3 inet static
+	address 192.168.143.203
+	netmask 255.255.240.0
+	gateway 192.168.143.100
+
+auto eth4
+iface eth4 inet static
+	address 192.168.143.204
+	netmask 255.255.240.0
+	gateway 192.168.143.100
+
+auto eth5
+iface eth5 inet static
+	address 192.168.143.205
+	netmask 255.255.240.0
+	gateway 192.168.143.100

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*",  ATTRS{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="eth1"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*",  ATTRS{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{address}=="a0:ce:c8:e1:ee:96", NAME="eth2"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*",  ATTRS{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{address}=="a0:ce:c8:e1:ec:db", NAME="eth3"
+
+#SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="eth1"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:ec:db", NAME="eth2"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:b5:a3", NAME="eth3"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:ee:96", NAME="eth4"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="eth5"
+
+#SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="eth1"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:ec:db", NAME="eth2"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:b5:a3", NAME="eth3"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:ee:96", NAME="eth4"
+
+#ACTION=="add", SUBSYSTEM=="net", DEVTYPE!="?*", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="eth5"
