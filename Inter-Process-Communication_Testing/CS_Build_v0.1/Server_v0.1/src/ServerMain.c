@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
     memset(rplyBuffer, '\0', MAX_LEN);
   }
 
-#else // UDP
+#else // USE UDP
   
   #ifdef M_THREADED_SOKETS
     // Local Variables
@@ -265,6 +265,9 @@ int main(int argc, char *argv[])
       
       sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
+      
+      sokData0.uPort = REM_SRV_PORT_0;
+      sokData1.uPort = REM_SRV_PORT_1;
       
       pthread_t SOKthread1;
       pthread_t SOKthread2;

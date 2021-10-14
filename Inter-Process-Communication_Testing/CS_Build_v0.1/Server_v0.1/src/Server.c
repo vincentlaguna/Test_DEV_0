@@ -258,22 +258,22 @@ Returns: void
 // void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
+  SOKData *lData;
+  lData = (SOKData *)sokData;
+  
   #ifdef THREAD_TEST
   
-    SOKData *lData;
-    
     // pthread_mutex_t SOKlock;
     // pthread_mutex_init(&SOKlock, NULL);
     
     // pthread_mutex_lock(&SOKlock);
-    
-    lData = (SOKData *)sokData;
     printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
     SLEEP
     srand(time(0));
     lData->SOKid = rID_Gen();
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
+    printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
     
     // pthread_mutex_unlock(&SOKlock);
     
@@ -314,7 +314,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     
     // pthread_mutex_unlock(&SOKlock);
     
-    return NULL;
+    // return NULL;
   
   #else 
     // Receive and Reply Buffers
@@ -322,13 +322,9 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     uint8_t *rplyBuffer = NULL;
     rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
     rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-    // // Local Variables
-    int sVal;
-    // uint16_t remPort;
-    int pClSOKFD = *((int *)clSOKFD);
-    free(clSOKFD);
-    
+    //
     socklen_t clAddrLen;
+    int16_t listenSOKFD;
     // Local Structs
     S_SADDR_IN ClAddr;
     // Assign remPort Port to corresponding port number
@@ -378,14 +374,10 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // //Receive the datagram
     clAddrLen = sizeof(ClAddr);
     // While-Loop to receive data from incomming connections
-    pthread_mutex_t SOKlock;
-    pthread_mutex_init(&SOKlock, NULL);
-      
-    pthread_mutex_lock(&SOKlock);
     // while (1)
     // {
       // receive message
-      sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
+      uint16_t sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       puts(rcvBuffer);
