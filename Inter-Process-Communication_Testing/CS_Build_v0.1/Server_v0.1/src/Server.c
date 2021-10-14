@@ -273,6 +273,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     srand(time(0));
     lData->SOKid = rID_Gen();
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
+    printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
     
     // pthread_mutex_unlock(&SOKlock);
     

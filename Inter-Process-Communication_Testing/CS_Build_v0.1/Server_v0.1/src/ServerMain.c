@@ -260,6 +260,9 @@ int main(int argc, char *argv[])
       sokData0.SOKid = 10;
       sokData1.SOKid = 20;
       
+      sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      
       pthread_t SOKthread1;
       pthread_t SOKthread2;
       
