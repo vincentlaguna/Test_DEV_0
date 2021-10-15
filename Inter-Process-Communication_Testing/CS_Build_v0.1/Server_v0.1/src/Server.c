@@ -278,13 +278,34 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // pthread_mutex_init(&SOKlock, NULL);
     
     // pthread_mutex_lock(&SOKlock);
-    printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
-    SLEEP
-    srand(time(0));
-    lData->SOKid = rID_Gen();
-    printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
-    printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
-    printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    // printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
+    // SLEEP
+    // srand(time(0));
+    // lData->SOKid = rID_Gen();
+    // printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
+    // printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
+    // printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    
+    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    {
+      printf("[-]Creation of SOCKET = FAIL\n");
+      return EXIT_FAILURE;
+    }
+    // Zero-out struct
+    memset(&SrvAddr, 0, sizeof(SrvAddr));
+    SrvAddr.sin_family = AF_INET;
+    SrvAddr.sin_addr.s_addr = inet_addr(lData->cIP);
+    SrvAddr.sin_port = htons(lData->uPort);
+    // Bind Server address to socket descriptor
+    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    {
+      perror("[-]BIND = FAIL\n"); // Print the error message
+    }
+    else
+    {
+      printf("[+]Bind = OK\n");
+    }
     
     clAddrLen = sizeof(ClAddr);
     // While-Loop to receive data from incomming connections

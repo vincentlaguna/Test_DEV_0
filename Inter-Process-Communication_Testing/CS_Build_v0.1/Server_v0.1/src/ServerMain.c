@@ -276,13 +276,13 @@ int main(int argc, char *argv[])
       SLEEP
       pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
       // SLEEP
-      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
-      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       pthread_join(SOKthread1, NULL);
       SLEEP
       pthread_join(SOKthread2, NULL);
-      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
-      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       
       // pthread_t thread1;
       // pthread_t thread2;
