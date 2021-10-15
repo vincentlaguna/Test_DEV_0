@@ -258,8 +258,19 @@ Returns: void
 // void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
 void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
+  // Local Data
   SOKData *lData;
   lData = (SOKData *)sokData;
+  // Receive and Reply Buffers
+  uint8_t *rcvBuffer = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // Local Variables
+  socklen_t clAddrLen;
+  int16_t listenSOKFD;
+  // Local Structs
+  S_SADDR_IN ClAddr;
   
   #ifdef THREAD_TEST
   
@@ -274,6 +285,42 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
     printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    
+    clAddrLen = sizeof(ClAddr);
+    // While-Loop to receive data from incomming connections
+    // while (1)
+    // {
+    // receive message
+      uint16_t sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
+                      (S_SADDR *)&ClAddr, &clAddrLen);
+      rcvBuffer[sVal] = '\0';
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(pClSOKFD, rplyBuffer, MAX_LEN, 0,
+            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      memset(rcvBuffer, '\0', MAX_LEN);
+      printf("This is where the magic would happen...\n");
+      
+    // }
+  
+    free(rcvBuffer);
+    free(rplyBuffer);
     
     // pthread_mutex_unlock(&SOKlock);
     
@@ -318,15 +365,15 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   
   #else 
     // Receive and Reply Buffers
-    uint8_t *rcvBuffer = NULL;
-    uint8_t *rplyBuffer = NULL;
-    rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-    rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-    //
-    socklen_t clAddrLen;
-    int16_t listenSOKFD;
+    // uint8_t *rcvBuffer = NULL;
+    // uint8_t *rplyBuffer = NULL;
+    // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+    // Local Variables
+    // socklen_t clAddrLen;
+    // int16_t listenSOKFD;
     // Local Structs
-    S_SADDR_IN ClAddr;
+    // S_SADDR_IN ClAddr;
     // Assign remPort Port to corresponding port number
     // if (szRempIP == szRem_Srv_IP[eREM_SRV_IP_0])
     // {
@@ -403,7 +450,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       memset(rcvBuffer, '\0', MAX_LEN);
       printf("This is where the magic would happen...\n");
     // }
-    pthread_mutex_unlock(&SOKlock);
+    // pthread_mutex_unlock(&SOKlock);
     
     free(rcvBuffer);
     free(rplyBuffer);

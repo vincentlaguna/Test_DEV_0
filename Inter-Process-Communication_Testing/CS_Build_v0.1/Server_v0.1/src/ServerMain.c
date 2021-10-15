@@ -300,18 +300,7 @@ int main(int argc, char *argv[])
     
     #else // Real Multi-threaded code
       
-      // pthread_t thread1;
-      // pthread_t thread2;
-      // int *pCl = (int *)malloc(sizeof(int));
-      // *pCl = listenSOKFD[0];
-      // int *pCl1 = (int *)malloc(sizeof(int));
-      // *pCl1 = listenSOKFD[0];
-      // pthread_create(&thread1, NULL, UDP_SrvConnection_Hndlr, pCl);
-      // pthread_create(&thread2, NULL, UDP_SrvConnection_Hndlr, pCl1);
-      // // SLEEP
-      // pthread_join(thread1, NULL);
-      // // SLEEP
-      // pthread_join(thread2, NULL);
+      
     
     #endif // THREAD_TEST
       
