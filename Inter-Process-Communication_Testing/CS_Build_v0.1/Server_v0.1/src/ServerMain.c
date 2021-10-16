@@ -148,52 +148,52 @@ int main(int argc, char *argv[])
   #endif // M_THREADED_SOKETS
   
   #ifdef M_THREADED_SOKETS
-    // Create a UDP Socket #1
-    // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
-    if ((listenSOKFD[0] = UDP_SokInit_Handlr()) < 0) 
-    {
-      printf("[-]Creation of SOCKET = FAIL\n");
-      return EXIT_FAILURE;
-    }
-    // Create a UDP Socket #2
-    if ((listenSOKFD[1] = UDP_SokInit_Handlr()) < 0) 
-    {
-      printf("[-]Creation of SOCKET = FAIL\n");
-      return EXIT_FAILURE;
-    }
-    // Zero-out struct (1st socket)
-    memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
-    SrvAddr[0].sin_family = AF_INET;
-    SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
+    // // Create a UDP Socket #1
+    // // listenSOKFD = socket(AF_INET, SOCK_DGRAM, 0);        
+    // if ((listenSOKFD[0] = UDP_SokInit_Handlr()) < 0) 
+    // {
+    //   printf("[-]Creation of SOCKET = FAIL\n");
+    //   return EXIT_FAILURE;
+    // }
+    // // Create a UDP Socket #2
+    // if ((listenSOKFD[1] = UDP_SokInit_Handlr()) < 0) 
+    // {
+    //   printf("[-]Creation of SOCKET = FAIL\n");
+    //   return EXIT_FAILURE;
+    // }
+    // // Zero-out struct (1st socket)
+    // memset(&SrvAddr[0], 0, sizeof(SrvAddr[0]));
+    // SrvAddr[0].sin_family = AF_INET;
+    // SrvAddr[0].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    // SrvAddr[0].sin_port = htons(REM_SRV_PORT_0);
     
-    // Zero-out struct (2nd Socket)
-    memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
-    SrvAddr[1].sin_family = AF_INET;
-    SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
-    // Bind Server address to socket descriptor
-    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-    if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
-    {
-      perror("[-]BIND = FAIL\n"); // Print the error message
-    }
-    else
-    {
-      printf("[+]Bind = OK\n");
-    }
-    // Second Socket
-    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_1);
-    if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
-    {
-      perror("[-]BIND = FAIL\n"); // Print the error message
-    }
-    else
-    {
-    printf("[+]Bind = OK\n");
-    }
-    //Receive the datagram
-    clAddrLen[0] = sizeof(ClAddr);
+    // // Zero-out struct (2nd Socket)
+    // memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
+    // SrvAddr[1].sin_family = AF_INET;
+    // SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    // SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
+    // // Bind Server address to socket descriptor
+    // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+    // if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+    // {
+    //   perror("[-]BIND = FAIL\n"); // Print the error message
+    // }
+    // else
+    // {
+    //   printf("[+]Bind = OK\n");
+    // }
+    // // Second Socket
+    // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_1);
+    // if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
+    // {
+    //   perror("[-]BIND = FAIL\n"); // Print the error message
+    // }
+    // else
+    // {
+    // printf("[+]Bind = OK\n");
+    // }
+    // //Receive the datagram
+    // clAddrLen[0] = sizeof(ClAddr);
     
   #else // Non-Thread code
     // Initialize Socket
@@ -224,8 +224,8 @@ int main(int argc, char *argv[])
     // Multi-threaded code
     // While-Loop to receive data from incomming connections
     printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    while (1)
-    {
+    // while (1)
+    // {
       // // receive message
       // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
       //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
@@ -254,22 +254,22 @@ int main(int argc, char *argv[])
     #ifdef THREAD_TEST
      
       SOKData sokData0;
-      SOKData sokData1;
+      // SOKData sokData1;
       
       sokData0.SOKid = 10;
-      sokData1.SOKid = 20;
+      // sokData1.SOKid = 20;
       
       sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
       
-      sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
+      // sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      // sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
       
       sokData0.uPort = REM_SRV_PORT_0;
-      sokData1.uPort = REM_SRV_PORT_1;
+      // sokData1.uPort = REM_SRV_PORT_1;
       
       pthread_t SOKthread1;
-      pthread_t SOKthread2;
+      // pthread_t SOKthread2;
       
       pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
       SLEEP
@@ -303,7 +303,7 @@ int main(int argc, char *argv[])
     
     #endif // THREAD_TEST
       
-    } // End of while-loop
+    // } // End of while-loop
     
   #else 
     // Non-Multi-threaded code

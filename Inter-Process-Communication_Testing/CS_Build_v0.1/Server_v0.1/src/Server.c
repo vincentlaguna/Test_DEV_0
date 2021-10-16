@@ -14,6 +14,9 @@ Description: Server-side code
 /****************************************************************************/
 
 /* Globals: *****************************************************************/
+
+S_SADDR_IN SrvAddr, ClAddr;
+
 /****************************************************************************/
 
 /* Function Definitions: ****************************************************/
@@ -270,7 +273,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   socklen_t clAddrLen;
   int16_t listenSOKFD;
   // Local Structs
-  S_SADDR_IN SrvAddr, ClAddr;
+  // S_SADDR_IN SrvAddr, ClAddr;
   
   #ifdef THREAD_TEST
   
