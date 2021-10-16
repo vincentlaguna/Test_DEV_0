@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
 
 #ifdef USE_TCP
   // Initialize Local Variables
-  int listenSOKFD, connectSOKFD; 
-  int sVal;
+  int16_t listenSOKFD, connectSOKFD; 
   S_SADDR_IN  SrvAddr; 
   S_SADDR_IN  ClAddr;
   // Winsock
@@ -113,7 +112,7 @@ int main(int argc, char *argv[])
     printf("[-]SERVER = RECEIVING DATA...\n\n");
     printf("[+]DATA RECEIVED: \n");
     
-    while ((sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
+    while ((uint16_t sVal = read(connectSOKFD, rcvBuffer, MAX_LEN-1)) > 0)
     {
       fprintf(stdout, "%s\n\n%s\n", convertHex(rcvBuffer, sVal), rcvBuffer);
       // Look for end of message
