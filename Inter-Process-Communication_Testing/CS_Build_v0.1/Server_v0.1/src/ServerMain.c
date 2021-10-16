@@ -137,12 +137,12 @@ int main(int argc, char *argv[])
 #else // USE UDP
   
   #ifdef M_THREADED_SOKETS
-    // Local Variables
-    int listenSOKFD[2];
-    socklen_t clAddrLen[2];
-    // Local Structs
-    S_SADDR_IN SrvAddr[2];
-    S_SADDR_IN ClAddr[2];
+    // // Local Variables
+    // int listenSOKFD[2];
+    // socklen_t clAddrLen[2];
+    // // Local Structs
+    // S_SADDR_IN SrvAddr[2];
+    // S_SADDR_IN ClAddr[2];
 
   // #else // Non Multi-threaded code
     
