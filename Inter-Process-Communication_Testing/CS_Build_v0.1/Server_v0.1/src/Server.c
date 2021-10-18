@@ -16,6 +16,7 @@ Description: Server-side code
 /* Globals: *****************************************************************/
 
 S_SADDR_IN SrvAddr, ClAddr;
+int16_t listenSOKFD;
 
 /****************************************************************************/
 
@@ -271,7 +272,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   socklen_t clAddrLen;
-  int16_t listenSOKFD;
+  // int16_t listenSOKFD;
   // Local Structs
   // S_SADDR_IN SrvAddr, ClAddr;
   
@@ -292,7 +293,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     {
       printf("[-]Creation of SOCKET = FAIL\n");
-      return EXIT_FAILURE;
+      // return EXIT_FAILURE;
+      perror("[-]BIND = FAIL\n");
     }
     // Zero-out struct
     memset(&SrvAddr, 0, sizeof(SrvAddr));

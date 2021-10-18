@@ -306,45 +306,45 @@ int main(int argc, char *argv[])
     // } // End of while-loop
     
   #else 
-    // Non-Multi-threaded code
-    clAddrLen = sizeof(ClAddr);
-    printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    // While-Loop to receive data from incomming connections
-    while (1)
-    {
-      // Receive message
-      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                      (S_SADDR *)&ClAddr, &clAddrLen);
-      rcvBuffer[sVal] = '\0';
-      // Display Receive Buffer
-      puts("[+]Displaying Recieve Buffer:\n");
-      puts(rcvBuffer);
-      // Validate
-      printf("\n[-]Confirming receive values...\n");
-      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    // // Non-Multi-threaded code
+    // clAddrLen = sizeof(ClAddr);
+    // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+    // // While-Loop to receive data from incomming connections
+    // while (1)
+    // {
+    //   // Receive message
+    //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    //                   (S_SADDR *)&ClAddr, &clAddrLen);
+    //   rcvBuffer[sVal] = '\0';
+    //   // Display Receive Buffer
+    //   puts("[+]Displaying Recieve Buffer:\n");
+    //   puts(rcvBuffer);
+    //   // Validate
+    //   printf("\n[-]Confirming receive values...\n");
+    //   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-      puts("\n");
-      strcpy(rplyBuffer, rcvBuffer);         
-      // Send the response
-      printf("[-]Sending Response to Client...\n");
-      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(ClAddr));
-      printf("[+]RESPONSE = SENT\n"); 
-      // Checksum Validation
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      {
-        printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-        printf("[+]CHECKSUM = PASS\n");
-      }
-      else
-      {
-        printf("[+]CHECKSUM = FAIL\n");
-      }
-      puts("\n");
-      // Zero-out receive buffer
-      memset(rcvBuffer, '\0', MAX_LEN);
-      // UDP_SrvConnection_Hndlr(listenSOKFD);  
-    }
+    //   puts("\n");
+    //   strcpy(rplyBuffer, rcvBuffer);         
+    //   // Send the response
+    //   printf("[-]Sending Response to Client...\n");
+    //   sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+    //         (S_SADDR *)&ClAddr, sizeof(ClAddr));
+    //   printf("[+]RESPONSE = SENT\n"); 
+    //   // Checksum Validation
+    //   if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    //   {
+    //     printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+    //     printf("[+]CHECKSUM = PASS\n");
+    //   }
+    //   else
+    //   {
+    //     printf("[+]CHECKSUM = FAIL\n");
+    //   }
+    //   puts("\n");
+    //   // Zero-out receive buffer
+    //   memset(rcvBuffer, '\0', MAX_LEN);
+    //   // UDP_SrvConnection_Hndlr(listenSOKFD);  
+    // }
     
   #endif // M_THREADED_SOKETS
 
