@@ -13,7 +13,7 @@ Description: Server-side code
 
 /****************************************************************************/
 
-/* Globals: *****************************************************************/
+/* Globals: *****************************************************************
 
 S_SADDR_IN SrvAddr, ClAddr;
 int16_t listenSOKFD;
@@ -272,9 +272,9 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   socklen_t clAddrLen;
-  // int16_t listenSOKFD;
+  int16_t listenSOKFD;
   // Local Structs
-  // S_SADDR_IN SrvAddr, ClAddr;
+  S_SADDR_IN SrvAddr, ClAddr;
   
   #ifdef THREAD_TEST
   
@@ -320,6 +320,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
+      
+      puts("[+]Displaying Recieve Buffer:\n");
       puts(rcvBuffer);
       printf("\n[-]Confirming receive values...\n");
       printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
@@ -450,7 +452,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // while (1)
     // {
       // receive message
-      uint16_t sVal = recvfrom(pClSOKFD, rcvBuffer, MAX_LEN, 0,
+      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       puts(rcvBuffer);
@@ -460,7 +462,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       puts("\n");
       strcpy(rplyBuffer, rcvBuffer);         
       // send the response
-      sendto(pClSOKFD, rplyBuffer, MAX_LEN, 0,
+      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(clAddrLen));
             
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
