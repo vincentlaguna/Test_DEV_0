@@ -46,7 +46,7 @@ Description: Common header file for Client-Server code
 #define   TIME_O 5
 #define   MAX_CONN 6
 // #define		USE_TCP
-// #define		THREAD_TEST
+#define		THREAD_TEST
 // #define		M_THREADED_SOKETS
 #define	  MAX_LEN 1024
 #define	  MAX_STR_SZ 128
@@ -129,19 +129,19 @@ static const uint8_t *cStringPayload =
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t 	*cIP;//[IP_STR_SZ];	// IP (c-String)
+  uint8_t   *cIP;//[IP_STR_SZ];	// IP (c-String)
 	uint16_t	uPort;	          // Port Number
 	uint16_t 	SOKid;	          // SOK ID
+	struct IPData	  *ipData;
 	
 } SOKData;
 
 typedef struct  IPData
 {
-  // Data to pass as argument to thread handler
-  uint8_t 	*cIP;//[IP_STR_SZ];	// IP (c-String)
-	uint16_t	uPort;	          // Port Number
-	uint16_t 	SOKid;	          // SOK ID
-	
+  // IP Data Struct
+  S_SADDR_IN 	srvAddr;
+  S_SADDR_IN	clAddr;
+		
 } IPData;
 
 // struct  DataBuffer

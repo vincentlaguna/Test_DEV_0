@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     // memset(&SrvAddr[1], 0, sizeof(SrvAddr[1]));
     // SrvAddr[1].sin_family = AF_INET;
     // SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    // SrvAddr[1].sin_port = htons(REM_SRV_PORT_1);
+    // SrvAddr[1].sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
     // // Bind Server address to socket descriptor
     // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
     // if ((bind(listenSOKFD[1], (S_SADDR *)&SrvAddr[1], sizeof(SrvAddr[1]))) < 0)
@@ -261,6 +261,10 @@ int main(int argc, char *argv[])
       
       sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      sokData0.IPData->srvAddr.sin_family = AF_INET;
+      sokData0.IPData->srvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+      sokData0.IPData->srvAddr.sin_port(REM_SRV_PORT_0);
+      sokData0.IPData->clAddr = {0};
       
       // sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       // sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
