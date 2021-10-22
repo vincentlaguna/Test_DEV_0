@@ -259,43 +259,43 @@ Returns: void
 
 
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
-// void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
-void  *UDP_SrvConnection_Hndlr(void *sokData)
+void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
+// void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   // Local Data
-  SOKData *lData;
-  lData = (SOKData *)sokData;
+  // SOKData *lData;
+  // lData = (SOKData *)sokData;
   // Receive and Reply Buffers
-  uint8_t *rcvBuffer = NULL;
-  uint8_t *rplyBuffer = NULL;
-  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // Local Variables
-  socklen_t clAddrLen;
-  int16_t listenSOKFD;
+  // uint8_t *rcvBuffer = NULL;
+  // uint8_t *rplyBuffer = NULL;
+  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // // Local Variables
+  // socklen_t clAddrLen;
+  // int16_t listenSOKFD;
   // Local Structs
   // S_SADDR_IN SrvAddr, ClAddr;
   
   // #ifdef THREAD_TEST
   
-    pthread_mutex_t SOKlock;
-    pthread_mutex_init(&SOKlock, NULL);
+    // pthread_mutex_t SOKlock;
+    // pthread_mutex_init(&SOKlock, NULL);
     
-    pthread_mutex_lock(&SOKlock);
-    printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
-    SLEEP
-    srand(time(0));
-    lData->SOKid = rID_Gen();
-    printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
-    printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
-    printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    // pthread_mutex_lock(&SOKlock);
+    // printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
+    // SLEEP
+    // srand(time(0));
+    // lData->SOKid = rID_Gen();
+    // printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
+    // printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
+    // printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
     
-    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
-    {
-      printf("[-]Creation of SOCKET = FAIL\n");
-      // return EXIT_FAILURE;
-      perror("[-]BIND = FAIL\n");
-    }
+    // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    // {
+    //   printf("[-]Creation of SOCKET = FAIL\n");
+    //   // return EXIT_FAILURE;
+    //   perror("[-]BIND = FAIL\n");
+    // }
     // Zero-out struct
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
     // SrvAddr.sin_family = AF_INET;
@@ -305,52 +305,53 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // Bind Server address to socket descriptor
     // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
     // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
-    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
-    if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
-    {
-      perror("[-]BIND = FAIL\n"); // Print the error message
-    }
-    else
-    {
-      printf("[+]Bind = OK\n");
-      printf("Inside Thread Handler...\n");
-    }
     
-    // clAddrLen = sizeof(ClAddr);
-    clAddrLen = sizeof(lData->ipData->clAddr);
-    // While-Loop to receive data from incomming connections
-    // while (1)
+    // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
+    // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
     // {
-    // receive message
-      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                      // (S_SADDR *)&ClAddr, &clAddrLen);
-                      (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
-      rcvBuffer[sVal] = '\0';
+    //   perror("[-]BIND = FAIL\n"); // Print the error message
+    // }
+    // else
+    // {
+    //   printf("[+]Bind = OK\n");
+    //   printf("Inside Thread Handler...\n");
+    // }
+    
+    // // clAddrLen = sizeof(ClAddr);
+    // clAddrLen = sizeof(lData->ipData->clAddr);
+    // // While-Loop to receive data from incomming connections
+    // // while (1)
+    // // {
+    // // receive message
+    //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    //                   // (S_SADDR *)&ClAddr, &clAddrLen);
+    //                   (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+    //   rcvBuffer[sVal] = '\0';
       
-      puts("[+]Displaying Recieve Buffer:\n");
-      puts(rcvBuffer);
-      printf("\n[-]Confirming receive values...\n");
-      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    //   puts("[+]Displaying Recieve Buffer:\n");
+    //   puts(rcvBuffer);
+    //   printf("\n[-]Confirming receive values...\n");
+    //   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-      puts("\n");
-      strcpy(rplyBuffer, rcvBuffer);         
-      // send the response
-      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            // (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-            (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+    //   puts("\n");
+    //   strcpy(rplyBuffer, rcvBuffer);         
+    //   // send the response
+    //   sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+    //         // (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+    //         (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
             
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      {
-        printf("[+]CHECKSUM = PASS\n");
-      }
-      else
-      {
-        printf("[+]CHECKSUM = FAIL\n");
-      }
-      puts("\n");
-      // Zero-out receive buffer
-      // memset(rcvBuffer, '\0', MAX_LEN);
-      printf("This is where the magic would happen...\n");
+    //   if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    //   {
+    //     printf("[+]CHECKSUM = PASS\n");
+    //   }
+    //   else
+    //   {
+    //     printf("[+]CHECKSUM = FAIL\n");
+    //   }
+    //   puts("\n");
+    //   // Zero-out receive buffer
+    //   // memset(rcvBuffer, '\0', MAX_LEN);
+    //   printf("This is where the magic would happen...\n");
       
     // }
   
@@ -360,41 +361,41 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // pthread_mutex_unlock(&SOKlock);
     
     
-    // int pClSOKFD = *((int *)clSOKFD);
-    // free(clSOKFD);
+    int pClSOKFD = *((int *)clSOKFD);
+    free(clSOKFD);
     
-    // int rID;
+    int rID;
     
-    // pthread_mutex_t SOKlock;
-    // pthread_mutex_init(&SOKlock, NULL);
+    pthread_mutex_t SOKlock;
+    pthread_mutex_init(&SOKlock, NULL);
     
-    // pthread_mutex_lock(&SOKlock);
+    pthread_mutex_lock(&SOKlock);
     
-    // if (pClSOKFD == 10)
-    // {
-    //   printf("\nSocket 10 = %d\n\n", pClSOKFD);
+    if (pClSOKFD == 10)
+    {
+      printf("\nSocket 10 = %d\n\n", pClSOKFD);
       
-    //   srand(time(0));
+      srand(time(0));
     
-    //   rID = rID_Gen();
+      rID = rID_Gen();
     
-    //   printf("Thread #%d\n\n", rID);
+      printf("Thread #%d\n\n", rID);
     
-    // }
-    // else if (pClSOKFD == 20)
-    // {
-    //   printf("\nSocket 20 = %d\n\n", pClSOKFD);
+    }
+    else if (pClSOKFD == 20)
+    {
+      printf("\nSocket 20 = %d\n\n", pClSOKFD);
       
-    //   SLEEP
+      SLEEP
       
-    //   srand(time(0));
+      srand(time(0));
     
-    //   rID = rID_Gen();
+      rID = rID_Gen();
     
-    //   printf("Thread #%d\n\n", rID++);
-    // }
+      printf("Thread #%d\n\n", rID++);
+    }
     
-    // pthread_mutex_unlock(&SOKlock);
+    pthread_mutex_unlock(&SOKlock);
     
     // return NULL;
   

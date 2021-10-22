@@ -224,8 +224,8 @@ int main(int argc, char *argv[])
     // Multi-threaded code
     // While-Loop to receive data from incomming connections
     // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    // while (1)
-    // {
+    while (1)
+    {
       // // receive message
       // int sVal = recvfrom(listenSOKFD[0], rcvBuffer, MAX_LEN, 0,
       //                 (S_SADDR *)&ClAddr[0], &clAddrLen[0]);
@@ -253,44 +253,43 @@ int main(int argc, char *argv[])
       // memset(rcvBuffer, '\0', MAX_LEN);
     // #ifdef THREAD_TEST
      
-      SOKData sokData0;
-      // SOKData sokData1;
+      // SOKData sokData0;
+      // // SOKData sokData1;
       
-      sokData0.SOKid = 10;
-      // sokData1.SOKid = 20;
+      // sokData0.SOKid = 10;
+      // // sokData1.SOKid = 20;
       
-      sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
-      sokData0.ipData->srvAddr.sin_family = AF_INET;
-      sokData0.ipData->srvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-      // sokData0.ipData->srvAddr.sin_port(REM_SRV_PORT_0);
-      // sokData0.ipData->clAddr = {0};
+      // sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      // sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      // sokData0.ipData->srvAddr.sin_family = AF_INET;
+      // sokData0.ipData->srvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+      // // sokData0.ipData->srvAddr.sin_port(REM_SRV_PORT_0);
+      // // sokData0.ipData->clAddr = {0};
       
-      // sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      // sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
+      // // sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      // // sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
       
-      sokData0.uPort = REM_SRV_PORT_0;
-      // sokData1.uPort = REM_SRV_PORT_1;
+      // sokData0.uPort = REM_SRV_PORT_0;
+      // // sokData1.uPort = REM_SRV_PORT_1;
       
-      pthread_t SOKthread1;
-      // pthread_t SOKthread2;
+      // pthread_t SOKthread1;
+      // // pthread_t SOKthread2;
       
-      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
-      SLEEP
-      // pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
+      // pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
       // SLEEP
-      // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
-      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
-      pthread_join(SOKthread1, NULL);
-      SLEEP
-      // pthread_join(SOKthread2, NULL);
-      // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
-      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      // // pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
+      // // SLEEP
+      // // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      // // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      // pthread_join(SOKthread1, NULL);
+      // SLEEP
+      // // pthread_join(SOKthread2, NULL);
+      // // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      // // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       
       pthread_t thread1;
       pthread_t thread2;
       int *pCl = (int *)malloc(sizeof(int));
-      *pCl = listenSOKFD[0];
       int *pCl1 = (int *)malloc(sizeof(int));
       *pCl = 10;
       *pCl1 = 20;
@@ -307,7 +306,7 @@ int main(int argc, char *argv[])
     
     // #endif // THREAD_TEST
       
-    // } // End of while-loop
+    } // End of while-loop
     
   // #else 
     // Non-Multi-threaded code
