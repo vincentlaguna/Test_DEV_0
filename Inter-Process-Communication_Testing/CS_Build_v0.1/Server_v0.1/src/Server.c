@@ -259,12 +259,12 @@ Returns: void
 
 
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
-void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
-// void  *UDP_SrvConnection_Hndlr(void *sokData)
+// void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
+void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   // Local Data
-  // SOKData *lData;
-  // lData = (SOKData *)sokData;
+  SOKData *lData;
+  lData = (SOKData *)sokData;
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
   // uint8_t *rplyBuffer = NULL;
@@ -282,13 +282,13 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     // pthread_mutex_init(&SOKlock, NULL);
     
     // pthread_mutex_lock(&SOKlock);
-    // printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
-    // SLEEP
-    // srand(time(0));
-    // lData->SOKid = rID_Gen();
-    // printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
-    // printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
-    // printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    printf("\nIn Thread Handler: SOKid = %d\n", lData->SOKid);
+    SLEEP
+    srand(time(0));
+    lData->SOKid = rID_Gen();
+    printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
+    printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
+    printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
     
     // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     // {
@@ -361,41 +361,41 @@ void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
     // pthread_mutex_unlock(&SOKlock);
     
     
-    int pClSOKFD = *((int *)clSOKFD);
-    free(clSOKFD);
+    // int pClSOKFD = *((int *)clSOKFD);
+    // free(clSOKFD);
     
-    int rID;
+    // int rID;
     
-    pthread_mutex_t SOKlock;
-    pthread_mutex_init(&SOKlock, NULL);
+    // pthread_mutex_t SOKlock;
+    // pthread_mutex_init(&SOKlock, NULL);
     
-    pthread_mutex_lock(&SOKlock);
+    // pthread_mutex_lock(&SOKlock);
     
-    if (pClSOKFD == 10)
-    {
-      printf("\nSocket 10 = %d\n\n", pClSOKFD);
+    // if (pClSOKFD == 10)
+    // {
+    //   printf("\nSocket 10 = %d\n\n", pClSOKFD);
       
-      srand(time(0));
+    //   srand(time(0));
     
-      rID = rID_Gen();
+    //   rID = rID_Gen();
     
-      printf("Thread #%d\n\n", rID);
+    //   printf("Thread #%d\n\n", rID);
     
-    }
-    else if (pClSOKFD == 20)
-    {
-      printf("\nSocket 20 = %d\n\n", pClSOKFD);
+    // }
+    // else if (pClSOKFD == 20)
+    // {
+    //   printf("\nSocket 20 = %d\n\n", pClSOKFD);
       
-      SLEEP
+    //   SLEEP
       
-      srand(time(0));
+    //   srand(time(0));
     
-      rID = rID_Gen();
+    //   rID = rID_Gen();
     
-      printf("Thread #%d\n\n", rID++);
-    }
+    //   printf("Thread #%d\n\n", rID++);
+    // }
     
-    pthread_mutex_unlock(&SOKlock);
+    // pthread_mutex_unlock(&SOKlock);
     
     // return NULL;
   
