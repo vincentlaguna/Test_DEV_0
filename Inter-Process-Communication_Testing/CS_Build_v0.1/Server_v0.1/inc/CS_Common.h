@@ -74,7 +74,7 @@ Description: Common header file for Client-Server code
 
 /* Globals: *****************************************************************/
 
-static uint8_t *const szRem_Srv_IP[] =
+static uint8_t *szRem_Srv_IP[] =
 {
   REM_SRV_IP_0,
   REM_SRV_IP_1,
