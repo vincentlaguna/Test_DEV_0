@@ -289,6 +289,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
     printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    printf("\nIn Thread Handler: ipData->IP = %s\n", lData->ipData->srvAddr.sin_addr.s_addr);
+    printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
     
     // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     // {

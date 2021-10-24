@@ -261,16 +261,31 @@ int main(int argc, char *argv[])
       
       sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
-      // sokData0.ipData->srvAddr.sin_family = AF_INET;
-      // sokData0.ipData->srvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-      // sokData0.ipData->srvAddr.sin_port(REM_SRV_PORT_0);
-      // sokData0.ipData->clAddr = {0};
+      sokData0.uPort = REM_SRV_PORT_0;
       
+      sokData0.ipData->srvAddr.sin_family = AF_INET;
+      
+      sokData0.ipData->srvAddr.sin_addr.s_addr =
+      *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
+      
+      sokData0.ipData->srvAddr.sin_addr.s_addr =
+      inet_addr(*(szRem_Srv_IP[eREM_SRV_IP_0]));
+      
+      sokData0.ipData->srvAddr.sin_port = htons(REM_SRV_PORT_0);
+      // sokData0.ipData->clAddr = {0};
       sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
-      
-      sokData0.uPort = REM_SRV_PORT_0;
       sokData1.uPort = REM_SRV_PORT_1;
+      
+      sokData1.ipData->srvAddr.sin_family = AF_INET;
+      
+      sokData1.ipData->srvAddr.sin_addr.s_addr =
+      *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
+      
+      sokData1.ipData->srvAddr.sin_addr.s_addr =
+      inet_addr(*(szRem_Srv_IP[eREM_SRV_IP_1]));
+      
+      sokData1.ipData->srvAddr.sin_port = htons(REM_SRV_PORT_1);
       
       pthread_t SOKthread1;
       pthread_t SOKthread2;
