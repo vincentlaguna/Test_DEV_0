@@ -269,8 +269,8 @@ int main(int argc, char *argv[])
       *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
       
       // This portion right here is causing the seg-fault...
-      sokData0.ipData->srvAddr.sin_addr.s_addr =
-      inet_addr(szRem_Srv_IP[eREM_SRV_IP_0]);
+      // sokData0.ipData->srvAddr.sin_addr.s_addr =
+      // inet_addr(szRem_Srv_IP[eREM_SRV_IP_0]);
       // inet_addr("127.0.0.1");
       // End of first seg-fault section
       
