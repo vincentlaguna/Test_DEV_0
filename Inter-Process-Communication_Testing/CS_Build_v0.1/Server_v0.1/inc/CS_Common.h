@@ -126,6 +126,14 @@ static const uint8_t *cStringPayload =
 
 /* Data Buffer **************************************************************/
 
+typedef struct  IPData
+{
+  // IP Data Struct
+  S_SADDR_IN 	srvAddr;
+  S_SADDR_IN	clAddr;
+		
+} IPData;
+
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
@@ -135,14 +143,6 @@ typedef struct  SOKData
 	struct IPData	  *ipData;
 	
 } SOKData;
-
-typedef struct  IPData
-{
-  // IP Data Struct
-  S_SADDR_IN 	srvAddr;
-  S_SADDR_IN	clAddr;
-		
-} IPData;
 
 // struct  DataBuffer
 // {
