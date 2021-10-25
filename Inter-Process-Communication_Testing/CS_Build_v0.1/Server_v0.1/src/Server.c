@@ -265,6 +265,13 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   // Local Data
   SOKData *lData;
   lData = (SOKData *)sokData;
+  
+  lData->ipData->srvAddr.sin_addr.s_addr =
+  *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
+      
+      // This portion right here is causing the seg-fault...
+  lData->ipData->srvAddr.sin_addr.s_addr =
+  inet_addr(szRem_Srv_IP[eREM_SRV_IP_0]);
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
   // uint8_t *rplyBuffer = NULL;
