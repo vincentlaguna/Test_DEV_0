@@ -131,6 +131,7 @@ typedef struct  IPData
   // IP Data Struct
   S_SADDR_IN 	srvAddr;
   S_SADDR_IN	clAddr;
+  uint8_t			IPDataID;
 		
 } IPData;
 
