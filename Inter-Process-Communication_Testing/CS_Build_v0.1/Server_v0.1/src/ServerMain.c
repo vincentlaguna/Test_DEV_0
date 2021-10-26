@@ -265,8 +265,8 @@ int main(int argc, char *argv[])
       
       sokData0.ipData->srvAddr.sin_family = AF_INET;
       
-      sokData0.ipData->srvAddr.sin_addr.s_addr =
-      *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
+      // sokData0.ipData->srvAddr.sin_addr.s_addr =
+      // *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
       
       // This portion right here is causing the seg-fault...
       // sokData0.ipData->srvAddr.sin_addr.s_addr =

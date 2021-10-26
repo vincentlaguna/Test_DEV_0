@@ -272,10 +272,11 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       
   // This portion right here is causing the seg-fault...
   lData->ipData->srvAddr.sin_addr.s_addr =
-  // inet_addr(szRem_Srv_IP[eREM_SRV_IP_0]);
-  inet_addr("127.0.0.1");
+  inet_addr(szRem_Srv_IP[eREM_SRV_IP_0]);
+  // inet_addr("127.0.0.1");
   // inet_addr(lData->cIP);
   // Seg-fault portion...
+  lData->ipData->srvAddr.sin_port = htons(REM_SRV_PORT_1);
   
   // Receive and Reply Buffers
   // uint8_t *rcvBuffer = NULL;
@@ -301,8 +302,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
     printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
-    printf("\nIn Thread Handler: ipData->IP = %s\n", lData->ipData->srvAddr.sin_addr.s_addr);
-    // printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
+    printf("\nIn Thread Handler: ipData->IP = %xd\n", lData->ipData->srvAddr.sin_addr.s_addr);
+    printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
     
     // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     // {
