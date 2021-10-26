@@ -279,15 +279,15 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   lData->ipData->srvAddr.sin_port = htons(REM_SRV_PORT_1);
   
   // Receive and Reply Buffers
-  // uint8_t *rcvBuffer = NULL;
-  // uint8_t *rplyBuffer = NULL;
-  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  // // Local Variables
-  // socklen_t clAddrLen;
-  // int16_t listenSOKFD;
+  uint8_t *rcvBuffer = NULL;
+  uint8_t *rplyBuffer = NULL;
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // Local Variables
+  socklen_t clAddrLen;
+  int16_t listenSOKFD;
   // Local Structs
-  // S_SADDR_IN SrvAddr, ClAddr;
+  S_SADDR_IN SrvAddr, ClAddr;
   
   // #ifdef THREAD_TEST
   
@@ -302,71 +302,72 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
     printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
-    printf("\nIn Thread Handler: ipData->IP = %xd\n", lData->ipData->srvAddr.sin_addr.s_addr);
-    printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
+    // printf("\nIn Thread Handler: ipData->IP = %xd\n", lData->ipData->srvAddr.sin_addr.s_addr);
+    // printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
     
-    // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
-    // {
-    //   printf("[-]Creation of SOCKET = FAIL\n");
-    //   // return EXIT_FAILURE;
-    //   perror("[-]BIND = FAIL\n");
-    // }
+    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    {
+      printf("[-]Creation of SOCKET = FAIL\n");
+      // return EXIT_FAILURE;
+      perror("[-]BIND = FAIL\n");
+    }
     // Zero-out struct
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
-    // SrvAddr.sin_family = AF_INET;
+    SrvAddr.sin_family = AF_INET;
     // SrvAddr.sin_addr.s_addr = inet_addr(lData->cIP);
-    // SrvAddr.sin_port = htons(lData->uPort);
+    SrvAddr.sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
+    SrvAddr.sin_port = htons(lData->uPort);
     
     // Bind Server address to socket descriptor
-    // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
-    // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     
-    // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
-    // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
-    // {
-    //   perror("[-]BIND = FAIL\n"); // Print the error message
-    // }
-    // else
-    // {
-    //   printf("[+]Bind = OK\n");
-    //   printf("Inside Thread Handler...\n");
-    // }
+    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
+    if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
+    {
+      perror("[-]BIND = FAIL\n"); // Print the error message
+    }
+    else
+    {
+      printf("[+]Bind = OK\n");
+      printf("Inside Thread Handler...\n");
+    }
     
-    // // clAddrLen = sizeof(ClAddr);
-    // clAddrLen = sizeof(lData->ipData->clAddr);
-    // // While-Loop to receive data from incomming connections
-    // // while (1)
-    // // {
-    // // receive message
-    //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-    //                   // (S_SADDR *)&ClAddr, &clAddrLen);
-    //                   (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
-    //   rcvBuffer[sVal] = '\0';
+    // clAddrLen = sizeof(ClAddr);
+    clAddrLen = sizeof(lData->ipData->clAddr);
+    // While-Loop to receive data from incomming connections
+    // while (1)
+    // {
+    // receive message
+      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                      // (S_SADDR *)&ClAddr, &clAddrLen);
+                      (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+      rcvBuffer[sVal] = '\0';
       
-    //   puts("[+]Displaying Recieve Buffer:\n");
-    //   puts(rcvBuffer);
-    //   printf("\n[-]Confirming receive values...\n");
-    //   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      puts("[+]Displaying Recieve Buffer:\n");
+      puts(rcvBuffer);
+      printf("\n[-]Confirming receive values...\n");
+      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-    //   puts("\n");
-    //   strcpy(rplyBuffer, rcvBuffer);         
-    //   // send the response
-    //   sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-    //         // (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-    //         (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+      puts("\n");
+      strcpy(rplyBuffer, rcvBuffer);         
+      // send the response
+      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+            // (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
             
-    //   if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-    //   {
-    //     printf("[+]CHECKSUM = PASS\n");
-    //   }
-    //   else
-    //   {
-    //     printf("[+]CHECKSUM = FAIL\n");
-    //   }
-    //   puts("\n");
-    //   // Zero-out receive buffer
-    //   // memset(rcvBuffer, '\0', MAX_LEN);
-    //   printf("This is where the magic would happen...\n");
+      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      {
+        printf("[+]CHECKSUM = PASS\n");
+      }
+      else
+      {
+        printf("[+]CHECKSUM = FAIL\n");
+      }
+      puts("\n");
+      // Zero-out receive buffer
+      // memset(rcvBuffer, '\0', MAX_LEN);
+      printf("This is where the magic would happen...\n");
       
     // }
   
