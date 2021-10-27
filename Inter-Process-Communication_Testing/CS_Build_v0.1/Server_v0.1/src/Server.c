@@ -313,10 +313,10 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     }
     // Zero-out struct
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
-    // SrvAddr->sin_family = AF_INET;
-    // SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
-    // // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    // SrvAddr->sin_port = htons(lData->uPort);
+    SrvAddr->sin_family = AF_INET;
+    SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
+    // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
+    SrvAddr->sin_port = htons(lData->uPort);
     
     // Bind Server address to socket descriptor
     printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
@@ -332,14 +332,15 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     }
     
     // clAddrLen = sizeof(ClAddr);
-    clAddrLen = sizeof(lData->ipData->clAddr);
+    // clAddrLen = sizeof(lData->ipData->clAddr);
+    clAddrLen = sizeof(unsigned int);
     // While-Loop to receive data from incomming connections
-    // while (1)
-    // {
+    while (1)
+    {
     // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       // (S_SADDR *)&ClAddr, &clAddrLen);
-                      (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+                      (S_SADDR *)&lData->ipData->clAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       
       puts("[+]Displaying Recieve Buffer:\n");
@@ -367,10 +368,10 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       // memset(rcvBuffer, '\0', MAX_LEN);
       printf("This is where the magic would happen...\n");
       
-    // }
+    }
   
-    // free(rcvBuffer);
-    // free(rplyBuffer);
+    free(rcvBuffer);
+    free(rplyBuffer);
     
     // pthread_mutex_unlock(&SOKlock);
     
