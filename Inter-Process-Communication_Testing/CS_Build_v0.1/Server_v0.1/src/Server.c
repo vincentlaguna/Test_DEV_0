@@ -287,7 +287,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   socklen_t clAddrLen;
   int16_t listenSOKFD;
   // Local Structs
-  S_SADDR_IN SrvAddr, ClAddr;
+  S_SADDR_IN *SrvAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  S_SADDR_IN *ClAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   
   // #ifdef THREAD_TEST
   
@@ -309,22 +310,18 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
     {
       printf("[-]Creation of SOCKET = FAIL\n");
-      // return EXIT_FAILURE;
-      perror("[-]BIND = FAIL\n");
     }
     // Zero-out struct
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
-    SrvAddr.sin_family = AF_INET;
-    // SrvAddr.sin_addr.s_addr = inet_addr(lData->cIP);
-    SrvAddr.sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    SrvAddr.sin_port = htons(lData->uPort);
+    // SrvAddr->sin_family = AF_INET;
+    // SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
+    // // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
+    // SrvAddr->sin_port = htons(lData->uPort);
     
     // Bind Server address to socket descriptor
     printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
-    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
-    
-    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
     if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
+    // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
       perror("[-]BIND = FAIL\n"); // Print the error message
     }
