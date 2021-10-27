@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                                 
+Author(s) or Contributor(s): Version 0.1  ~Vincent A. Laguna 2021                                                                 
 
 File: ServerMain.c              
 

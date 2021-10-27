@@ -1,6 +1,6 @@
 #pragma once
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                               
+Author(s) or Contributor(s): Version 0.1  ~Vincent A. Laguna 2021                                                               
   
 File: CS_Common.h                                                          
 
@@ -43,8 +43,9 @@ Description: Common header file for Client-Server code
 
 #define   TIME_O 5
 #define   MAX_CONN 6
-#define	  MAX_LEN 260//257
-#define	  MAXLINE 1000
+#define	  MAX_LEN 1024
+#define	  MAX_STR_SZ 128
+#define	  IP_STR_SZ 16
 #define   SLEEP	sleep(1);
 #define   REM_CL_PORT 11069
 #define   REM_SRV_PORT_0 11000
@@ -52,17 +53,16 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_2 11002
 #define   REM_SRV_PORT_3 11003
 #define   REM_SRV_PORT_4 11004
-// #define	  REM_SRV_IP_0 "127.0.0.1"
-// #define	  REM_SRV_IP_0 "192.168.143.20"
-#define	  REM_SRV_IP_0 "192.168.143.201"
-#define	  REM_SRV_IP_1 "192.168.143.202"
-#define	  REM_SRV_IP_2 "192.168.143.203"
-#define	  REM_SRV_IP_3 "192.168.143.204"
-#define	  REM_SRV_IP_4 "192.168.143.205"
+#define	  REM_SRV_IP_0 "192.168.128.250"
+#define	  REM_SRV_IP_1 "192.168.128.251"
+#define	  REM_SRV_IP_2 "192.168.128.252"
+#define	  REM_SRV_IP_3 "192.168.128.253"
+#define	  REM_SRV_IP_4 "192.168.128.254"
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
 #define	  S_SADDR_IN struct	sockaddr_in
+
 
 /****************************************************************************/
 
@@ -117,39 +117,16 @@ static const uint8_t *cStringPayload =
 /****************************************************************************/
 
 /* Data Sructure Definitions: ***********************************************/
-
-/* Data Buffer **************************************************************
-
-struct  DataBuffer
-{
-  char  cPayload[MAX_STR_SZ]; // Storage for string	
-  // uint32_t	uDataSize;	    // Size of data
-  // uint16_t	*pNext;	        // Next node *
-  // uint16_t  *pPrev;	    // Previous node *
-
-} __attribute__((__packed__));
-
 /****************************************************************************/
 
 /* Typedefs: ****************************************************************
-
-// typedef  DataBuffer_  *pDbuff;
-typedef	struct DataBuffer DBffr;
-
 /****************************************************************************/
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
+int16_t   UDP_SokInit_Handlr(void);
 uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-void      UDP_SrvConnection_Hndlr(const uint8_t *remIP);
-int16_t   UDP_SokInit_Handlr(void);
-int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
-// void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
-// int16_t  SokInit_Handlr(void);
-// uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
-// uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
-// uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
 
 /****************************************************************************/
 #endif // CS_COMMON_H
