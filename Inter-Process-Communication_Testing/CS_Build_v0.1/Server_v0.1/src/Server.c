@@ -289,7 +289,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   // Local Structs
   S_SADDR_IN *SrvAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   S_SADDR_IN *ClAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
-  
+
   // #ifdef THREAD_TEST
   
     // pthread_mutex_t SOKlock;
@@ -313,15 +313,22 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     }
     // Zero-out struct
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
-    SrvAddr->sin_family = AF_INET;
-    SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
+    // SrvAddr->sin_family = AF_INET;
+    // SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
+    // // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
+    // SrvAddr->sin_port = htons(lData->uPort);
+    
+    // Trying this for now (102721-1340)
+    memset(&SrvAddr, 0, sizeof(SrvAddr));
+    SrvAddr->sin_family = lData->ipData->srvAddr.sin_family;
+    SrvAddr->sin_addr.s_addr = lData->ipData->srvAddr.sin_addr.s_addr;
     // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    SrvAddr->sin_port = htons(lData->uPort);
+    SrvAddr->sin_port = lData->ipData->srvAddr.sin_port;
     
     // Bind Server address to socket descriptor
     printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
-    if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
-    // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
+    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
       perror("[-]BIND = FAIL\n"); // Print the error message
     }
@@ -339,8 +346,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     {
     // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                      // (S_SADDR *)&ClAddr, &clAddrLen);
-                      (S_SADDR *)&lData->ipData->clAddr, &clAddrLen);
+                      (S_SADDR *)&ClAddr, &clAddrLen);
+                      // (S_SADDR *)&lData->ipData->clAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
       
       puts("[+]Displaying Recieve Buffer:\n");
@@ -352,8 +359,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       strcpy(rplyBuffer, rcvBuffer);         
       // send the response
       sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            // (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-            (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
+            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
+            // (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
             
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
