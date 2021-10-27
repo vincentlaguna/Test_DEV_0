@@ -287,8 +287,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   socklen_t clAddrLen;
   int16_t listenSOKFD;
   // Local Structs
-  S_SADDR_IN *SrvAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
-  S_SADDR_IN *ClAddr = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
 
   // #ifdef THREAD_TEST
   
@@ -312,21 +312,22 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       printf("[-]Creation of SOCKET = FAIL\n");
     }
     // Zero-out struct
-    // memset(&SrvAddr, 0, sizeof(SrvAddr));
-    // SrvAddr->sin_family = AF_INET;
-    // SrvAddr->sin_addr.s_addr = inet_addr(lData->cIP);
-    // // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    // SrvAddr->sin_port = htons(lData->uPort);
-    
-    // Trying this for now (102721-1340)
     memset(&SrvAddr, 0, sizeof(SrvAddr));
-    SrvAddr->sin_family = lData->ipData->srvAddr.sin_family;
-    SrvAddr->sin_addr.s_addr = lData->ipData->srvAddr.sin_addr.s_addr;
+    SrvAddr.sin_family = AF_INET;
+    printf("[+]sin_family assignment = OK\n");
+    SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
     // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    SrvAddr->sin_port = lData->ipData->srvAddr.sin_port;
+    SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+    
+    // Trying this for now (102721-1340) ...Nope (1440)
+    // memset(&SrvAddr, 0, sizeof(SrvAddr));
+    // SrvAddr->sin_family = lData->ipData->srvAddr.sin_family;
+    // SrvAddr->sin_addr.s_addr = lData->ipData->srvAddr.sin_addr.s_addr;
+    // // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
+    // SrvAddr->sin_port = lData->ipData->srvAddr.sin_port;
     
     // Bind Server address to socket descriptor
-    printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
+    // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
     // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
     if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
@@ -338,9 +339,9 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       printf("Inside Thread Handler...\n");
     }
     
-    // clAddrLen = sizeof(ClAddr);
+    clAddrLen = sizeof(ClAddr);
     // clAddrLen = sizeof(lData->ipData->clAddr);
-    clAddrLen = sizeof(unsigned int);
+    // clAddrLen = sizeof(unsigned int);
     // While-Loop to receive data from incomming connections
     while (1)
     {
