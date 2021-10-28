@@ -20,16 +20,16 @@ int main(int argc, char *argv[])
 {
 // #ifndef M_THREADED_SOKETS  
   // Initialize Local Variables
-  socklen_t clAddrLen;
-  int16_t listenSOKFD;
-  S_SADDR_IN SrvAddr, ClAddr;
+  // socklen_t clAddrLen;
+  // int16_t listenSOKFD;
+  // S_SADDR_IN SrvAddr, ClAddr;
 
 // #endif
   // Receive and Reply Buffers
-  uint8_t *rcvBuffer  = NULL;
-  uint8_t *rplyBuffer = NULL;
-  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // uint8_t *rcvBuffer  = NULL;
+  // uint8_t *rplyBuffer = NULL;
+  // rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  // rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
 
 // #ifdef USE_TCP
 //   // Initialize Local Variables
@@ -197,26 +197,26 @@ int main(int argc, char *argv[])
     
   // #else // Non-Thread code
     // Initialize Socket
-    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
-    {
-      printf("[-]Creation of SOCKET = FAIL\n");
-      return EXIT_FAILURE;
-    }
-    // Zero-out struct
-    memset(&SrvAddr, 0, sizeof(SrvAddr));
-    SrvAddr.sin_family = AF_INET;
-    SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-    SrvAddr.sin_port = htons(REM_SRV_PORT_0);
-    // Bind Server address to socket descriptor
-    printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
-    {
-      perror("[-]BIND = FAIL\n"); // Print the error message
-    }
-    else
-    {
-      printf("[+]Bind = OK\n");
-    }
+    // if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    // {
+    //   printf("[-]Creation of SOCKET = FAIL\n");
+    //   return EXIT_FAILURE;
+    // }
+    // // Zero-out struct
+    // memset(&SrvAddr, 0, sizeof(SrvAddr));
+    // SrvAddr.sin_family = AF_INET;
+    // SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
+    // SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+    // // Bind Server address to socket descriptor
+    // printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+    // if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    // {
+    //   perror("[-]BIND = FAIL\n"); // Print the error message
+    // }
+    // else
+    // {
+    //   printf("[+]Bind = OK\n");
+    // }
     
   // #endif // M_THREADED_SOKETS
      
@@ -330,44 +330,45 @@ int main(int argc, char *argv[])
     
   // #else 
     // Non-Multi-threaded code
-    clAddrLen = sizeof(ClAddr);
-    printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
-    // While-Loop to receive data from incomming connections
-    while (1)
-    {
-      // Receive message
-      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                      (S_SADDR *)&ClAddr, &clAddrLen);
-      rcvBuffer[sVal] = '\0';
-      // Display Receive Buffer
-      puts("[+]Displaying Recieve Buffer:\n");
-      puts(rcvBuffer);
-      // Validate
-      printf("\n[-]Confirming receive values...\n");
-      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    // clAddrLen = sizeof(ClAddr);
+    // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
+    // // While-Loop to receive data from incomming connections
+    // while (1)
+    // {
+    //   // Receive message
+    //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+    //                   (S_SADDR *)&ClAddr, &clAddrLen);
+    //   rcvBuffer[sVal] = '\0';
+    //   // Display Receive Buffer
+    //   puts("[+]Displaying Recieve Buffer:\n");
+    //   puts(rcvBuffer);
+    //   // Validate
+    //   printf("\n[-]Confirming receive values...\n");
+    //   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
-      puts("\n");
-      strcpy(rplyBuffer, rcvBuffer);         
-      // Send the response
-      printf("[-]Sending Response to Client...\n");
-      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(ClAddr));
-      printf("[+]RESPONSE = SENT\n"); 
-      // Checksum Validation
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      {
-        printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-        printf("[+]CHECKSUM = PASS\n");
-      }
-      else
-      {
-        printf("[+]CHECKSUM = FAIL\n");
-      }
-      puts("\n");
-      // Zero-out receive buffer
-      memset(rcvBuffer, '\0', MAX_LEN);
-    //   // UDP_SrvConnection_Hndlr(listenSOKFD);  
-    }
+    //   puts("\n");
+    //   strcpy(rplyBuffer, rcvBuffer);         
+    //   // Send the response
+    //   printf("[-]Sending Response to Client...\n");
+    //   sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+    //         (S_SADDR *)&ClAddr, sizeof(ClAddr));
+    //   printf("[+]RESPONSE = SENT\n"); 
+    //   // Checksum Validation
+    //   if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+    //   {
+    //     printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+    //     printf("[+]CHECKSUM = PASS\n");
+    //   }
+    //   else
+    //   {
+    //     printf("[+]CHECKSUM = FAIL\n");
+    //   }
+    //   puts("\n");
+    //   // Zero-out receive buffer
+    //   memset(rcvBuffer, '\0', MAX_LEN);
+      UDP_SrvConnection_Hndlr();
+      // UDP_SrvConnection_Hndlr(listenSOKFD);
+    // }
     
   // #endif // M_THREADED_SOKETS
 
