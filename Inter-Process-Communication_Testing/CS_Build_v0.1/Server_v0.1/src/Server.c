@@ -13,9 +13,10 @@ Description: Server-side code
 
 /****************************************************************************/
 
-/* Globals: *****************************************************************
+/* Globals: *****************************************************************/
 
-S_SADDR_IN SrvAddr, ClAddr;
+S_SADDR_IN SrvAddr;
+S_SADDR_IN ClAddr;
 int16_t listenSOKFD;
 
 /****************************************************************************/
@@ -286,10 +287,10 @@ void  UDP_SrvConnection_Hndlr(void)
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   socklen_t clAddrLen;
-  int16_t listenSOKFD;
+  // int16_t listenSOKFD;
   // Local Structs
-  S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
-  S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  // S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  // S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
 
   // #ifdef THREAD_TEST
   
@@ -374,13 +375,13 @@ void  UDP_SrvConnection_Hndlr(void)
       }
       puts("\n");
       // Zero-out receive buffer
-      // memset(rcvBuffer, '\0', MAX_LEN);
+      memset(rcvBuffer, '\0', MAX_LEN);
       printf("This is where the magic would happen...\n");
       
     }
   
-    // free(rcvBuffer);
-    // free(rplyBuffer);
+    free(rcvBuffer);
+    free(rplyBuffer);
     
     // pthread_mutex_unlock(&SOKlock);
     
