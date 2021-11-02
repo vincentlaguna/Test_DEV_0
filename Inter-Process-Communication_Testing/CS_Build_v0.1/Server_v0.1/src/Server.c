@@ -289,8 +289,8 @@ void  UDP_SrvConnection_Hndlr(void)
   socklen_t clAddrLen;
   // int16_t listenSOKFD;
   // Local Structs
-  // S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
-  // S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
+  S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
 
   // #ifdef THREAD_TEST
   
