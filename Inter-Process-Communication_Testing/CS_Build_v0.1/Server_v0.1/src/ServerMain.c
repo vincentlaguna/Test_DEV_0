@@ -334,8 +334,8 @@ int main(int argc, char *argv[])
     // clAddrLen = sizeof(ClAddr);
     // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
     // // While-Loop to receive data from incomming connections
-    // while (1)
-    // {
+    while (1)
+    {
     //   // Receive message
     //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
     //                   (S_SADDR *)&ClAddr, &clAddrLen);
@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
     //   memset(rcvBuffer, '\0', MAX_LEN);
       UDP_SrvConnection_Hndlr();
     //   // UDP_SrvConnection_Hndlr(listenSOKFD);
-    // }
+    }
     
   // #endif // M_THREADED_SOKETS
 
