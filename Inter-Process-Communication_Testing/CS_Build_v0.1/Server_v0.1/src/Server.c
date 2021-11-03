@@ -287,7 +287,8 @@ void  UDP_SrvConnection_Hndlr(void)
   rplyBuffer = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
   socklen_t clAddrLen;
-  // int16_t listenSOKFD;
+  int16_t *listenSOKFD;
+  listenSOKFD = malloc(sizeof(int16_t));
   // Local Structs
   S_SADDR_IN SrvAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
   S_SADDR_IN ClAddr; // = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
