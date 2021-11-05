@@ -68,18 +68,20 @@ Returns: signed 16-bit integer
 int16_t  UDP_SokInit_Handlr(void)
 {
   // Local Variables
-  int16_t  hSok;
+  // int16_t  hSok;
+  int16_t  *hSok;
+  hSok = malloc(sizeof(int16_t));
   // Output
   printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
   // SLEEP
   // Socket System Call
-  hSok = socket(AF_INET, SOCK_DGRAM, 0);        
+  *hSok = socket(AF_INET, SOCK_DGRAM, 0);        
   // Output Validation
   // SLEEP
   printf("[+]SERVER-Side Socket Initialization = OK\n");
   // SLEEP
   // Function Return
-  return  hSok;
+  return  *hSok;
 }
 
 // End UDP_SokInit_Handlr()
@@ -310,7 +312,7 @@ void  UDP_SrvConnection_Hndlr(void)
     // printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
     // printf("\nIn Thread Handler: ipData->IPDataID = %d\n", lData->ipData->IPDataID);
     
-    if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
+    if ((listenSOKFD = (int)UDP_SokInit_Handlr()) < 0) 
     {
       printf("[-]Creation of SOCKET = FAIL\n");
     }
@@ -332,7 +334,7 @@ void  UDP_SrvConnection_Hndlr(void)
     // Bind Server address to socket descriptor
     // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
     // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
-    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+    if ((bind((int)listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
     {
       perror("[-]BIND = FAIL\n"); // Print the error message
     }
@@ -349,7 +351,7 @@ void  UDP_SrvConnection_Hndlr(void)
     while (1)
     {
     // receive message
-      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+      uint16_t sVal = recvfrom((int)listenSOKFD, rcvBuffer, MAX_LEN, 0,
                       (S_SADDR *)&ClAddr, &clAddrLen);
                       // (S_SADDR *)&lData->ipData->clAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
@@ -362,7 +364,7 @@ void  UDP_SrvConnection_Hndlr(void)
       puts("\n");
       strcpy(rplyBuffer, rcvBuffer);         
       // send the response
-      sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+      sendto((int)listenSOKFD, rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(clAddrLen));
             // (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
             
