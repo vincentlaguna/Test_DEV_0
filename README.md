@@ -10,6 +10,7 @@ when not testing locally)
 - Create pthread test branch
 
 Updates:
+- CS_Build_v0.1 (master) -> At this point, I need help... 110521
 - CS_Build_v0.1 (master) -> No segmentation faults, but the data doesn't get replied back to client - 102821
 - CS_Build_v0.1 (master) -> Need to allocate the memory for the struct elsewhere... - 102621
 - CS_Build_v0.1 (master) -> Pass in struct as arg for thread handler (IP = success) - 101421
