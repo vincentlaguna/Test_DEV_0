@@ -61,10 +61,10 @@ int main(int argc, char *argv[])
     rcvBuffer[sVal] = '\0';
     // Display Receive Buffer
     // puts("[+]Displaying Recieve Buffer:\n");
-    puts(rcvBuffer);
+    // puts(rcvBuffer);
     // Validate
     // printf("\n[-]Confirming receive values...\n");
-    printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
     
     // puts("\n");
     strcpy(rplyBuffer, rcvBuffer);         

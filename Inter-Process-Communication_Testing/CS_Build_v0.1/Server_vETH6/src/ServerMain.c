@@ -37,10 +37,10 @@ int main(int argc, char *argv[])
   // Zero-out struct
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   SrvAddr.sin_family = AF_INET;
-  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_4);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_4);
+  SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_5);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_5);
   // Bind Server address to socket descriptor
-  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_4, REM_SRV_PORT_4);
+  printf("[+]Binding to IP: %s on PORT: %d...\n", REM_SRV_IP_5, REM_SRV_PORT_5);
   if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
   {
     perror("[-]BIND = FAIL\n"); // Print the error message

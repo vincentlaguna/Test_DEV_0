@@ -58,6 +58,7 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_2 11002
 #define   REM_SRV_PORT_3 11003
 #define   REM_SRV_PORT_4 11004
+#define   REM_SRV_PORT_5 11005
 #define	  REM_SRV_IP_0 "127.0.0.1"
 // #define	  REM_SRV_IP_0 "192.168.143.20"
 // #define	  REM_SRV_IP_0 "192.168.128.250"
@@ -65,6 +66,7 @@ Description: Common header file for Client-Server code
 #define	  REM_SRV_IP_2 "192.168.128.252"
 #define	  REM_SRV_IP_3 "192.168.128.253"
 #define	  REM_SRV_IP_4 "192.168.128.254"
+#define	  REM_SRV_IP_5 "192.168.128.255"
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
@@ -79,8 +81,8 @@ static uint8_t *szRem_Srv_IP[] =
   REM_SRV_IP_0,
   REM_SRV_IP_1,
   REM_SRV_IP_2,
-  REM_SRV_IP_3,
-  REM_SRV_IP_4
+  REM_SRV_IP_4,
+  REM_SRV_IP_5
 };
 
 enum
@@ -89,7 +91,8 @@ enum
   eREM_SRV_IP_1,
   eREM_SRV_IP_2,
   eREM_SRV_IP_3,
-  eREM_SRV_IP_4
+  eREM_SRV_IP_4,
+  eREM_SRV_IP_5
 };
 
 static const uint8_t *cSerialData = 
