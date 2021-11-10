@@ -554,7 +554,7 @@ network={
 }
 
 #network={
-#	ssid="BurtonBu5"
+#	ssid="*"
 #	psk="****"
 #	key_mgmt=WPA-PSK
 #}
@@ -598,7 +598,7 @@ Change the etc/dhcpcd.conf file:
 For initial headless setup:
 
 	1. Format and image Rasbian on MicroSD card
-	2. Replace the original config.txt with the config.txt in C:\Users\Vlaguna.TROLLSYSTEMS\Documents\Software Validation\Software\Linux\NH_LCD_TCH_Screen\ELI70-IxHW (for New Haven's LCD TouchScreen display compatibility)
+	2. Replace the original config.txt with the config.txt in C:\Users\*\Documents\Software Validation\Software\Linux\NH_LCD_TCH_Screen\ELI70-IxHW (for New Haven's LCD TouchScreen display compatibility)
 	3. (From Windows): Create a wpa_supplicant.conf.txt file (edit the file in sublime):
 	
 	ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
