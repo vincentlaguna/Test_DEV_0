@@ -1,0 +1,7 @@
+# Append in /home/pi ~/.bashrc
+
+VARNAME="$TERM"
+
+if [ $VARNAME == "xterm-256color" ]; then
+	/home/pi/Desktop/spawner.sh
+fi

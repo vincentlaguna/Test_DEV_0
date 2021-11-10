@@ -6,11 +6,7 @@ MDELAY=2
 LDELAY=30
 COUNT=0
 
-HOST1=192.168.143.201
-HOST2=192.168.143.202
-HOST3=192.168.143.203
-HOST4=192.168.143.204
-HOST5=192.168.143.205
+HOST=192.168.143.10
 SERVER=192.168.135.100
 TARGETIP=192.168.135.20
 MIBIP=192.168.135.20
@@ -19,7 +15,7 @@ TYPE=1
 echo "<<< This is an MIB Network Test V.0 >>>"
 #echo ""
 #echo "Please Enter Host IP Address: "
-#read HOST1
+#read HOST
 
 #echo ""
 #echo "Please Enter Server IP: "
@@ -110,13 +106,9 @@ do
 		if [ $TYPE -eq 1 ];
 		then
 			#/usr/bin/iperf-3.7/src/iperf3 -c $SERVER -B $HOST --bidir
-		        iperf3 -c $SERVER -B $HOST1 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST2 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST3 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST4 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST5 -i 0.75 -t 5
+		        iperf3 -c $SERVER -B $HOST -i 0.75 -t 5
 		else
-			iperf3 -c $SERVER -B $HOST1 -u -i 2 -b 64M
+			iperf3 -c $SERVER -B $HOST -u -i 2 -b 64M
 		fi
 		echo ""
 		echo "---------------------------------------------------------------------------------------------------"
@@ -138,14 +130,9 @@ do
 		echo ""
 		if [ $TYPE -eq 1 ];
 		then
-			iperf3 -c $SERVER -B $HOST1 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST2 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST3 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST4 -i 0.75 -t 5
-			iperf3 -c $SERVER -B $HOST5 -i 0.75 -t 5
-
+			iperf3 -c $SERVER -B $HOST -i 0.75 -t 5
 		else
-			iperf3 -c $SERVER -B $HOST1 -u -i 2 -b 64M
+			iperf3 -c $SERVER -B $HOST -u -i 2 -b 64M
 		fi
 		echo ""
 		echo "---------------------------------------------------------------------------------------------------"

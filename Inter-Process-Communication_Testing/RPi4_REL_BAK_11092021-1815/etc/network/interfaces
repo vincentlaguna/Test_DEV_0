@@ -1,0 +1,97 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+
+# auto lo
+# iface lo inet loopback
+
+auto enxa0cec8e179a2 
+iface enxa0cec8e179a2 inet static
+	address 192.168.128.250
+	netmask 255.255.240.0
+	gateway 192.168.136.100
+
+auto enxa0cec8e1b5a3
+iface enxa0cec8e1b5a3 inet static
+	address 192.168.128.251
+	netmask 255.255.240.0
+	gateway 192.168.136.100
+
+
+
+auto enxa0cec8e1ecdb
+iface enxa0cec8e1ecdb inet static
+	address 192.168.128.252
+	netmask 255.255.240.0
+	gateway 192.168.136.100
+
+
+auto enxa0cec8e1ece0
+iface enxa0cec8e1ece0 inet static
+	address 192.168.128.253
+	netmask 255.255.240.0
+	gateway 192.168.136.100
+	link-speed 1000
+
+auto enxa0cec8e1ee96
+iface enxa0cec8e1ee96 inet static
+	address 192.168.128.254
+	netmask 255.255.240.0
+	gateway 192.168.136.100
+	link-speed 1000
+
+# For bringing up wlan0 if needed
+# allow-hotplug wlan0 
+# iface wlan0 inet manual
+# 	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+# 	# iface default inet dhcp #dhcp on wlan still works without this part
+
+# wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+# iface default inet dhcp
+
+# allow-hotplug wlx74ea3a9460bc
+# iface wlx74ea3a9460bc inet manual
+# wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+# iface default inet dhcp
+
+# auto eth0
+# iface eth0 inet static 	
+#	address 192.168.143.10
+#	netmask 255.255.255.240
+#	gateway 192.168.143.100
+
+# auto eth1
+# iface eth1 inet static
+#	address 192.168.143.201
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+
+# auto eth2
+# iface eth2 inet static
+#	address 192.168.143.202
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+
+# auto eth3
+# iface eth3 inet static
+#	address 192.168.143.203
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+
+# auto eth4
+# iface eth4 inet static
+#	address 192.168.143.204
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+#	#link-speed 1000
+
+# auto eth5
+# iface eth5 inet static
+#	address 192.168.143.205
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+#	#link-speed 1000

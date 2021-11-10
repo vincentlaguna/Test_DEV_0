@@ -1,0 +1,731 @@
+-----------------------------------------------------------------
+1214-10 Test Set Setup:
+
+PC *Info: 
+1214-10 Test Fixture:
+
+ID: 
+Password: 
+Windows PIN: 
+
+RPi4:
+
+Make sure to configure the /etc/network/interfaces file i.e.:
+(retain eth0 as well)
+
+Ø #auto lo
+Ø #iface lo inet loopback 
+
+Ø allow-hotplug wlan0
+iface wlan0 inet manual
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+Ø #auto eth0
+Ø #iface eth0 inet static
+#	address 192.168.143.10
+#	netmask 255.255.240.0
+#	gateway 192.168.143.100
+
+	Ø auto ethx
+	Ø iface ethx inet static
+		address 192.168.143.20x
+		netmask 255.255.240.0
+		gateway 192.168.143.100
+		
+	Ø auto ethx …
+
+	
+Spawn a shell on startup. Desktop runs in the background so deleting, or renaming this file, will bring back the desktop on a reboot.
+
+	1. vi /home/pi/.config/lxsession/LXDE-pi/autostart
+	add in @lxterminal to the file
+              
+Download xterm
+	
+	1. sudo apt-get update
+	sudo apt-get install xterm
+ 
+Edit the bashrc file for the lxterminal
+
+	1. vi ~/.bashrc
+	 
+	append to the bottom of the file
+	        
+	VARNAME=”$TERM”
+	If [ $VARNAME == “xterm-256color” ]; then
+		/home/pi/Desktop/spawner.sh
+	fi
+ 
+To change the speed of the NIC:
+
+	1. vi /etc/network/interfaces
+	link-speed 1000 or link-speed 100.
+	
+	2. Modify the spawner.sh script accordingly. In its current state it is spawning a client and a server but uncommenting the for loop should spawn 5 servers. The spawner script is attached to this email.
+	3. Spawner script: 
+	
+	#!/bin/bash
+	
+	PASSWORD=$(echo "raspberry")
+	
+	sleep 1
+	
+	# Set IP rules to reply incoming packets back onto the interface they came in from
+	
+	echo $PASSWORD | sudo -S -k ip route add table 1 to 192.168.143.201 dev eth1
+	echo $PASSWORD | sudo -S -k ip route add table 1 to default via 192.168.143.100 dev eth1
+	
+	echo $PASSWORD | sudo -S -k ip route add table 2 to 192.168.143.202 dev eth2
+	echo $PASSWORD | sudo -S -k ip route add table 2 to default via 192.168.143.100 dev eth2
+	
+	echo $PASSWORD | sudo -S -k ip route add table 3 to 192.168.143.203 dev eth3
+	echo $PASSWORD | sudo -S -k ip route add table 3 to default via 192.168.143.100 dev eth3
+	
+	echo $PASSWORD | sudo -S -k ip route add table 4 to 192.168.143.204 dev eth4
+	echo $PASSWORD | sudo -S -k ip route add table 4 to default via 192.168.143.100 dev eth4
+	
+	echo $PASSWORD | sudo -S -k ip route add table 5 to 192.168.143.205 dev eth5
+	echo $PASSWORD | sudo -S -k ip route add table 5 to default via 192.168.143.100 dev eth5
+	
+	echo $PASSWORD | sudo -S -k ip rule add from 192.168.143.201 table 1 priority 1
+	echo $PASSWORD | sudo -S -k ip rule add from 192.168.143.202 table 2 priority 2
+	echo $PASSWORD | sudo -S -k ip rule add from 192.168.143.203 table 3 priority 3
+	echo $PASSWORD | sudo -S -k ip rule add from 192.168.143.204 table 4 priority 4
+	echo $PASSWORD | sudo -S -k ip rule add from 192.168.143.205 table 5 priority 5
+	
+	# spawn 5 shells
+	
+	for i in {1..5}
+	do
+		xterm -hold -e "cd /home/pi/Desktop/Test_DEV_0/Inter-Process-Communication_Testing/CS_Build_v0.1/Server_vETH$i/ && make all" &
+		sleep 1
+	done
+	
+	echo $PASSWORD | sudo -S -k ip link set dev eth1 down
+	echo $PASSWORD | sudo -S -k ip link set dev eth1 up
+	
+	echo $PASSWORD | sudo -S -k ip link set dev eth2 down
+	echo $PASSWORD | sudo -S -k ip link set dev eth2 up
+	
+	echo $PASSWORD | sudo -S -k ip link set dev eth3 down
+	echo $PASSWORD | sudo -S -k ip link set dev eth3 up
+	
+	echo $PASSWORD | sudo -S -k ip link set dev eth4 down
+	echo $PASSWORD | sudo -S -k ip link set dev eth4 up
+	
+	echo $PASSWORD | sudo -S -k ip link set dev eth5 down
+	echo $PASSWORD | sudo -S -k ip link set dev eth5 up
+	
+	# end of script
+	
+	
+	4. Add udev rules: /etc/udev/rules.d/50-net…
+	5. Disable unnecessary services:
+		a. Timesyncd: sytemctl disable systemd-timesyncd
+		b. There are a few others to add to this list…
+	-----------------------------------------------------------------
+	
+	
+	Things to try:
+	
+	#!/bin/bash
+	oldinterfacename=$(ip -br link | awk '$3 ~ /90:10:00:9f:46:c3/ {print $1}')
+if [ -z "$oldinterfacename" ]
+then
+  echo "Did not find interface to rename"
+  exit 1
+fi
+ip link set "$oldinterfacename" name newName  || { echo "Error: Failed to set newName"  ; exit 1; }
+	
+
+---------------------------------------------------------------------------------
+REALTEK FW ISSUE (to solve):
+
+The missing of this firmware can throw different errors prefixed by rtl_nic/ to solve this simply add the official repository Debian firmware-realtek to your /etc/apt/sources.list and make sure you are selecting the right Destro
+your source.list should look like this:
+#realtek firmware
+deb http://ftp.de.debian.org/debian stretch main non-free
+deb-src  http://ftp.de.debian.org/debian stretch main non-free
+After that install realtek firmware
+sudo apt-get update
+sudo apt-get install firmware-realtek
+
+------------------------------------------------------------------------
+UDEV:
+
+UDEV Rules:
+
+To find out current rules applied to each device:
+
+	Ø udevadm test /sys/class/net/<iface>
+
+RPi4 Current Example (/etc/udev/rules.d/50-net-ifaces.rules) <iface eth1>:
+
+	Ø SUBSYSTEM=="net", ACTION=="add", DEVPATH=="/devices/platform/scb/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb1/1-1/1-1.2/1-1.2.1/1-1.2.1.3/1-1.2.1.3:1.0/net/enxa0cec8e179a2", ATTR{devpath}=="1.2.1.3", ATTR{address}=="a0:ce:c8:e1:79:a2", NAME="enxa0cec8e179a2" # And so on…
+
+
+
+To Monitor Kernel udev events:
+
+	Ø udevadm monitor
+
+	Ø udevadm info -a /sys/class/net/<iface>
+
+	Ø udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0)
+
+------------------------------------------------------------------------
+NETPLAN:
+
+https://netplan.io/examples/
+-------------------------------------------------------------
+IP Tables:
+
+To list current table:
+
+	Ø iptables -t -L -n
+
+To Block IP Address:
+
+	Ø iptables -A INPUT -s <IP> -j DROP (to unblock use -D instead of -A)
+	Ø Iptables -A OUTPUT -p tcp --dport <port#> -j DROP (block outgoing port) (ACCEPT to block incoming)
+	
+Syntax for rules: iptables [ option ] CHAIN_rule [ -j target ] 
+
+-------------------------------------------------------------
+Setting up NIC's:
+
+######################################################################
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+#
+# A "#" character in the very first column makes the rest of the line
+# be ignored. Blank lines are ignored. Lines may be indented freely.
+# A "\" character at the very end of the line indicates the next line
+# should be treated as a continuation of the current one.
+#
+# The "pre-up", "up", "down" and "post-down" options are valid for all 
+# interfaces, and may be specified multiple times. All other options
+# may only be specified once.
+#
+# See the interfaces(5) manpage for information on what options are 
+# available.
+######################################################################
+# We always want the loopback interface.
+#
+# auto lo
+# iface lo inet loopback
+# An example ethernet card setup: (broadcast and gateway are optional)
+#
+# auto eth0
+# iface eth0 inet static
+#     address 192.168.0.42
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+#     broadcast 192.168.0.255
+#     gateway 192.168.0.1
+# A more complicated ethernet setup, with a less common netmask, and a downright
+# weird broadcast address: (the "up" lines are executed verbatim when the 
+# interface is brought up, the "down" lines when it's brought down)
+#
+# auto eth0
+# iface eth0 inet static
+#     address 192.168.1.42
+#     network 192.168.1.0
+#     netmask 255.255.255.128
+#     broadcast 192.168.1.0
+#     up route add -net 192.168.1.128 netmask 255.255.255.128 gw 192.168.1.2
+#     up route add default gw 192.168.1.200
+#     down route del default gw 192.168.1.200
+#     down route del -net 192.168.1.128 netmask 255.255.255.128 gw 192.168.1.2
+# A more complicated ethernet setup with a single ethernet card with
+# two interfaces.
+# Note: This happens to work since ifconfig handles it that way, not because
+# ifup/down handles the ':' any differently.
+# Warning: There is a known bug if you do this, since the state will not
+# be properly defined if you try to 'ifdown eth0' when both interfaces
+# are up. The ifconfig program will not remove eth0 but it will be
+# removed from the interfaces state so you will see it up until you execute:
+# 'ifdown eth0:1 ; ifup eth0; ifdown eth0'
+# BTW, this is "bug" #193679 (it's not really a bug, it's more of a 
+# limitation)
+#
+# auto eth0 eth0:1
+# iface eth0 inet static
+#     address 192.168.0.100
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+#     broadcast 192.168.0.255
+#     gateway 192.168.0.1
+# iface eth0:1 inet static
+#     address 192.168.0.200
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+# "pre-up" and "post-down" commands are also available. In addition, the
+# exit status of these commands are checked, and if any fail, configuration
+# (or deconfiguration) is aborted. So:
+#
+# auto eth0
+# iface eth0 inet dhcp
+#     pre-up [ -f /etc/network/local-network-ok ]
+#
+# will allow you to only have eth0 brought up when the file 
+# /etc/network/local-network-ok exists.
+# Two ethernet interfaces, one connected to a trusted LAN, the other to
+# the untrusted Internet. If their MAC addresses get swapped (because an
+# updated kernel uses a different order when probing for network cards,
+# say), then they don't get brought up at all.
+#
+# auto eth0 eth1
+# iface eth0 inet static
+#     address 192.168.42.1
+#     netmask 255.255.255.0
+#     pre-up /path/to/check-mac-address.sh eth0 11:22:33:44:55:66
+#     pre-up /usr/local/sbin/enable-masq
+# iface eth1 inet dhcp
+#     pre-up /path/to/check-mac-address.sh eth1 AA:BB:CC:DD:EE:FF
+#     pre-up /usr/local/sbin/firewall
+# Two ethernet interfaces, one connected to a trusted LAN, the other to
+# the untrusted Internet, identified by MAC address rather than interface
+# name:
+#
+# auto eth0 eth1
+# mapping eth0 eth1
+#     script /path/to/get-mac-address.sh
+#     map 11:22:33:44:55:66 lan
+#     map AA:BB:CC:DD:EE:FF internet
+# iface lan inet static
+#     address 192.168.42.1
+#     netmask 255.255.255.0
+#     pre-up /usr/local/sbin/enable-masq $IFACE
+# iface internet inet dhcp
+#     pre-up /usr/local/sbin/firewall $IFACE
+# A PCMCIA interface for a laptop that is used in different locations:
+# (note the lack of an "auto" line for any of these)
+#
+# mapping eth0
+#    script /path/to/pcmcia-compat.sh
+#    map home,*,*,*                  home
+#    map work,*,*,00:11:22:33:44:55  work-wireless
+#    map work,*,*,01:12:23:34:45:50  work-static
+#
+# iface home inet dhcp
+# iface work-wireless bootp
+# iface work-static static
+#     address 10.15.43.23
+#     netmask 255.255.255.0
+#     gateway 10.15.43.1
+#
+# Note, this won't work unless you specifically change the file
+# /etc/pcmcia/network to look more like:
+#
+#     if [ -r ./shared ] ; then . ./shared ; else . /etc/pcmcia/shared ; fi
+#     get_info $DEVICE
+#     case "$ACTION" in
+#         'start')
+#             /sbin/ifup $DEVICE
+#             ;;
+#         'stop')
+#             /sbin/ifdown $DEVICE
+#             ;;
+#     esac
+#     exit 0
+# An alternate way of doing the same thing: (in this case identifying
+# where the laptop is done by configuring the interface as various
+# options, and seeing if a computer that is known to be on each particular
+# network will respond to pings. The various numbers here need to be chosen
+# with a great deal of care.)
+#
+# mapping eth0
+#    script /path/to/ping-places.sh
+#    map 192.168.42.254/24 192.168.42.1 home
+#    map 10.15.43.254/24 10.15.43.1 work-wireless
+#    map 10.15.43.23/24 10.15.43.1 work-static
+#
+# iface home inet dhcp
+# iface work-wireless bootp
+# iface work-static static
+#     address 10.15.43.23
+#     netmask 255.255.255.0
+#     gateway 10.15.43.1
+#
+# Note that the ping-places script requires the iproute package installed,
+# and the same changes to /etc/pcmcia/network are required for this as for
+# the previous example.
+# Set up an interface to read all the traffic on the network. This 
+# configuration can be useful to setup Network Intrusion Detection
+# sensors in 'stealth'-type configuration. This prevents the NIDS
+# system to be a direct target in a hostile network since they have
+# no IP address on the network. Notice, however, that there have been
+# known bugs over time in sensors part of NIDS (for example see 
+# DSA-297 related to Snort) and remote buffer overflows might even be
+# triggered by network packet processing.
+# 
+# auto eth0
+# iface eth0 inet manual
+# 	up ifconfig $IFACE 0.0.0.0 up
+#       up ip link set $IFACE promisc on
+#       down ip link set $IFACE promisc off
+#       down ifconfig $IFACE down
+# Set up an interface which will not be allocated an IP address by
+# ifupdown but will be configured through external programs. This
+# can be useful to setup interfaces configured through other programs,
+# like, for example, PPPOE scripts.
+#
+# auto eth0
+# iface eth0 inet manual
+#       up ifconfig $IFACE 0.0.0.0 up
+#       up /usr/local/bin/myconfigscript
+#       down ifconfig $IFACE down
+-------------------------------------------------------------
+NMAP:
+
+-A -T4 = Fast OS detection
+-sV = detect Service and Daemon versions
+-sS = stealth mode scan
+-sN = hostnames
+-sp = host scan with MAC's
+-sL = associated names
+-oN = output to a .txt file
+# = ping scan on local ports
+
+Port scans:
+
+-sS = TCP SYN scan
+-sT = TCP connect scan
+
+Networking Resources:
+
+https://networkencyclopedia.com/host-id/
+https://flylib.com/books/en/2.350.1.21/1/ -> this is useful in the TCP/IP programming topologies course
+
+-------------------------------------------------------------
+
+OTHERS...
+
+Initial Configuration (Kali)
+
+You can use Balena etcher to load the latest Raspbian or other Linux Distro image unto the SD card.
+
+Once installed, connect to the network and start with all the initial OS package updates and upgrades. You can also create a bash script function you can name "apt-updater" and run it as a single command.
+	- Go to .bash_aliases file
+	- Alias ls='ls --color=always -rthla'
+	- Function:
+	function apt-updater {
+			apt-get update &&
+			apt-get dist-upgrade -Vy &&
+			apt-get autoremove -y &&
+			apt-get autoclean &&    
+			apt-get clean &&
+			reboot
+			}
+			
+	- Additional updates:
+	- Maximize memory usage on SD card:
+	- Show the current memory usage in drives:
+	- >df -h
+	- >apt-get install triggerhappy
+	- >apt-get install lua5.1
+	- >apt-get install alsa-utils
+	- >cd temp
+	- >wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config_20160506_all.deb107
+	- >raspi-config
+
+Software:
+	- Vim
+	- Nmap
+	- Iperf3
+	
+
+Home Rpi4 xdev 192.168.1.106
+Home Rpi4 xdev wlan1 10.149.85.110
+
+---------------------------------------------------------------------------------
+UBUNTU SETUP:
+
+For running raspi-config on Ubuntu 20.10 -> run:
+
+wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20200601_all.deb -P /tmp
+sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 alsa-utils -y
+# Auto install dependancies on eg. ubuntu server on RPI
+sudo apt-get install -fy
+sudo dpkg -i /tmp/raspi-config_20200601_all.deb
+
+*Note some of these are optional and depend on the specific application the RPi4 will be used for.
+
+For openssh-server -> install -> systemctl enable ssh
+
+Before changing to static IP -> please create a backup *.yaml file in /etc/netplan/ -> here is an example of a default configuration:
+
+network:
+  version: 2
+  ethernets:
+    eth0:
+      # Rename the built-in ethernet device to "eth0"
+      match:
+		driver: bcmgenet smsc95xx lan78xx 
+      set-name: eth0
+	  dhcp4: true
+	  optional: true
+      
+static IP ubuntu 20.10
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp3s0:
+      addresses:
+        - 10.10.10.2/24
+      gateway4: 10.10.10.1
+      nameservers:
+          search: [mydomain, otherdomain]
+          addresses: [10.10.10.1, 1.1.1.1]
+
+For Wifi:
+
+version: 2
+ethernets:
+  eth0:
+    dhcp4: true
+    optional: true
+wifis:
+  wlan0:
+    dhcp4: true
+    optional: true
+    access-points:
+      "YOUR_WIFI_NAME":
+        password: "YOUR_WIFI_PASSWORD"
+
+Then:
+
+Sudo netplan generate
+Sudo netplan apply
+Sync
+Reboot
+
+If you run into issues bringing up wlan0:
+
+Rfkill list all
+Rfkill unblock all
+Ip link set wlan0 up
+
+For Work (RPi4) Configuration:
+
+Rpi41:
+IP: 192.168.135.56/20
+Username: rpi41:
+Password: rpi4
+
+Wlan0: 192.168.1.238/24
+
+---------------------------------------------------------------------------------
+For Home (personal RPi4) configuration (Raspbian OS):
+
+Home Rpi4 xdev 192.168.1.106
+Home Rpi4 xdev wlan1 10.149.85.110
+
+pi@xdev:~ $ sudo cat /etc/network/interfaces
+# interfaces(5) file used by ifup(8) and ifdown(8)
+
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+
+auto lo
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0 #default
+iface wlan1 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+
+pi@xdev:~ $ cat /etc/wpa_supplicant/wpa_supplicant.conf
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+
+network={
+	scan_ssid=1
+	ssid="."
+	psk="****"
+	key_mgmt=WPA-PSK
+}
+
+#network={
+#	ssid="BurtonBu5"
+#	psk="****"
+#	key_mgmt=WPA-PSK
+#}
+
+01-11-2021 setup on RPi40 
+
+In "etc/network/interfaces":
+	auto eth0
+	iface eth0 inet static
+	    address 192.168.168.18
+	    netmask 255.255.240.0
+	    gateway 192.168.168.1
+	
+01-11-2021 setup on RPi41
+
+In "etc/network/interfaces":
+	auto eth0
+	iface eth0 inet static
+	    address 192.168.168.180
+	    netmask 255.255.240.0
+	    gateway 192.168.168.10
+
+---------------------------------------------------------------------------------
+RPi4 2021 Troll Setup:
+
+Raspbian OS installed
+
+Follow the usual install/update process…
+
+#rpi40
+
+To change to static IP on eth0:
+
+>ip r | grep default # take note of the current default gateway
+
+Change the etc/dhcpcd.conf file:
+>interface eth0
+>static ip_address=192.168.168.18/20
+>static routers=192.168.168.1
+
+For initial headless setup:
+
+	1. Format and image Rasbian on MicroSD card
+	2. Replace the original config.txt with the config.txt in C:\Users\Vlaguna.TROLLSYSTEMS\Documents\Software Validation\Software\Linux\NH_LCD_TCH_Screen\ELI70-IxHW (for New Haven's LCD TouchScreen display compatibility)
+	3. (From Windows): Create a wpa_supplicant.conf.txt file (edit the file in sublime):
+	
+	ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+	update_config=1
+	country=US
+	
+	network={
+	        ssid="<SSID>"
+	        psk="<PSWD>"
+			key_mgmt=WPA-PSK        
+			priority=1
+	}
+	
+	network={
+	        ssid="<Hidden SSID>"
+	        scan_ssid=1
+	        psk="<PSWD>"
+	        priority=2
+	}
+	
+	4. Edit the /etc/rc.local file (not necessary, but just in case):
+
+The hack: Edit /etc/rc.local file from windows 7
+After googling for almost the whole day i got to know two thing
+	1. Commands can be executed by editing the file /etc/rc.local in the rootfs partition
+	2. Command to start ssh is /etc/init.d/ssh start
+So i edited the rc.local file by placing the /etc/init.d/ssh start just before the exit 0 so that it executes on every boot, as follows
+
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+# Print the IP address
+
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+Fi
+/etc/init.d/ssh start
+exit 0
+
+	1. Access the RPi4 over your network using putty SSH client:
+Type user name: raspberrypi (port 22) default password raspberry
+	1. Enable all other interfaces in (su) raspi-config
+	2. Setup:
+	- Go to .bash_aliases file
+	- Alias ls='ls --color=always -rthla'
+	- Function:
+	function apt-updater {
+			apt-get update &&
+			apt-get dist-upgrade -Vy &&
+			apt-get autoremove -y &&
+			apt-get autoclean &&    
+			apt-get clean &&
+			reboot
+			}
+		
+	3. Install:
+	- Vim
+	- Nmap
+	- Iperf3
+	- Iperf
+	- Sweeper && bleachbit (optional, junk cached data management)
+	
+	4. Backup:
+	
+	sudo dd bs=4M if=/dev/sdb of=PiOS.img
+	This will create an image file on your computer which you can use to write to another SD card, and keep exactly the same contents and settings. To restore or clone to another card, use dd in reverse:
+	sudo dd bs=4M if=PiOS.img of=/dev/sdb
+	These files can be very large, and compress well. To compress, you can pipe the output of dd to gzip to get a compressed file that is significantly smaller than the original size:
+	sudo dd bs=4M if=/dev/sdb | gzip > PiOS.img.gz
+	To restore, pipe the output of gunzip to dd:
+	gunzip --stdout PiOS.img.gz | sudo dd bs=4M of=/dev/sdb
+	
+	5. Alt. backup:
+
+	wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
+	Chmod +x pishrink.sh
+	Mv pishrink.sh /usr/local/bin
+	Lsblk (to check mounted USB)
+	
+	1. Alt. backup (I did this one):
+
+	Stick the SD card you want to make an image of into the USB SD card reader and insert into Linux machine
+	
+	Run lsblk
+	
+	Umount both sd card partitions
+	
+	Df -h to confirm the SD card is not mounted
+	
+	Ensure you have enough space on your drive
+	
+	Run dd bs=4M if=/dev/sdb of=RPi4_IMG_031021.img status=progress; sync (in my case: "sdb")
+	
+	sudo dd if=/dev/mmcblk0 of=[mount point]/myimg.img bs=1M count=7000 (if pre-shrunk with gparted)
+	
+	Or duplicate and compress in one go: dd <bs=4M?> if=/dev/sdb | gzip > PiOS.img.gz
+	
+	Shrink the image: gzip sdcard.img
+	
+	Use pishrink:
+	Pishrink.sh -z sdcard.img
+	
+	1. To restore image:
+
+	Run lsblk (Please be kind and do not overwrite your computer's OS partition)
+	
+	Run df -h to confirm the blank SD card is not mounted
+	
+	Run dd if=RPi4_IMG_031021.img of=/dev/sdc bs=4M status=progress; sync (in my case: "sdc" because I am writing the image from a mounted external HDD)
+	
+	To image from a gzip file: gzip -dc sdcard.img.gz | sudo dd of=/dev/sdc
+	
+	1. To Format (FAT32) in Linux:
+
+	Sudo dd if=/dev/zero of=/dev/sdb bs=4096 status=progress
+	Sudo parted /dev/sdb --script --mklabel msdos
+	Sudo parted /dev/sdb --script --mkpart primary fat32 1MiB 100%
+	Sudo mkfs.vfat -F32 /dev/sdb1 (Format Boot partition to FAT32)
+	Sudo parted /dev/sdb --script print (to verify)
+	
