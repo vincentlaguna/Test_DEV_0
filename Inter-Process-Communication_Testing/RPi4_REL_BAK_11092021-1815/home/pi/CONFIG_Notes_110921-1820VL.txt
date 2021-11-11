@@ -520,12 +520,6 @@ Wlan0: 192.168.1.238/24
 ---------------------------------------------------------------------------------
 For Home (personal RPi4) configuration (Raspbian OS):
 
-Home Rpi4 xdev 192.168.1.106
-Home Rpi4 xdev wlan1 10.149.85.110
-
-pi@xdev:~ $ sudo cat /etc/network/interfaces
-# interfaces(5) file used by ifup(8) and ifdown(8)
-
 # Please note that this file is written to be used with dhcpcd
 # For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
 
@@ -578,13 +572,12 @@ In "etc/network/interfaces":
 	    gateway 192.168.168.10
 
 ---------------------------------------------------------------------------------
-RPi4 2021 Troll Setup:
+RPi4 2021 Work Setup:
 
 Raspbian OS installed
 
 Follow the usual install/update process…
 
-#rpi40
 
 To change to static IP on eth0:
 

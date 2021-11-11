@@ -9,7 +9,7 @@ Description: Server-side code
 
 /* Includes: ****************************************************************/
 
-#include "../inc/CS_Common.h"
+#include  "../../Server_Common/CS_Common.h"
 
 /****************************************************************************/
 
