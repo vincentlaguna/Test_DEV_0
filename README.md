@@ -11,7 +11,7 @@ when not testing locally)
 
 Updates:
 
-<!--- CS_Build_v0.1 (master) -> Refactored Server instances for Debug Mode (DBG MACRO) - 111221-->
+- CS_Build_v0.1 (master) -> Refactored Server instances for Debug Mode (DBG MACRO) - 111221
 - CS_Build_v0.1 (master) -> Refactored Server instances to use only one common .h file - 111121
 - CS_Build_v0.1 (master) -> No segmentation faults, but the data doesn't get replied back to client - 102821
 - CS_Build_v0.1 (master) -> Need to allocate the memory for the struct elsewhere... - 102621
