@@ -351,35 +351,63 @@ void  UDP_SrvConnection_Hndlr(void)
     // While-Loop to receive data from incomming connections
     while (1)
     {
-    // receive message
+      // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-                      (S_SADDR *)&ClAddr, &clAddrLen);
-                      // (S_SADDR *)&lData->ipData->clAddr, &clAddrLen);
+                    (S_SADDR *)&ClAddr, &clAddrLen);
       rcvBuffer[sVal] = '\0';
-      
+    
+    #ifdef DBG
+      // Display Receive Buffer
+      puts("[+]DEBUG STATUS: ENABLED\n");
       puts("[+]Displaying Recieve Buffer:\n");
       puts(rcvBuffer);
+      // Validate
       printf("\n[-]Confirming receive values...\n");
       printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
       
       puts("\n");
-      strcpy(rplyBuffer, rcvBuffer);         
-      // send the response
-      sendto((int)listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(clAddrLen));
-            // (S_SADDR *)&lData->ipData->clAddr, sizeof(clAddrLen));
-            
+      printf("[-]Sending Response to Client...\n");
+      
+    #endif
+      // Copying to reply buffer for sending
+      strcpy(rplyBuffer, rcvBuffer);
+      // Replying Buffer w/active notifier
+      if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+            (S_SADDR *)&ClAddr, sizeof(ClAddr)))
+      {
+      
+      #ifndef DBG  
+        
+        puts("[-]DEBUG STATUS: DISABLED\n");
+      
+      #endif
+      
+        puts("[+]Replying Back to CLient Status: ACTIVE\n");
+      }
+          
+    #ifdef DBG
+  
+      printf("[-]CHECKSUM Validation...\n");
+      // Checksum Validation (for debugging)
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
+        printf("[+]BYTES RECEIVED = %d\n",
+              (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
+              
         printf("[+]CHECKSUM = PASS\n");
       }
       else
       {
         printf("[+]CHECKSUM = FAIL\n");
       }
+
+    #endif  
+      
       puts("\n");
       // Zero-out receive buffer
       memset(rcvBuffer, '\0', MAX_LEN);
+      memset(rplyBuffer, '\0', MAX_LEN);
+  
       printf("This is where the magic would happen...\n");
       
     }

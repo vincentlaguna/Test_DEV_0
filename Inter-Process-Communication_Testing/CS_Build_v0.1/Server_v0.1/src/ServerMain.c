@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                                 
+Author(s) or Contributor(s): Version 1.1  ~ Vincent A. Laguna 2021                                                                 
 
 File: ServerMain.c              
 
@@ -335,46 +335,66 @@ int main(int argc, char *argv[])
     // printf("[-]WAITING FOR INCOMING CONNECTIONS...\n\n");
     // // While-Loop to receive data from incomming connections
     // while (1)
-    // {
-      // // Receive message
-      // uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
-      //                 (S_SADDR *)&ClAddr, &clAddrLen);
-      // rcvBuffer[sVal] = '\0';
-      // // Display Receive Buffer
-      // puts("[+]Displaying Recieve Buffer:\n");
-      // puts(rcvBuffer);
-      // // Validate
-      // printf("\n[-]Confirming receive values...\n");
-      // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-      
-      // puts("\n");
-      // strcpy(rplyBuffer, rcvBuffer);         
-      // // Send the response
-      // printf("[-]Sending Response to Client...\n");
-      // sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-      //       (S_SADDR *)&ClAddr, sizeof(ClAddr));
-      // printf("[+]RESPONSE = SENT\n"); 
-      // // Checksum Validation
-      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      // {
-      //   printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-      //   printf("[+]CHECKSUM = PASS\n");
-      // }
-      // else
-      // {
-      //   printf("[+]CHECKSUM = FAIL\n");
-      // }
-      // puts("\n");
-      // // Zero-out receive buffer
-      // memset(rcvBuffer, '\0', MAX_LEN);
-      UDP_SrvConnection_Hndlr();
-    //   // UDP_SrvConnection_Hndlr(listenSOKFD);
-    // }
+  // {
+  //   // receive message
+  //   uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+  //                   (S_SADDR *)&ClAddr, &clAddrLen);
+  //   rcvBuffer[sVal] = '\0';
     
-  // #endif // M_THREADED_SOKETS
-
-// #endif // TCP/UDP
-
+  // #ifdef DBG
+  //   // Display Receive Buffer
+  //   puts("[+]DEBUG STATUS: ENABLED\n");
+  //   puts("[+]Displaying Recieve Buffer:\n");
+  //   puts(rcvBuffer);
+  //   // Validate
+  //   printf("\n[-]Confirming receive values...\n");
+  //   printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+    
+  //   puts("\n");
+  //   printf("[-]Sending Response to Client...\n");
+    
+  // #endif
+  //   // Copying to reply buffer for sending
+  //   strcpy(rplyBuffer, rcvBuffer);
+  //   // Replying buffer w/active notifier
+  //   if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+  //         (S_SADDR *)&ClAddr, sizeof(ClAddr)))
+  //   {
+    
+  //   #ifndef DBG  
+      
+  //     puts("[-]DEBUG STATUS: DISABLED\n");
+    
+  //   #endif
+    
+  //     puts("[+]Replying Back to CLient: Active\n");
+  //   }
+          
+  // #ifdef DBG
+  
+  //   printf("[-]CHECKSUM Validation...\n");
+  //   // Checksum Validation (for debugging)
+  //   if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+  //   {
+  //     printf("[+]BYTES RECEIVED = %d\n",
+  //           (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
+            
+  //     printf("[+]CHECKSUM = PASS\n");
+  //   }
+  //   else
+  //   {
+  //     printf("[+]CHECKSUM = FAIL\n");
+  //   }
+  //   puts("\n");
+  
+  // #endif  
+  //   // Zero-out receive buffer
+  //   memset(rcvBuffer, '\0', MAX_LEN);
+      // UDP_SrvConnection_Hndlr();
+  // }
+  
+  // puts("[+]Replying Back to CLient: INACTIVE (Connection Closed)\n");
+  
   return(0);
 
 }
