@@ -41,7 +41,7 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
-#define   DBG
+#define   DBG // GLOBAL DEBUG MODE
 #define   TIME_O 5
 #define   MAX_CONN 6
 #define	  MAX_LEN 1024
@@ -56,8 +56,8 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_4 11004
 #define   REM_SRV_PORT_5 11005
 #define   LOCAL_IP "127.0.0.1"
-#define	  REM_SRV_IP_0 "127.0.0.1" // For quick local test
-// #define	  REM_SRV_IP_0 "192.168.128.250"
+// #define	  REM_SRV_IP_0 "127.0.0.1" // For quick local test
+#define	  REM_SRV_IP_0 "192.168.128.250"
 #define	  REM_SRV_IP_1 "192.168.128.251"
 #define	  REM_SRV_IP_2 "192.168.128.252"
 #define	  REM_SRV_IP_3 "192.168.128.253"
