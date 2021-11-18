@@ -174,7 +174,7 @@ uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
 // void      *UDP_SrvConnection_Hndlr(void *clSOKFD);
-void      UDP_SrvConnection_Hndlr(void);
+void      UDP_SrvConnection_Hndlr(void *SOKData);
 // void      *UDP_SrvConnection_Hndlr(void *SOKData);
 int16_t   UDP_SokInit_Handlr(void);
 int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);

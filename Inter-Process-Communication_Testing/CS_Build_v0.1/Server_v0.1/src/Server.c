@@ -263,14 +263,16 @@ Returns: void
 
 // void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
 // void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
-void  UDP_SrvConnection_Hndlr(void)
+void  UDP_SrvConnection_Hndlr(void *sokData)
 // void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   // Local Data
-  // SOKData *lData;
-  // lData = (SOKData *)malloc(sizeof(SOKData));
-  // lData = (SOKData *)sokData;
+  SOKData *lData;
+  lData = (SOKData *)malloc(sizeof(SOKData));
+  lData = (SOKData *)sokData;
   
+  // lData->cIp = *sokData->cIP;
+  // lData->uPort = (SOKData *)sokData->uPort;
   // lData->ipData->srvAddr.sin_addr.s_addr =
   // *(uint8_t *)malloc(sizeof(uint8_t) * IP_STR_SZ);
       
@@ -308,7 +310,7 @@ void  UDP_SrvConnection_Hndlr(void)
     // lData->SOKid = rID_Gen();
     // printf("\nIn Thread Handler: changed SOKid = %d\n", lData->SOKid);
     // printf("\nIn Thread Handler: cIP = %s\n", lData->cIP);
-    // printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
+    printf("\nIn Thread Handler: uPort = %d\n", lData->uPort);
     // printf("\nIn Thread Handler: ipData->IP = %xd\n", lData->ipData->srvAddr.sin_addr.s_addr);
     // printf("\nIn Thread Handler: ipData->Port = %d\n", lData->ipData->srvAddr.sin_port);
     // printf("\nIn Thread Handler: ipData->IPDataID = %d\n", lData->ipData->IPDataID);
@@ -323,8 +325,8 @@ void  UDP_SrvConnection_Hndlr(void)
     printf("[+]sin_family assignment = OK\n");
     SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
     // SrvAddr->sin_addr.s_addr = inet_addr(lData->ipData->srvAddr.sin_addr.s_addr);
-    SrvAddr.sin_port = htons(REM_SRV_PORT_0);
-    
+    // SrvAddr.sin_port = htons(REM_SRV_PORT_0);
+    SrvAddr.sin_port = htons(lData->uPort);
     // Trying this for now (102721-1340) ...Nope (1440)
     // memset(&SrvAddr, 0, sizeof(SrvAddr));
     // SrvAddr->sin_family = lData->ipData->srvAddr.sin_family;
