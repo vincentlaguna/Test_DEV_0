@@ -96,6 +96,25 @@ enum
   eREM_SRV_IP_5
 };
 
+static uint8_t uRem_Srv_Port[] =
+{
+  REM_SRV_PORT_0,
+  REM_SRV_PORT_1,
+  REM_SRV_PORT_3,
+  REM_SRV_PORT_4,
+  REM_SRV_PORT_5
+};
+
+enum
+{
+  eREM_SRV_PORT_0,
+  eREM_SRV_PORT_1,
+  eREM_SRV_PORT_2,
+  eREM_SRV_PORT_3,
+  eREM_SRV_PORT_4,
+  eREM_SRV_PORT_5
+};
+
 static const uint8_t *cSerialData = 
 {
 	"\xff"													// NUM bytes
