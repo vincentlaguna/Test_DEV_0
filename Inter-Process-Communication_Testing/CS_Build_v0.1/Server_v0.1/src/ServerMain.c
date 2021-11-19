@@ -257,10 +257,10 @@ int main(int argc, char *argv[])
       SOKData sokData0;
       // sokData0 = (SOKData *)malloc(sizeof(SOKData));
       // sokData0 = (SOKData *)sokData0;
-      // SOKData sokData1;
+      SOKData sokData1;
       
-      // sokData0.SOKid = 10;
-      // sokData1.SOKid = 20;
+      sokData0.SOKid = 10;
+      sokData1.SOKid = 20;
       
       // sokData0->cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       // sokData0->cIP = szRem_Srv_IP[eREM_SRV_IP_0];
@@ -282,8 +282,12 @@ int main(int argc, char *argv[])
       // sokData0.ipData->srvAddr.sin_port = htons(REM_SRV_PORT_0);
       // sokData0.ipData->clAddr = {0};
       sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_1];
+      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
       sokData0.uPort = REM_SRV_PORT_0;
+      
+      sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      sokData1.uPort = REM_SRV_PORT_1;
       
       // sokData1.ipData->srvAddr.sin_family = AF_INET;
       
@@ -295,18 +299,18 @@ int main(int argc, char *argv[])
       
       // sokData1.ipData->srvAddr.sin_port = htons(REM_SRV_PORT_1);
       
-      // pthread_t SOKthread1;
-      // pthread_t SOKthread2;
+      pthread_t SOKthread1;
+      pthread_t SOKthread2;
       
-      // pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
+      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
+      SLEEP
+      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
       // SLEEP
-      // pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
+      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      pthread_join(SOKthread1, NULL);
       // SLEEP
-      // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
-      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
-      // pthread_join(SOKthread1, NULL);
-      // SLEEP
-      // pthread_join(SOKthread2, NULL);
+      pthread_join(SOKthread2, NULL);
       // printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
       // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
       
@@ -392,7 +396,7 @@ int main(int argc, char *argv[])
   // #endif  
   //   // Zero-out receive buffer
   //   memset(rcvBuffer, '\0', MAX_LEN);
-      UDP_SrvConnection_Hndlr(&sokData0);
+      // UDP_SrvConnection_Hndlr(&sokData0);
   // }
   
   // puts("[+]Replying Back to CLient: INACTIVE (Connection Closed)\n");

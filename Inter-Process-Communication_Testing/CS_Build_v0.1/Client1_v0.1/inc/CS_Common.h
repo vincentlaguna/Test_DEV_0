@@ -1,6 +1,6 @@
 #pragma once
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~Vincent A. Laguna 2021                                                               
+Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                            
   
 File: CS_Common.h                                                          
 
@@ -43,7 +43,6 @@ Description: Common header file for Client-Server code
 
 /* Defines: *****************************************************************/
 
-#define   DBG
 #define   TIME_O 5
 #define   MAX_CONN 6
 // #define		USE_TCP
@@ -59,15 +58,13 @@ Description: Common header file for Client-Server code
 #define   REM_SRV_PORT_2 11002
 #define   REM_SRV_PORT_3 11003
 #define   REM_SRV_PORT_4 11004
-#define   REM_SRV_PORT_5 11005
-#define	  REM_SRV_IP_0 "127.0.0.1" // For quick local test
+#define	  REM_SRV_IP_0 "127.0.0.1"
 // #define	  REM_SRV_IP_0 "192.168.143.20"
-// #define	  REM_SRV_IP_0 "192.168.128.250"
-#define	  REM_SRV_IP_1 "192.168.128.251"
-#define	  REM_SRV_IP_2 "192.168.128.252"
-#define	  REM_SRV_IP_3 "192.168.128.253"
-#define	  REM_SRV_IP_4 "192.168.128.254"
-#define	  REM_SRV_IP_5 "192.168.128.255"
+// #define	  REM_SRV_IP_0 "192.168.143.201"
+#define	  REM_SRV_IP_1 "192.168.143.202"
+#define	  REM_SRV_IP_2 "192.168.143.203"
+#define	  REM_SRV_IP_3 "192.168.143.204"
+#define	  REM_SRV_IP_4 "192.168.143.205"
 #define   LOCAL_IP "127.0.0.1"
 #define	  TIME_V struct timeval
 #define	  S_SADDR struct sockaddr
@@ -77,13 +74,13 @@ Description: Common header file for Client-Server code
 
 /* Globals: *****************************************************************/
 
-static uint8_t *szRem_Srv_IP[] =
+static const uint8_t *const szRem_Srv_IP[] =
 {
   REM_SRV_IP_0,
   REM_SRV_IP_1,
   REM_SRV_IP_2,
-  REM_SRV_IP_4,
-  REM_SRV_IP_5
+  REM_SRV_IP_3,
+  REM_SRV_IP_4
 };
 
 enum
@@ -92,8 +89,7 @@ enum
   eREM_SRV_IP_1,
   eREM_SRV_IP_2,
   eREM_SRV_IP_3,
-  eREM_SRV_IP_4,
-  eREM_SRV_IP_5
+  eREM_SRV_IP_4
 };
 
 static const uint8_t *cSerialData = 
@@ -128,37 +124,27 @@ static const uint8_t *cStringPayload =
 
 /* Data Sructure Definitions: ***********************************************/
 
-/* Data Buffer **************************************************************/
-
-typedef struct  IPData
-{
-  // IP Data Struct
-  S_SADDR_IN 	srvAddr;
-  S_SADDR_IN	clAddr;
-  uint8_t			IPDataID;
-		
-} IPData;
+/* Data Buffer **************************************************************
 
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t   			*cIP;	  //[IP_STR_SZ];	// IP (c-String)
-	uint16_t				uPort;	// Port Number
-	uint16_t 				SOKid;	// SOK ID
-	struct IPData	  *ipData;
+  uint8_t 	*cIP[IP_STR_SZ];	// IP (c-String)
+	uint16_t	uPort;	          // Port Number
+	uint16_t 	SOKid;	          // SOK ID
 	
 } SOKData;
 
 // struct  DataBuffer
 // {
 //   char  cPayload[MAX_STR_SZ]; // Storage for string	
-//   // uint32_t	uDataSize;	   // Size of data
-//   // uint16_t	*pNext;	       // Next node *
-//   // uint16_t  *pPrev;	       // Previous node *
+//   // uint32_t	uDataSize;	    // Size of data
+//   // uint16_t	*pNext;	        // Next node *
+//   // uint16_t  *pPrev;	    // Previous node *
 
 // } __attribute__((__packed__));
 
-/****************************************************************************/
+/****************************************************************************
 
 /* Typedefs: ****************************************************************
 
@@ -169,15 +155,12 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-int 			rID_Gen(void);
 uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
 // void      *UDP_SrvConnection_Hndlr(void *clSOKFD);
-// void      UDP_SrvConnection_Hndlr(void *SOKData);
-void      *UDP_SrvConnection_Hndlr(void *SOKData);
 int16_t   UDP_SokInit_Handlr(void);
-int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
+// int32_t   BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);
 // uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
