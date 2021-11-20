@@ -17,38 +17,45 @@ Description: Server-side Main
 /* Main Starts Here: ********************************************************/
 // Refactored Main (Multi-threaded)
 int main(int argc, char *argv[])
-{
-
+{ 
+  // Initialize Local Objects
+  SOKData   sokData[NUM_SRV_THREADS];
+  pthread_t SOKthread[NUM_SRV_THREADS];
+  // Initialize Number of Server Thread Objects in a for-loop
+  for (int i = 0; i < NUM_SRV_THREADS; i++)
+  {
+    sokData[i].SOKid = i * 10;
+    sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].cIP   = szRem_Srv_IP[i];
+    sokData[i].uPort = uRem_Srv_Port[i];
+    
+    pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
+    printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
+    
+    pthread_join(SOKthread[1], NULL);
+  }
       SOKData sokData0;
+      
       // sokData0 = (SOKData *)malloc(sizeof(SOKData));
       // sokData0 = (SOKData *)sokData0;
       SOKData sokData1;
       
       sokData0.SOKid = 10;
       sokData1.SOKid = 20;
-      
-      
-      // Initi for-loop here?
+
+      // Init for-loop here?
     
-      sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
-      sokData0.uPort = REM_SRV_PORT_0;
-      
       sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
       sokData1.uPort = REM_SRV_PORT_1;
       
       
-      pthread_t SOKthread1;
       pthread_t SOKthread2;
       
-      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
       // SLEEP
       pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
       // SLEEP
-      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
       printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
-      pthread_join(SOKthread1, NULL);
       // SLEEP
       pthread_join(SOKthread2, NULL);
       

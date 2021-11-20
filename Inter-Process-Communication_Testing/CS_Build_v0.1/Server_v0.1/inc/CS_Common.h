@@ -53,6 +53,7 @@ Description: Common header file for Client-Server code
 #define	  MAX_STR_SZ 128
 #define	  IP_STR_SZ 16
 #define   SLEEP	sleep(1);
+#define   NUM_SRV_THREADS 5
 #define   REM_CL_PORT 11069
 #define   REM_SRV_PORT_0 11000
 #define   REM_SRV_PORT_1 11001
@@ -100,6 +101,7 @@ static uint16_t uRem_Srv_Port[] =
 {
   REM_SRV_PORT_0,
   REM_SRV_PORT_1,
+  REM_SRV_PORT_2,
   REM_SRV_PORT_3,
   REM_SRV_PORT_4,
   REM_SRV_PORT_5
