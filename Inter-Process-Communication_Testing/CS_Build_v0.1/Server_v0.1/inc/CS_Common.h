@@ -53,7 +53,7 @@ Description: Common header file for Client-Server code
 #define	  MAX_STR_SZ 128
 #define	  IP_STR_SZ 16
 #define   SLEEP	sleep(1);
-#define   NUM_SRV_THREADS 5
+#define   NUM_SRV_THREADS 2
 #define   REM_CL_PORT 11069
 #define   REM_SRV_PORT_0 11000
 #define   REM_SRV_PORT_1 11001
@@ -64,7 +64,8 @@ Description: Common header file for Client-Server code
 #define	  REM_SRV_IP_0 "127.0.0.1" // For quick local test
 // #define	  REM_SRV_IP_0 "192.168.143.20"
 // #define	  REM_SRV_IP_0 "192.168.128.250"
-#define	  REM_SRV_IP_1 "192.168.128.251"
+#define	  REM_SRV_IP_1 "127.0.0.1" // Local Tests
+// #define	  REM_SRV_IP_1 "192.168.128.251"
 #define	  REM_SRV_IP_2 "192.168.128.252"
 #define	  REM_SRV_IP_3 "192.168.128.253"
 #define	  REM_SRV_IP_4 "192.168.128.254"
