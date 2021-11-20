@@ -281,6 +281,9 @@ int main(int argc, char *argv[])
       
       // sokData0.ipData->srvAddr.sin_port = htons(REM_SRV_PORT_0);
       // sokData0.ipData->clAddr = {0};
+      
+      // Initi for-loop here?
+    
       sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
       sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
       sokData0.uPort = REM_SRV_PORT_0;
