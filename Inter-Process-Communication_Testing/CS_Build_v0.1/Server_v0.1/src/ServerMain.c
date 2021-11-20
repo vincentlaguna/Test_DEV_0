@@ -34,31 +34,7 @@ int main(int argc, char *argv[])
     
     pthread_join(SOKthread[1], NULL);
   }
-      // SOKData sokData0;
-      
-      // // sokData0 = (SOKData *)malloc(sizeof(SOKData));
-      // // sokData0 = (SOKData *)sokData0;
-      // SOKData sokData1;
-      
-      // sokData0.SOKid = 10;
-      // sokData1.SOKid = 20;
-
-      // // Init for-loop here?
-    
-      // sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
-      // sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
-      // sokData1.uPort = REM_SRV_PORT_1;
-      
-      
-      // pthread_t SOKthread2;
-      
-      // // SLEEP
-      // pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
-      // // SLEEP
-      // printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
-      // // SLEEP
-      // pthread_join(SOKthread2, NULL);
-      
+   
   return(0);
 
 }
