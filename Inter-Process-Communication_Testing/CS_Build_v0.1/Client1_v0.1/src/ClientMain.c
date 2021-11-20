@@ -179,10 +179,10 @@ int main(int argc, char *argv[])
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
-  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
-  // Waiting for response
-  // while (1)
-  // {
+  while (1)
+  {
+    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
+    // Waiting for response
     uint16_t sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                         // (S_SADDR *)&ClAddr, &clAddrLen);
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
     // SLEEP
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-  // }
+  }
   
   if (rcvBuffer != NULL)
   {

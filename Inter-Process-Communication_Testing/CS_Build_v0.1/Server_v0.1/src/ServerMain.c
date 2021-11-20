@@ -15,6 +15,51 @@ Description: Server-side Main
 /****************************************************************************/
 
 /* Main Starts Here: ********************************************************/
+// Refactored Main (Multi-threaded)
+int main(int argc, char *argv[])
+{
+
+      SOKData sokData0;
+      // sokData0 = (SOKData *)malloc(sizeof(SOKData));
+      // sokData0 = (SOKData *)sokData0;
+      SOKData sokData1;
+      
+      sokData0.SOKid = 10;
+      sokData1.SOKid = 20;
+      
+      
+      // Initi for-loop here?
+    
+      sokData0.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      sokData0.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      sokData0.uPort = REM_SRV_PORT_0;
+      
+      sokData1.cIP = malloc(sizeof(uint8_t) * IP_STR_SZ);
+      sokData1.cIP = szRem_Srv_IP[eREM_SRV_IP_0];
+      sokData1.uPort = REM_SRV_PORT_1;
+      
+      
+      pthread_t SOKthread1;
+      pthread_t SOKthread2;
+      
+      pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
+      // SLEEP
+      pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
+      // SLEEP
+      printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);
+      printf("\nIn Main: SOKid(1) = %d\n", sokData1.SOKid);
+      pthread_join(SOKthread1, NULL);
+      // SLEEP
+      pthread_join(SOKthread2, NULL);
+      
+  return(0);
+
+}
+
+/****************************************************************************/
+
+
+/* Main Starts Here: ********************************************************
 
 int main(int argc, char *argv[])
 {
@@ -306,7 +351,7 @@ int main(int argc, char *argv[])
       pthread_t SOKthread2;
       
       pthread_create(&SOKthread1, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData0);
-      SLEEP
+      // SLEEP
       pthread_create(&SOKthread2, NULL, UDP_SrvConnection_Hndlr, (void *)&sokData1);
       // SLEEP
       printf("\nIn Main: SOKid(0) = %d\n", sokData0.SOKid);

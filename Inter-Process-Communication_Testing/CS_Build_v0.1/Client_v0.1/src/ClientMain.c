@@ -179,10 +179,10 @@ int main(int argc, char *argv[])
   // Request to send datagram
   // No need to specify server address in sendto
   // Connect stores the peers IP and port
-  sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
-  // Waiting for response
-  // while (1)
-  // {
+  while (1)
+  {
+    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
+    // Waiting for response
     uint16_t sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                         // (S_SADDR *)&ClAddr, &clAddrLen);
@@ -199,32 +199,32 @@ int main(int argc, char *argv[])
     // SLEEP
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-  // }
+  }
   
-  if (rcvBuffer != NULL)
-  {
-    printf("\n\n[+]DATA RECEIVED = OK\n");
-  }
-  else
-  {
-    printf("\n\n[-]DATA RECEIVED = FAIL\n");
-  }
-  printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
-  // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
-  if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
-  {
-    printf("[+]CHECKSUM = PASS\n");
-  }
-  else
-  {
-    printf("[+]CHECKSUM = FAIL\n");
-  }
-  putchar('\n');
-  // Zero-out receive buffer
-  memset(rcvBuffer, '\0', MAX_LEN);
-  // Close the descriptor
-  printf("\n[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n\n", REM_SRV_IP_0, REM_SRV_PORT_0);
-  close(connectSOKFD);
+    if (rcvBuffer != NULL)
+    {
+      printf("\n\n[+]DATA RECEIVED = OK\n");
+    }
+    else
+    {
+      printf("\n\n[-]DATA RECEIVED = FAIL\n");
+    }
+    printf("[+]BYTES RECEIVED = %d\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
+    // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
+    if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
+    {
+      printf("[+]CHECKSUM = PASS\n");
+    }
+    else
+    {
+      printf("[+]CHECKSUM = FAIL\n");
+    }
+    putchar('\n');
+    // Zero-out receive buffer
+    memset(rcvBuffer, '\0', MAX_LEN);
+    // Close the descriptor
+    printf("\n[-]CLOSING CONNECTION TO SERVER: IP %s PORT %d\n\n", REM_SRV_IP_0, REM_SRV_PORT_0);
+    close(connectSOKFD);
   
 #endif // TCP/UDP  
 

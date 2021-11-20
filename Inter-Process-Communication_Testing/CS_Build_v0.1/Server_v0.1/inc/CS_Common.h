@@ -96,7 +96,7 @@ enum
   eREM_SRV_IP_5
 };
 
-static uint8_t uRem_Srv_Port[] =
+static uint16_t uRem_Srv_Port[] =
 {
   REM_SRV_PORT_0,
   REM_SRV_PORT_1,

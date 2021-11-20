@@ -412,9 +412,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       memset(rplyBuffer, '\0', MAX_LEN);
   
       printf("This is where the magic would happen...\n");
-      
     }
-  
+    
     free(rcvBuffer);
     free(rplyBuffer);
     
