@@ -163,13 +163,13 @@ int main(int argc, char *argv[])
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);
   SrvAddr.sin_addr.s_addr = inet_addr(REM_SRV_IP_0);
-  SrvAddr.sin_port = htons(REM_SRV_PORT_1);
+  SrvAddr.sin_port = htons(REM_SRV_PORT_4);
   SrvAddr.sin_family = AF_INET;
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cSerialData);    
   // strcpy(sndBuffer, cStringPayload);    
   // Connect to server
-  printf("[-]CONNECTING TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_1);
+  printf("[-]CONNECTING TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_4);
   if(connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
   {
       printf("\n[-]CONNECT TO SERVER Error: Connect Failed \n");

@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
     printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
     
+  }
+  for (i = 0; i < NUM_SRV_THREADS; i++)
+  {
     pthread_join(SOKthread[i], NULL);
   }
    
