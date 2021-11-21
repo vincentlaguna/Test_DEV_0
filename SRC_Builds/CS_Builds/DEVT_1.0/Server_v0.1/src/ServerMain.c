@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
     printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
     
-    pthread_join(SOKthread[1], NULL);
+    pthread_join(SOKthread[i], NULL);
   }
    
   return(0);
