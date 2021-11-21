@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 1.1  ~ Vincent A. Laguna 2021                                                                 
+Author(s) or Contributor(s): Version 1.1  ~Vincent A. Laguna 2021                                                                 
 
 File: ServerMain.c              
 
@@ -26,16 +26,17 @@ int main(int argc, char *argv[])
   {
     sokData[i].SOKid = (i+1) * 10;
     sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
-    sokData[i].cIP   = szRem_Srv_IP[i];
+    sokData[i].cIP   = szRem_Srv_IP[0];
     sokData[i].uPort = uRem_Srv_Port[i];
     
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
     printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
     
   }
-  for (i = 0; i < NUM_SRV_THREADS; i++)
+  
+  for (int j = 0; j < NUM_SRV_THREADS; j++)
   {
-    pthread_join(SOKthread[i], NULL);
+    pthread_join(SOKthread[j], NULL);
   }
    
   return(0);
