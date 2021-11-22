@@ -99,7 +99,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   else
   {
     printf("[+]Bind = OK\n");
-    printf("Inside Thread Handler...\n");
+    // printf("Inside Thread Handler...\n");
   }
     
   clAddrLen = sizeof(ClAddr);
@@ -162,8 +162,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       // Zero-out receive buffer
       memset(rcvBuffer, '\0', MAX_LEN);
       memset(rplyBuffer, '\0', MAX_LEN);
-  
-      printf("This is where the magic would happen...\n");
+      // printf("This is where the magic would happen...\n");
     }
     
   free(rcvBuffer);

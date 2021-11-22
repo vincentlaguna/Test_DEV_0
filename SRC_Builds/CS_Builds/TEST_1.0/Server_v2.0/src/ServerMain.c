@@ -24,13 +24,24 @@ int main(int argc, char *argv[])
   // Initialize Number of Server Thread Objects in a for-loop
   for (int i = 0; i < NUM_SRV_THREADS; i++)
   {
-    // sokData[i].SOKid = (i+1) * 10;
+  #ifdef DBG
+  
+    sokData[i].SOKid = (i+1) * 10;
+  
+  #endif
+    // Basic Assignment
     sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
     sokData[i].cIP   = szRem_Srv_IP[i];
     sokData[i].uPort = uRem_Srv_Port[i];
-    
+    // Initialize Thread Handlers  
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
-    // printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
+  
+  #ifdef DBG
+  
+    printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
+  
+  #endif
+  
   }
   
   for (int j = 0; j < NUM_SRV_THREADS; j++)
