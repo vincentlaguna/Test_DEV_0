@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
   #endif
   
   }
-  
+  // Join Threads (EXIT Thread Handlers)
   for (int j = 0; j < NUM_SRV_THREADS; j++)
   {
     pthread_join(SOKthread[j], NULL);

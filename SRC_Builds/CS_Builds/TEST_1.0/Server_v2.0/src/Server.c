@@ -81,7 +81,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   // Local Structs
   S_SADDR_IN SrvAddr;
   S_SADDR_IN ClAddr;
-
+  // Initialize UDP SOCKET
   if ((listenSOKFD = UDP_SokInit_Handlr()) < 0) 
   {
     printf("[-]Creation of SOCKET = FAIL\n");
