@@ -1,6 +1,6 @@
 #pragma once
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~Vincent A. Laguna 2021                                                               
+Author(s) or Contributor(s): Version 2.0 (IN TEST)  ~Vincent A. Laguna 2021                                                               
   
 File: CS_Common.h                                                          
 
@@ -19,13 +19,18 @@ Description: Common header file for Client-Server code
 /* Includes: ****************************************************************/
 
 #ifndef	  LIN
-#include  <winsock.h>
-#include  <Windows.h>
+  
+  #include  <winsock.h>
+  #include  <Windows.h>
+
 #else
-#include  <sys/socket.h>
-#include  <arpa/inet.h>
-#include  <unistd.h>
+
+  #include  <sys/socket.h>
+  #include  <arpa/inet.h>
+  #include  <unistd.h>
+
 #endif
+
 #include  <stdio.h>
 #include  <stdlib.h>
 #include  <time.h>

@@ -10,7 +10,7 @@ when not testing locally)
 - Create pthread test branch
 
 Updates:
-
+- CS_Builds/TEST_1.0 (master) -> Multi-threaded Server_v2.0 is TEST READY - 112921
 - CS_Build_v0.1 (master) -> Refactored Server instances for Debug Mode (DBG MACRO) - 111221
 - CS_Build_v0.1 (master) -> Refactored Server instances to use only one common .h file - 111121
 - CS_Build_v0.1 (master) -> No segmentation faults, but the data doesn't get replied back to client - 102821
