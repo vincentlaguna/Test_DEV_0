@@ -5,6 +5,7 @@ across Linux-ARM platforms
 
 Need to:
 
+- Try using the select() function for asynchronous-like operations
 - Handle Data Streams (having issues getting valid ASCII data
 when not testing locally)
 - Create pthread test branch
