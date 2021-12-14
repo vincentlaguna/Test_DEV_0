@@ -1,10 +1,10 @@
 #pragma once
 /*****************************************************************************
-Author(s) or Contributor(s): Version 2.0 (IN TEST)  ~Vincent A. Laguna 2021                                                               
+Author(s) or Contributor(s): Version 0.0 (IN TEST)  ~Vincent A. Laguna 2021                                                               
   
 File: CS_Common.h                                                          
 
-Description: Common header file for Client-Server code                     
+Description: Common header file for REMOTE Server code                     
 
 *****************************************************************************/
 // Header Include Guards
@@ -175,6 +175,23 @@ typedef struct  SOKData
 	struct IPData	  *ipData;
 	
 } SOKData;
+
+typedef struct  REMData
+{
+  // REM Protocol Packet Structure
+  uint8_t   			    sink1;
+	uint8_t				      sink2;
+	uint8_t 			      src;	
+	uint8_t   			    dst;
+	uint8_t				      cmd;
+	uint8_t 			      len;
+	uint8_t   			    LMSB;
+	uint8_t				      LLSB;
+	uint8_t 			      data;
+	uint8_t 			      cs;
+	struct PayloadData  *PyldData;
+	
+} REMData;
 
 // struct  DataBuffer
 // {
