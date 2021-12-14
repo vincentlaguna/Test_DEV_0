@@ -1,9 +1,9 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 2.0 (IN TEST)  ~Vincent A. Laguna 2021                                                                 
+Author(s) or Contributor(s): Version 0.0 (IN TEST)  ~Vincent A. Laguna 2021                                                                 
 
 File: ServerMain.c              
 
-Description: Server-side Main                                              
+Description: REMOTE Protocol Server-side Main                                              
 
 *****************************************************************************/
 
