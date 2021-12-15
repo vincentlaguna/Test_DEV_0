@@ -169,6 +169,8 @@ typedef struct  IPData
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
+  uint8_t   			*rcvBuffer;
+  uint8_t   			*rplyBuffer;
   uint8_t   			*cIP;	  //[IP_STR_SZ];	// IP (c-String)
 	uint16_t				uPort;	// Port Number
 	uint16_t 				SOKid;	// SOK ID
