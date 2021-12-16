@@ -176,6 +176,23 @@ typedef struct  SOKData
 	
 } SOKData;
 
+typedef struct  Data
+{
+  // REM Protocol Packet Structure
+  uint8_t   			    sink1;
+	uint8_t				      sink2;
+	uint8_t 			      src;	
+	uint8_t   			    dst;
+	uint8_t				      cmd;
+	uint8_t 			      len;
+	uint8_t   			    LMSB;
+	uint8_t				      LLSB;
+// 	uint8_t 			      *Data;
+	uint8_t 			      cs; // <sink1-last data byte % 256>
+// 	struct PayloadData  *PyldData;
+	
+} Data;
+
 typedef struct  REMData
 {
   // REM Protocol Packet Structure
@@ -187,7 +204,7 @@ typedef struct  REMData
 	uint8_t 			      len;
 	uint8_t   			    LMSB;
 	uint8_t				      LLSB;
-	uint8_t 			      data;
+	uint8_t 			      *Data;
 	uint8_t 			      cs; // <sink1-last data byte % 256>
 // 	struct PayloadData  *PyldData;
 	
