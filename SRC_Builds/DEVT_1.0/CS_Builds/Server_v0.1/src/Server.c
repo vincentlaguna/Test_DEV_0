@@ -325,27 +325,35 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     while (1)
     {
       // receive message
-      uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+      // uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
+                    // (S_SADDR *)&ClAddr, &clAddrLen);
+      // rcvBuffer[sVal] = '\0';
+      uint16_t sVal = recvfrom(listenSOKFD, lData->rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
-      rcvBuffer[sVal] = '\0';
-    
+      lData->rcvBuffer[sVal] = '\0';
+      
     #ifdef DBG
       // Display Receive Buffer
       puts("[+]DEBUG STATUS: ENABLED\n");
       puts("[+]Displaying Recieve Buffer:\n");
-      puts(rcvBuffer);
+      // puts(rcvBuffer);
+      puts(lData->rcvBuffer);
       // Validate
       printf("\n[-]Confirming receive values...\n");
-      printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-      
+      // printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
+      printf("\n%s", convertHex(lData->rcvBuffer, strlen(lData->rcvBuffer)));
       puts("\n");
       printf("[-]Sending Response to Client...\n");
       
     #endif
       // Copying to reply buffer for sending
-      strcpy(rplyBuffer, rcvBuffer);
+      // strcpy(rplyBuffer, rcvBuffer);
+      strcpy(lData->rplyBuffer, lData->rcvBuffer);
       // Replying Buffer w/active notifier
-      if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+      // if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
+      //       (S_SADDR *)&ClAddr, sizeof(ClAddr)))
+      // {
+      if (sendto(listenSOKFD, lData->rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(ClAddr)))
       {
       
@@ -362,11 +370,15 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   
       printf("[-]CHECKSUM Validation...\n");
       // Checksum Validation (for debugging)
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      // {
+      //   printf("[+]BYTES RECEIVED = %d\n",
+      //         (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
+      if (bCheckSum(lData->rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
         printf("[+]BYTES RECEIVED = %d\n",
-              (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
-              
+              (strlen(lData->rcvBuffer))/(sizeof(uint8_t)) + 1);
+                      
         printf("[+]CHECKSUM = PASS\n");
       }
       else
@@ -378,14 +390,18 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       
       puts("\n");
       // Zero-out receive buffer
-      memset(rcvBuffer, '\0', MAX_LEN);
-      memset(rplyBuffer, '\0', MAX_LEN);
-  
+      // memset(rcvBuffer, '\0', MAX_LEN);
+      // memset(rplyBuffer, '\0', MAX_LEN);
+      memset(lData->rcvBuffer, '\0', MAX_LEN);
+      memset(lData->rplyBuffer, '\0', MAX_LEN);
+
       printf("This is where the magic would happen...\n");
     }
     
-    free(rcvBuffer);
-    free(rplyBuffer);
+    // free(rcvBuffer);
+    // free(rplyBuffer);
+    free(lData->rcvBuffer);
+    free(lData->rplyBuffer);
     
     // pthread_mutex_unlock(&SOKlock);
     
