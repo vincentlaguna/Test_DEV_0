@@ -1,0 +1,13 @@
+[Unit]
+Description=x service description
+After=?
+Wants=x.service
+Required=other_udev-x.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash /usr/bin/x_service_launch.sh
+
+[Install]
+WantedBy=?
