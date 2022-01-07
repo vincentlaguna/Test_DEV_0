@@ -78,11 +78,13 @@ echo "[-]INSERTING=lines to launch syslog WD script into test_shell_launch.sh"
 # insert lines into test_shell_launch script to launch syslog WD script
 # test_shell_launch is a script that is ran from a systemd .service on every boot
 
-MATCH='This is the test line from test_shell_launch.sh that we want to append to as new line'
-INSERT='/usr/bin/test_syslog_wd.sh &'
+MATCH='i2cset -y 1 0x5f 0xff 0 0 0x80 0x80 0 0x0f 0 i'
+INSERT='#launch syslog WD script in the background'
+INSERT1='/usr/bin/test_syslog_wd.sh &'
 FILE='/usr/bin/test_shell_launch.sh'
 
-sed -i "s/$MATCH/$MATCH\n$INSERT/" $FILE
+sed -i "/$MATCH/a$INSERT" $FILE
+sed -i "/$INSERT/a$INSERT1" $FILE
 
 echo "[+]INSERTED=lines to launch syslog WD script from test_shell_launch.sh"
 
