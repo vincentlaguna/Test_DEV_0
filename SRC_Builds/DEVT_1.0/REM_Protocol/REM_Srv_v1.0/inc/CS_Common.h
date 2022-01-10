@@ -176,6 +176,18 @@ typedef struct  SOKData
 	
 } SOKData;
 
+typedef struct  Data
+{
+  // Data field structure 
+  uint8_t   			    header;
+	uint8_t				      length;
+	uint8_t 			      fMask;	
+	uint8_t   			    f1;
+	uint8_t				      f2;
+	uint8_t 			      fN;
+	uint8_t   			    LMSB;
+	uint8_t 			      CS;
+
 typedef struct  REMDataM // REM Protocol Packet Structure
 {
   // Byte-oriented (multi-byte fields are little-endian)
@@ -193,7 +205,7 @@ typedef struct  REMDataM // REM Protocol Packet Structure
 	
 } REMDataM;
 
-typedef struct  REMData
+typedef struct  REMDataL
 {
   // REM Protocol Packet Structure
   uint8_t   			    sink1;
