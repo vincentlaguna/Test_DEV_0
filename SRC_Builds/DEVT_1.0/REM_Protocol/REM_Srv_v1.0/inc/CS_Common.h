@@ -178,7 +178,7 @@ typedef struct  SOKData
 
 typedef struct  Data
 {
-  // Data field structure 
+  // Data field structure (variable length fields <field N> -> implement in Server.c)
   uint8_t   			    header;
 	uint8_t				      length;
 	uint8_t 			      fMask;	
