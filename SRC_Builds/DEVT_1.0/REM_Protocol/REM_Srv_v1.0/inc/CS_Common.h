@@ -179,14 +179,14 @@ typedef struct  SOKData
 typedef struct  Data
 {
   // Data field structure (variable length fields <field N> -> implement in Server.c)
-  uint8_t   			    header;
-	uint8_t				    length;
-	uint8_t 			    fMask;	
-	uint8_t   			    f1;
-	uint8_t				    f2;
-	uint8_t 			    fN;
-	uint8_t   			    LMSB;
-	uint8_t 			    CS;
+  uint8_t   	header;
+  uint8_t	    length;
+  uint8_t 	    fMask;	
+  uint8_t  	    f1;
+  uint8_t	    f2;
+  uint8_t 	    fN;
+  uint8_t  	    LMSB;
+  uint8_t 	    CS;
 
 typedef struct  REMDataM // REM Protocol Packet Structure
 {
@@ -208,18 +208,17 @@ typedef struct  REMDataM // REM Protocol Packet Structure
 typedef struct  REMDataL
 {
   // REM Protocol Packet Structure
-  uint8_t   			    sink1;
-	uint8_t				    sink2;
-	uint8_t 			    src;	
-	uint8_t   			    dst;
-	uint8_t				    cmd;
-	uint8_t 			    len;
-	// uint8_t   			    LMSB;
-	uint8_t				    LLSB;
-	uint8_t 			    *Data;
-	uint8_t 			    cs; // <sink1-last data byte % 256>
+  uint8_t   	sink1;
+  uint8_t		sink2;
+  uint8_t 	    src;	
+  uint8_t       dst;
+  uint8_t	    cmd;
+  uint8_t 	    len;
+  // uint8_t   			    LMSB;
+  uint8_t	    LLSB;
+  uint8_t 	    *Data;
+  uint8_t 	    cs; // <sink1-last data byte % 256>
 // 	struct PayloadData  *PyldData;
-	
 } REMDataL;
 
 // struct  DataBuffer
@@ -242,7 +241,7 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-int 			rID_Gen(void);
+int 	  rID_Gen(void);
 uint8_t	  *convertHex(uint8_t *src, size_t len);
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
