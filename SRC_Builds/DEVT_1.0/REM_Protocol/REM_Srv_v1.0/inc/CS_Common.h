@@ -162,17 +162,17 @@ typedef struct  IPData
   // IP Data Struct
   S_SADDR_IN 	srvAddr;
   S_SADDR_IN	clAddr;
-  uint8_t			IPDataID;
+  uint8_t		IPDataID;
 		
 } IPData;
 
 typedef struct  SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t   			*cIP;	  //[IP_STR_SZ];	// IP (c-String)
-	uint16_t				uPort;	// Port Number
-	uint16_t 				SOKid;	// SOK ID
-	struct IPData	  *ipData;
+  uint8_t   		*cIP;	  //[IP_STR_SZ];	// IP (c-String)
+  uint16_t			uPort;	// Port Number
+  uint16_t 			SOKid;	// SOK ID
+  struct IPData	    *ipData;
 	
 } SOKData;
 
@@ -180,27 +180,27 @@ typedef struct  Data
 {
   // Data field structure (variable length fields <field N> -> implement in Server.c)
   uint8_t   			    header;
-	uint8_t				      length;
-	uint8_t 			      fMask;	
+	uint8_t				    length;
+	uint8_t 			    fMask;	
 	uint8_t   			    f1;
-	uint8_t				      f2;
-	uint8_t 			      fN;
+	uint8_t				    f2;
+	uint8_t 			    fN;
 	uint8_t   			    LMSB;
-	uint8_t 			      CS;
+	uint8_t 			    CS;
 
 typedef struct  REMDataM // REM Protocol Packet Structure
 {
   // Byte-oriented (multi-byte fields are little-endian)
   uint8_t   			    sink1;
-	uint8_t				      sink2;
-	uint8_t 			      src;	
+	uint8_t				    sink2;
+	uint8_t 			    src;	
 	uint8_t   			    dst;
-	uint8_t				      cmd;
-	uint8_t 			      len;
+	uint8_t				    cmd;
+	uint8_t 			    len;
 	uint8_t   			    LMSB;
 	// uint8_t				      LLSB;
-	uint8_t 			      *Data;
-	uint8_t 			      cs; // <sink1-last data byte % 256>
+	uint8_t 			    *Data;
+	uint8_t 			    cs; // <sink1-last data byte % 256>
 // 	struct PayloadData  *PyldData;
 	
 } REMDataM;
@@ -209,15 +209,15 @@ typedef struct  REMDataL
 {
   // REM Protocol Packet Structure
   uint8_t   			    sink1;
-	uint8_t				      sink2;
-	uint8_t 			      src;	
+	uint8_t				    sink2;
+	uint8_t 			    src;	
 	uint8_t   			    dst;
-	uint8_t				      cmd;
-	uint8_t 			      len;
+	uint8_t				    cmd;
+	uint8_t 			    len;
 	// uint8_t   			    LMSB;
-	uint8_t				      LLSB;
-	uint8_t 			      *Data;
-	uint8_t 			      cs; // <sink1-last data byte % 256>
+	uint8_t				    LLSB;
+	uint8_t 			    *Data;
+	uint8_t 			    cs; // <sink1-last data byte % 256>
 // 	struct PayloadData  *PyldData;
 	
 } REMDataL;
