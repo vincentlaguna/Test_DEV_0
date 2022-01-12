@@ -110,7 +110,8 @@ static uint16_t uRem_Srv_Port[] =
   REM_SRV_PORT_2,
   REM_SRV_PORT_3,
   REM_SRV_PORT_4,
-  REM_SRV_PORT_5};
+  REM_SRV_PORT_5
+};
 
 enum
 {
