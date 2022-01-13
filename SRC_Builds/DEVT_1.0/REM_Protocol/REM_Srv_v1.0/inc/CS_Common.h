@@ -218,7 +218,8 @@ typedef struct REMDataL
   uint8_t LLSB;
   uint8_t *Data;
   uint8_t cs; // <sink1-last data byte % 256>
-  // 	struct PayloadData  *PyldData;
+  struct PayloadData  *PyldData;
+
 } REMDataL;
 
   // struct  DataBuffer
