@@ -322,8 +322,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     
     clAddrLen = sizeof(ClAddr);
     // While-Loop to receive data from incomming connections
-    while (1)
-    {
+    // while (1)
+    // {
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
@@ -382,7 +382,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       memset(rplyBuffer, '\0', MAX_LEN);
   
       printf("This is where the magic would happen...\n");
-    }
+    // }
     
     free(rcvBuffer);
     free(rplyBuffer);
