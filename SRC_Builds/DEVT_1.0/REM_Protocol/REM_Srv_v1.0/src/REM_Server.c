@@ -364,7 +364,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       // Checksum Validation (for debugging)
       if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
       {
-        printf("[+]BYTES RECEIVED = %d\n",
+        printf("[+]BYTES RECEIVED = %ld\n",
               (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
               
         printf("[+]CHECKSUM = PASS\n");
