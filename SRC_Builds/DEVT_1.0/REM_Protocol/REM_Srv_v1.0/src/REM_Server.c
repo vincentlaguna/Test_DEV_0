@@ -360,19 +360,19 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
           
     #ifdef DBG
   
-      printf("[-]CHECKSUM Validation...\n");
-      // Checksum Validation (for debugging)
-      if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
-      {
-        printf("[+]BYTES RECEIVED = %ld\n",
-              (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
+      // printf("[-]CHECKSUM Validation...\n");
+      // // Checksum Validation (for debugging)
+      // if (bCheckSum(rcvBuffer, cSerialData, sizeof(cSerialData)))
+      // {
+      //   printf("[+]BYTES RECEIVED = %ld\n",
+      //         (strlen(rcvBuffer))/(sizeof(uint8_t)) + 1);
               
-        printf("[+]CHECKSUM = PASS\n");
-      }
-      else
-      {
-        printf("[+]CHECKSUM = FAIL\n");
-      }
+      //   printf("[+]CHECKSUM = PASS\n");
+      // }
+      // else
+      // {
+      //   printf("[+]CHECKSUM = FAIL\n");
+      // }
 
     #endif  
       
