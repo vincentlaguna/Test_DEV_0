@@ -243,6 +243,7 @@ typedef struct REMDataL
   /* Function Prototypes: *****************************************************/
   // Helper Functions
   int rID_Gen(void);
+  void REMDataSnd(void *SOKData, uint8_t *buff, int flags);
   uint8_t *convertHex(uint8_t *src, size_t len);
   bool bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
   // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
