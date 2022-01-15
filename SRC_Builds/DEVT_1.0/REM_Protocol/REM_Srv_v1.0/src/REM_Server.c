@@ -438,6 +438,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 // End UDP_SrvConnection_Handlr() 
 /****************************************************************************/
 
+//Add here  (REM sender function)
+void REMDataSnd(void *SOKData, uint8_t *buff, int flags);
 
 /*****************************************************************************
 
