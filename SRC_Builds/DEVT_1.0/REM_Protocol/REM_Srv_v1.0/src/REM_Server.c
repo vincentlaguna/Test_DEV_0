@@ -343,7 +343,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       
     #endif
       // Copying to reply buffer for sending
-      strcpy(rplyBuffer, rcvBuffer);
+      // strcpy(rplyBuffer, cStringPayload);
+      strcpy(rplyBuffer, cSerialData);      
       // Replying Buffer w/active notifier
       if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
             (S_SADDR *)&ClAddr, sizeof(ClAddr)))
