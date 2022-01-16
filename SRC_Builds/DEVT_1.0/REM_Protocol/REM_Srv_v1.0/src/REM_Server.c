@@ -438,8 +438,24 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 // End UDP_SrvConnection_Handlr() 
 /****************************************************************************/
 
-//Add here  (REM sender function)
-void REMDataSnd(void *SOKData, uint8_t *buff, int flags);
+
+/*****************************************************************************
+
+Name:	REM_DataSnd() function (for UDP threaded version server)                                        
+Purpose:       
+Parameters: Pointer to SOKData, unsigned uint8_t pointer to send buffer                                          
+Returns: void                                        
+
+*****************************************************************************
+//
+void REMDataSnd(void *SOKData, uint8_t *buff, int flags)
+{
+  
+}
+
+// End REM_DataSnd() 
+/****************************************************************************/
+
 
 /*****************************************************************************
 

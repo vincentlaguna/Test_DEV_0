@@ -211,14 +211,14 @@ int main(int argc, char *argv[])
   }
   printf("[+]BYTES RECEIVED = %ld\n", (strlen(rcvBuffer))/(sizeof(uint8_t)));
   // printf("[+]LENGTH RECEIVED = %d\n", strlen(rcvBuffer));
-  if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
-  {
-    printf("[+]CHECKSUM = PASS\n");
-  }
-  else
-  {
-    printf("[+]CHECKSUM = FAIL\n");
-  }
+  // if (bCheckSum(sndBuffer, rcvBuffer, sizeof(rcvBuffer)))
+  // {
+  //   printf("[+]CHECKSUM = PASS\n");
+  // }
+  // else
+  // {
+  //   printf("[+]CHECKSUM = FAIL\n");
+  // }
   putchar('\n');
   // Zero-out receive buffer
   memset(rcvBuffer, '\0', MAX_LEN);
