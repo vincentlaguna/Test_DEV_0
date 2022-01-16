@@ -9,6 +9,7 @@ Need to:
 
 Updates:
 
+- SRC_Builds/DEVT_1.0/REM_Protocol (master) -> REM Server - Send Function    - 011622
 - SRC_Builds/LIN/TEST_Scripts (master) -> Making more useful additions       - 010522
 - SRC_Builds/DEVT_1.0/REM_Protocol (master) -> REM Server - .h File def's    - 121421
 - SRC_Builds/DEVT_1.0 (master) -> RPi3 project - Creation                    - 121221
@@ -16,7 +17,7 @@ Updates:
 - SRC_Builds/TEST_1.0 (master) -> Multi-threaded Server_v2.0 is TEST READY   - 112921
 - CS_Build_v0.1 (master) -> Refactored Server builds for Debug Mode (DGB)    - 111221
 - CS_Build_v0.1 (master) -> Refactored Server builds to use only common file - 111121
-- CS_Build_v0.1 (master) -> No seg faults, but data doesn't get replied   - 102821
+- CS_Build_v0.1 (master) -> No seg faults, but data doesn't get replied      - 102821
 - CS_Build_v0.1 (master) -> Need to allocate the memory for the struct       - 102621
 - CS_Build_v0.1 (master) -> Passed struct arg for thread handler (IP = OK)   - 101421
 - CS_Build_v0.1 (master) -> FOR RPI4 DEPLOYMENT                              - 101421
