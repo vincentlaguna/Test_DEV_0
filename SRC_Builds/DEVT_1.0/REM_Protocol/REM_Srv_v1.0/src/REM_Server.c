@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                                 
+Author(s) or Contributor(s): Version (DEV) 1.0  ~Vincent A. Laguna 2022                                                                 
 
 File:	Server.c                                                      
 
@@ -324,6 +324,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // While-Loop to receive data from incomming connections
     // while (1)
     // {
+      // Testing placement of REMDataSnd() Function call
+      REMDataSnd(lData, rplyBuffer, 0);
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
@@ -446,11 +448,11 @@ Purpose:
 Parameters: Pointer to SOKData, unsigned uint8_t pointer to send buffer                                          
 Returns: void                                        
 
-*****************************************************************************
+*****************************************************************************/
 //
 void REMDataSnd(void *SOKData, uint8_t *buff, int flags)
 {
-  
+  printf("\nTesting REMDataSnd() Function call >>> \n");
 }
 
 // End REM_DataSnd() 
