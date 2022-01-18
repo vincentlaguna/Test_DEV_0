@@ -365,6 +365,8 @@ Returns: void
 void REMDataSnd(void *SOKData, uint8_t *buff, int flags)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
+  // Build the message
+  // Send the message
 }
 
 // End REM_DataSnd() 
