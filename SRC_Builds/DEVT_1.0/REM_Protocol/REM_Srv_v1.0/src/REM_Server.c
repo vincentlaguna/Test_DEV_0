@@ -366,7 +366,7 @@ void REMDataSnd(void *SOKData, uint8_t *buff, int flags)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
   // Build the message
-  // Send the message or create build message function???
+  // Send the message in separate function
 }
 
 // End REM_DataSnd() 
