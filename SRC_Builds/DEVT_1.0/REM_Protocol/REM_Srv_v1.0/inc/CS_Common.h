@@ -222,36 +222,29 @@ typedef struct REMDataL
 
 } REMDataL;
 
-  // struct  DataBuffer
-  // {
-  //   char  cPayload[MAX_STR_SZ]; // Storage for string
-  //   // uint32_t	uDataSize;	   // Size of data
-  //   // uint16_t	*pNext;	       // Next node *
-  //   // uint16_t  *pPrev;	       // Previous node *
+// struct  DataBuffer
+// {
+//   char  cPayload[MAX_STR_SZ]; // Storage for string
+//   // uint32_t	uDataSize;	   // Size of data
+//   // uint16_t	*pNext;	       // Next node *
+//   // uint16_t  *pPrev;	       // Previous node *
+// } __attribute__((__packed__));
+/****************************************************************************/
 
-  // } __attribute__((__packed__));
+/* Typedefs: ****************************************************************
+// typedef  DataBuffer_  *pDbuff;
+typedef	struct DataBuffer DBffr;
+/****************************************************************************/
 
-  /****************************************************************************/
-
-  /* Typedefs: ****************************************************************
-
-  // typedef  DataBuffer_  *pDbuff;
-  typedef	struct DataBuffer DBffr;
-
-  /****************************************************************************/
-
-  /* Function Prototypes: *****************************************************/
-  // Helper Functions
-  int rID_Gen(void);
-  void REMDataSnd(void *SOKData, uint8_t *buff, int szData);
-  uint8_t *convertHex(uint8_t *src, size_t len);
-  bool bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-  // void      UDP_SrvConnection_Hndlr(const uint16_t clSOKFD);
-  // void      *UDP_SrvConnection_Hndlr(void *clSOKFD);
-  // void      UDP_SrvConnection_Hndlr(void *SOKData);
-  void *UDP_SrvConnection_Hndlr(void *SOKData);
-  int16_t UDP_SokInit_Handlr(void);
-  int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
+/* Function Prototypes: *****************************************************/
+// Helper Functions
+int rID_Gen(void);
+void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *SOKData, uint8_t *buff, uint16_t szData)
+uint8_t *convertHex(uint8_t *src, size_t len);
+bool bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
+// void  UDP_SrvConnection  void REMDataSnd(void *SOKData, uint8_t *buff, int szData);void *SOKData);
+int16_t UDP_SokInit_Handlr(void);
+int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);
 // uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);

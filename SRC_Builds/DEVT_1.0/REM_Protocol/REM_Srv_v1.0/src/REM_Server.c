@@ -362,7 +362,7 @@ Returns: void
 
 *****************************************************************************/
 //
-void REMDataSnd(void *SOKData, uint8_t *buff, int szData)
+void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *SOKData, uint8_t *buff, uint16_t szData)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
   // Build the message
