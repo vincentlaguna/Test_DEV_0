@@ -180,6 +180,11 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   SOKData *lData;
   lData = (SOKData *)malloc(sizeof(SOKData));
   lData = (SOKData *)sokData;
+  lData->src = SRC_ANY;
+  lData->dst = DST_SCU;
+  lData->cmd = PWR_CTRL;
+  lData->len = 0
+  
   // Receive and Reply Buffers
   uint8_t *rcvBuffer = NULL;
   uint8_t *rplyBuffer = NULL;
@@ -237,7 +242,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // while (1)
     // {
       // Testing placement of REMDataSnd() Function call
-      REMDataSnd(lData, rplyBuffer, 0);
+      REMDataSnd(lData->src, lData->dst, rplyBuffer,lData->len);
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
@@ -362,9 +367,10 @@ Returns: void
 
 *****************************************************************************/
 //
-void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *SOKData, uint8_t *buff, uint16_t szData)
+void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
+  printf("%d, %d %d %s, %d\n", )
   // Build the message
   // Send the message in separate function
   // Notes to self: change the function arguments to specify the length

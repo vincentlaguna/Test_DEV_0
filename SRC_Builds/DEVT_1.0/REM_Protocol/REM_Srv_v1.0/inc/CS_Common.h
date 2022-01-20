@@ -80,6 +80,10 @@ Description: Common header file for REMOTE Server code
 #define S_SADDR struct sockaddr
 #define S_SADDR_IN struct sockaddr_in
 
+#define SRC_ANY   0xFF
+#define DST_SCU   0x20
+#define PWR_CTRL  0x40
+
 /****************************************************************************/
 
 /* Globals: *****************************************************************/
@@ -175,6 +179,7 @@ typedef struct SOKData
   uint8_t  src;
   uint8_t  dst;
   uint8_t  len;
+  uint8_t  cmd;
   // struct IPData *ipData;
 } SOKData;
 
