@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 2.0 (TEST)  ~Vincent A. Laguna 2021                                                                 
+Author(s) or Contributor(s): Version 2.0 (Release)  ~Vincent A. Laguna 2022                                                                 
 
 File: ServerMain.c              
 
