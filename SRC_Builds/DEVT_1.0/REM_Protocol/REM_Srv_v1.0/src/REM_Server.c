@@ -183,7 +183,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   lData->src = SRC_ANY;
   lData->dst = DST_SCU;
   lData->cmd = PWR_CTRL;
-  lData->len = 0
+  lData->len = 0;
+  
   
   // Receive and Reply Buffers
   uint8_t *rcvBuffer = NULL;
