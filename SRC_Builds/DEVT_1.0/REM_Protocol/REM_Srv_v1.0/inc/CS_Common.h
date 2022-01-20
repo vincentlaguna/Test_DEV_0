@@ -178,8 +178,9 @@ typedef struct SOKData
   uint16_t SOKid; // SOK ID
   uint8_t  src;
   uint8_t  dst;
-  uint8_t  len;
   uint8_t  cmd;
+  uint8_t  len;
+  
   // struct IPData *ipData;
 } SOKData;
 
