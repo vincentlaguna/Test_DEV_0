@@ -85,6 +85,7 @@ static uint8_t *szRem_Srv_IP[] =
   REM_SRV_IP_0,
   REM_SRV_IP_1,
   REM_SRV_IP_2,
+  REM_SRV_IP_3,
   REM_SRV_IP_4,
   REM_SRV_IP_5
 };
