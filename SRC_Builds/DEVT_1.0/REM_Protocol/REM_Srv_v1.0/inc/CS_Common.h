@@ -247,7 +247,7 @@ typedef	struct DataBuffer DBffr;
 /* Function Prototypes: *****************************************************/
 // Helper Functions
 int rID_Gen(void);
-void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData)
+void REMDataSnd(uint8_t *pSrc/*, uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData*/)
 uint8_t *convertHex(uint8_t *src, size_t len);
 bool bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 // void  UDP_SrvConnection  void REMDataSnd(void *SOKData, uint8_t *buff, int szData);void *SOKData);

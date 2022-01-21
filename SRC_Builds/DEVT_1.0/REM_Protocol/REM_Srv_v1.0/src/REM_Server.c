@@ -368,10 +368,10 @@ Returns: void
 
 *****************************************************************************/
 //
-void REMDataSnd(uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData)
+void REMDataSnd(uint8_t *pSrc, /*uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData*/)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
-  printf("%d, %d %d %s, %d\n", )
+  printf("%d, /*%d %d %s, %d*/\n", *pSrc );
   // Build the message
   // Send the message in separate function
   // Notes to self: change the function arguments to specify the length
