@@ -131,13 +131,13 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
             (S_SADDR *)&ClAddr, sizeof(ClAddr)))
       {
       
-      #ifndef DBG  
+      // #ifndef DBG  
         
-        puts("[-]DEBUG STATUS: DISABLED\n");
+      //   puts("[-]DEBUG STATUS: DISABLED\n");
       
-      #endif
+      // #endif
       
-        puts("[+]Replying Back to CLient Status: ACTIVE\n");
+      //   puts("[+]Replying Back to CLient Status: ACTIVE\n");
       }
           
     #ifdef DBG
@@ -158,7 +158,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
     #endif  
       
-      puts("\n");
+      // puts("\n");
       // Zero-out receive buffer
       memset(rcvBuffer, '\0', MAX_LEN);
       memset(rplyBuffer, '\0', MAX_LEN);
