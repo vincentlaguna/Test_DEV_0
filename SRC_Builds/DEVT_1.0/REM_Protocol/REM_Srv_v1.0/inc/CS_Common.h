@@ -93,7 +93,7 @@ Description: Common header file for REMOTE Server code
 #define MSB       0xFF
 #define LSB       0xFF00
 
-#define CS        0x10
+#define CS        0x00
 
 /****************************************************************************/
 
@@ -276,7 +276,7 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 int     rID_Gen(void);
 void    *UDP_SrvConnection_Hndlr(void *SOKData);
-void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t, uint8_t *pLsb, uint8_t *pCs);
+void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool    bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t *convertHex(uint8_t *src, size_t len);
 int16_t UDP_SokInit_Handlr(void);
