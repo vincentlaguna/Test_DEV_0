@@ -83,6 +83,17 @@ Description: Common header file for REMOTE Server code
 #define SRC_ANY   0xFF
 #define DST_SCU   0x20
 #define PWR_CTRL  0x40
+#define SYNC_1    0x0A
+#define SYNC_2    0x0B
+#define LEN       0x04
+
+#define DATA_0    "DATA 0"
+#define DATA_1    "DATA 1"
+
+#define MSB       0xFF
+#define LSB       0xFF00
+
+#define CS        0x10
 
 /****************************************************************************/
 
@@ -125,6 +136,18 @@ enum
   eREM_SRV_PORT_3,
   eREM_SRV_PORT_4,
   eREM_SRV_PORT_5
+};
+
+static uint8_t *szData[] =
+{
+  DATA_0,
+  DATA_1
+};
+
+enum
+{
+  eData_0,
+  eData_1,
 };
 
 static const uint8_t *cSerialData =
@@ -173,14 +196,19 @@ static const uint8_t *cStringPayload =
 typedef struct SOKData
 {
   // Data to pass as argument to thread handler
-  uint8_t *cIP;   //[IP_STR_SZ];	// IP (c-String)
+  uint8_t  *cIP;   //[IP_STR_SZ];	// IP (c-String)
   uint16_t uPort; // Port Number
   uint16_t SOKid; // SOK ID
+  uint8_t  sink1;
+  uint8_t  sink2;
   uint8_t  src;
   uint8_t  dst;
   uint8_t  cmd;
   uint8_t  len;
-  
+  uint8_t  *data;
+  uint8_t  msb;
+  uint8_t  lsb;
+  uint8_t  cs;
   // struct IPData *ipData;
 } SOKData;
 
@@ -194,7 +222,7 @@ typedef struct Data
   uint8_t f2;
   uint8_t fN;
   uint8_t LMSB;
-  uint8_t CS;
+  // uint8_t CS;
 } Data;
 
 typedef struct REMDataM // REM Protocol Packet Structure
@@ -246,13 +274,13 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-int rID_Gen(void);
-void REMDataSnd(uint8_t *pSrc/*, uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData*/)
+int     rID_Gen(void);
+void    *UDP_SrvConnection_Hndlr(void *SOKData);
+void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t, uint8_t *pLsb, uint8_t *pCs);
+bool    bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t *convertHex(uint8_t *src, size_t len);
-bool bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-// void  UDP_SrvConnection  void REMDataSnd(void *SOKData, uint8_t *buff, int szData);void *SOKData);
 int16_t UDP_SokInit_Handlr(void);
-int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
+// int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);
 // uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);

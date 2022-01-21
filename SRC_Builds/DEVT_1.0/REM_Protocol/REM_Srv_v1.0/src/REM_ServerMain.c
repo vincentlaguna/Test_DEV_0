@@ -34,6 +34,9 @@ int main(int argc, char *argv[])
     sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
     sokData[i].cIP   = szRem_Srv_IP[i];
     sokData[i].uPort = uRem_Srv_Port[i];
+    
+    sokData[i].data  = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].data  = szData[i];
     // Initialize Thread Handlers  
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
   

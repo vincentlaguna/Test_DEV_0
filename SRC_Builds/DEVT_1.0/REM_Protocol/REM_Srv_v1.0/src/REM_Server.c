@@ -177,15 +177,19 @@ Returns: void
 void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   // Local Data
-  SOKData *lData;
-  lData = (SOKData *)malloc(sizeof(SOKData));
-  lData = (SOKData *)sokData;
-  lData->src = SRC_ANY;
-  lData->dst = DST_SCU;
-  lData->cmd = PWR_CTRL;
-  lData->len = 0;
-  
-  
+  SOKData      *lData;
+  lData        = (SOKData *)malloc(sizeof(SOKData));
+  lData        = (SOKData *)sokData;
+  lData->sink1 = SYNC_1;
+  lData->sink2 = SYNC_2; 
+  lData->src   = SRC_ANY;
+  lData->dst   = DST_SCU;
+  lData->cmd   = PWR_CTRL;
+  lData->len   = LEN;
+  lData->msb   = MSB;
+  lData->lsb   = LSB;
+  lData->cs    = CS;
+
   // Receive and Reply Buffers
   uint8_t *rcvBuffer = NULL;
   uint8_t *rplyBuffer = NULL;
@@ -243,7 +247,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // while (1)
     // {
       // Testing placement of REMDataSnd() Function call
-      REMDataSnd(lData->src, lData->dst, rplyBuffer,lData->len);
+      REMDataSnd(lData->sink1, lData->sink2, lData->src, lData->dst, lData->cmd, lData->len, lData->data, lData->msb, lData->lsb, lData->cs);
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
@@ -351,7 +355,6 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   
   // #else 
     
-  
   return NULL;
 }
 
@@ -368,17 +371,20 @@ Returns: void
 
 *****************************************************************************/
 //
-void REMDataSnd(uint8_t *pSrc, /*uint8_t *pDst, uint8_t *pCmd, void *pData, uint8_t *buff, uint16_t szData*/)
+void REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst,
+                uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, 
+                uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
-  printf("%d, /*%d %d %s, %d*/\n", *pSrc );
+  printf("\nsink1 = %02X | sink2 = %02X | src = %02X | dst = %02X | cmd = %02X | len = %02X | data = %s | msb = %02X | lsb = %02X | cs = %02X\n\n", pSink1, pSink2, pSrc, pDst, pCmd, pLen, pData, pMsb, pLsb, pCs);
+
   // Build the message
   // Send the message in separate function
   // Notes to self: change the function arguments to specify the length
   // of data (bytes)
 }
 
-// End REM_DataSnd() 
+// End REM_DataSnd()
 /****************************************************************************/
 
 
