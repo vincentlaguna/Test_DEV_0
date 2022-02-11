@@ -363,7 +363,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
 void  init_test_buffer(test_buffer **d_pbuffer)
 {
-
+  // right now at least it is still compiling... 02112022
 }
 
 /*****************************************************************************
