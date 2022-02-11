@@ -361,6 +361,10 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 // End UDP_SrvConnection_Handlr() 
 /****************************************************************************/
 
+void  init_test_buffer(test_buffer **d_pbuffer)
+{
+
+}
 
 /*****************************************************************************
 

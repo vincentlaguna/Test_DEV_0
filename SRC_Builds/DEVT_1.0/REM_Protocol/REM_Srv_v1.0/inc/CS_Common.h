@@ -258,6 +258,12 @@ typedef struct REMDataL
 
 } REMDataL;
 
+typedef struct test_buffer
+{
+  /* data */
+} test_buffer;
+
+
 // struct  DataBuffer
 // {
 //   char  cPayload[MAX_STR_SZ]; // Storage for string
@@ -276,6 +282,7 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 int     rID_Gen(void);
 void    *UDP_SrvConnection_Hndlr(void *SOKData);
+void    init_test_buffer(test_buffer **d_pbuffer);
 void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool    bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t *convertHex(uint8_t *src, size_t len);
