@@ -260,7 +260,8 @@ typedef struct REMDataL
 
 typedef struct test_buffer
 {
-  /* data */
+  uint8_t *data;
+  uint8_t next;
 } test_buffer;
 
 
