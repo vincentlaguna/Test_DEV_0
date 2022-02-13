@@ -364,6 +364,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 void  init_test_buffer(test_buffer **d_pbuffer)
 {
   (*d_pbuffer)->data = (test_buffer *)calloc(1 * (test_buffer));
+
+  (*d_pbuffer)->size = // Insert macro...
 }
 
 /*****************************************************************************
