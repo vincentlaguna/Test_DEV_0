@@ -264,6 +264,7 @@ typedef struct test_buffer
   uint8_t *tst_bffr_data;
   uint8_t size;
   uint8_t next;
+  
 } test_buffer;
 
 
