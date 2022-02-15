@@ -377,7 +377,9 @@ Returns: void
 //
 void  init_test_buffer(test_buffer **d_pbuffer)
 {
-  (*d_pbuffer)->tst_bffr_data = (test_buffer *)calloc(1 * (test_buffer));
+  (*d_pbuffer) = (test_buffer *)calloc(1, sizeof(test_buffer));
+
+  (*d_pbuffer)->tst_bffr_data = calloc(1, BUFF_SZ);
 
   (*d_pbuffer)->size = BUFF_SZ;
 
