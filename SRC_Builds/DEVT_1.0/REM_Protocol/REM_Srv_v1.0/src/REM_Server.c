@@ -365,6 +365,16 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 // End UDP_SrvConnection_Handlr() 
 /****************************************************************************/
 
+
+/*****************************************************************************
+
+Name:	init_test_buffer()                                       
+Purpose:  Test Prototype Function to test initializing a test buffer
+Parameters: Double Pointer to test_buffer struct                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
 void  init_test_buffer(test_buffer **d_pbuffer)
 {
   (*d_pbuffer)->tst_bffr_data = (test_buffer *)calloc(1 * (test_buffer));
@@ -373,6 +383,10 @@ void  init_test_buffer(test_buffer **d_pbuffer)
 
   (*d_pbuffer)->next = 0;
 }
+
+// End UDP_SrvConnection_Handlr() 
+/****************************************************************************/
+
 
 /*****************************************************************************
 
