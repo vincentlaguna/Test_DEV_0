@@ -371,7 +371,7 @@ void  init_test_buffer(test_buffer **d_pbuffer)
 
   (*d_pbuffer)->size = BUFF_SZ;
 
-  // (*d_pbuffer)->next = 0;
+  (*d_pbuffer)->next = 0;
 }
 
 /*****************************************************************************
