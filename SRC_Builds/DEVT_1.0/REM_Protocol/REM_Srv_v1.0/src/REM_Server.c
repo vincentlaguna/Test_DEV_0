@@ -284,7 +284,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       
       #endif
       
-        puts("[+]Replying Back to CLient Status: ACTIVE\n");
+        puts("[+]Replying Back to Client Status: ACTIVE\n");
       }
           
     #ifdef DBG
@@ -370,7 +370,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
 Name:	init_test_buffer()                                       
 Purpose:  Test Prototype Function to test initializing a test buffer
-Parameters: Double Pointer to test_buffer struct                                          
+Parameters: Double Pointer to test_buffer struct
 Returns: void                                        
 
 *****************************************************************************/
@@ -386,7 +386,31 @@ void  init_test_buffer(test_buffer **d_pbuffer)
   (*d_pbuffer)->next = 0;
 }
 
-// End UDP_SrvConnection_Handlr() 
+// End init_test_buffer() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_insert_data()                                       
+Purpose:  Test Prototype Function for inserting data into test buffer
+Parameters: Pointer to test_buffer struct                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
+{
+  // (*d_pbuffer) = (test_buffer *)calloc(1, sizeof(test_buffer));
+
+  // (*d_pbuffer)->tst_bffr_data = calloc(1, BUFF_SZ);
+
+  // (*d_pbuffer)->size = BUFF_SZ;
+
+  // (*d_pbuffer)->next = 0;
+}
+
+// End init_test_buffer() 
 /****************************************************************************/
 
 
