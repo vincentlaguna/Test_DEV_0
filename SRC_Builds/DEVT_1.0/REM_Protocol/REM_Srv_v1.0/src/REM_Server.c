@@ -401,6 +401,8 @@ Returns: void
 //
 void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 {
+  uint8_t alloc_sz = p_buffer->size - p_buffer->size;
+  uint8_t r_sz = 0;
   // (*d_pbuffer) = (test_buffer *)calloc(1, sizeof(test_buffer));
 
   // (*d_pbuffer)->tst_bffr_data = calloc(1, BUFF_SZ);
