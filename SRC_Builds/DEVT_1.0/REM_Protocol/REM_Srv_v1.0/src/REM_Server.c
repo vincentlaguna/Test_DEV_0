@@ -409,13 +409,7 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
   {
     // Sort of stuck here right now 021622
   }
-  // (*d_pbuffer) = (test_buffer *)calloc(1, sizeof(test_buffer));
-
-  // (*d_pbuffer)->tst_bffr_data = calloc(1, BUFF_SZ);
-
-  // (*d_pbuffer)->size = BUFF_SZ;
-
-  // (*d_pbuffer)->next = 0;
+  
 }
 
 // End init_test_buffer() 
