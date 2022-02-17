@@ -407,9 +407,21 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 
   while (alloc_sz < n_bytes)
   {
-    // Sort of stuck here right now 021622
+    p_buffer->size = p_buffer->size * 2;
+    alloc_sz = p_buffer->size - p_buffer->next;
+    rsz_ct = 1;
   }
-  
+
+  if (rsz_ct == 0)
+  {
+    memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  }
+  // Size modification to buffer
+  p_buffer->tst_bffr_data = realloc(p_buffer->tst_bffr_data, p_buffer->size);
+  memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  p_buffer->next += n_bytes;
+
+  return;
 }
 
 // End init_test_buffer() 
