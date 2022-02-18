@@ -437,7 +437,7 @@ Returns: void
 
 *****************************************************************************/
 //
-void  test_insert_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
+void  test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
 {
   memcpy(p_dst, p_buffer->tst_bffr_data + p_buffer->next, size);
 
