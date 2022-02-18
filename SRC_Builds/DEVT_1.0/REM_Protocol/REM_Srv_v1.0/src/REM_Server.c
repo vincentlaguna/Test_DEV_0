@@ -218,6 +218,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
   // test_skip_data(ptst_buff, -size from... ???); example of rewinding back n size
 
+  // test_reset_buffer(ptst_buff); // Reset buffer to ptst_buff->next = 0
+
   // test_free_buffer(ptst_buff); // Don't forget to free the buffer, please
 
   // END TEST SECTION (#endif?)
@@ -480,6 +482,25 @@ void  test_skip_data(test_buffer *p_buffer, uint8_t skip_sz)
 }
 
 // End test_skip_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_reset_buffer()                                       
+Purpose:  Test Prototype Function for resetting test buffer
+Parameters: Pointer to test_buffer struct                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_reset_buffer(test_buffer *p_buffer)
+{
+  if (p_buffer->next != 0)
+    p_buffer->next = 0;
+}
+
+// End test_reset_buffer() 
 /****************************************************************************/
 
 
