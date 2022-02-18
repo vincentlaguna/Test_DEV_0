@@ -515,6 +515,7 @@ Returns: void
 //
 void  test_free_buffer(test_buffer *p_buffer)
 {
+  free(p_buffer->tst_bffr_data);
   free(p_buffer);
 }
 
