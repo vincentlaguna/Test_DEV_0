@@ -8,7 +8,7 @@ make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Feb 17 14:48:47 2022
+# Make data base, printed on Fri Feb 18 11:51:36 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:55572
+JOURNAL_STREAM = 8:52924
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from '/home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/', line 1)
@@ -67,7 +67,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1003
+MANAGERPID = 950
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -79,7 +79,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1272,unix/vl-workstation-0:/tmp/.ICE-unix/1272
+SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1288,unix/vl-workstation-0:/tmp/.ICE-unix/1288
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -89,7 +89,7 @@ VSCODE_LOG_STACK = false
 # environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=62d56429-2fed-4dc9-bd3e-b528b8159701&iid=62d56429-2fed-4dc9-bd3e-b528b8159701&sid=62d56429-2fed-4dc9-bd3e-b528b8159701","uploadToServer":true}
 # environment
-INVOCATION_ID = 6544788d6f25446a9094ace8f37c5ed9
+INVOCATION_ID = 8104702fa6894f9291895f23da9712bc
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -99,7 +99,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 12065
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5329
 # automatic
 %F = $(notdir $%)
 # environment
@@ -111,7 +111,7 @@ PWD = /home/ubuntu/workspace/Test_DEV_0
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1218
+SSH_AGENT_PID = 1166
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -147,7 +147,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d75caab6-7622-4aa2-8eed-8dd1a6a38bec.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-db5200a8-5a35-47dd-86a4-5a6667046277.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -209,7 +209,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 12065
+VSCODE_PID = 5329
 # variable set hash-table stats:
 # Load=99/1024=10%, Rehash=0, Collisions=12/112=11%
 
@@ -261,6 +261,6 @@ all:
 # strcache performance: lookups = 9 / hit rate = 33%
 # hash-table stats:
 # Load=6/8192=0%, Rehash=0, Collisions=0/9=0%
-# Finished Make data base on Thu Feb 17 14:48:47 2022
+# Finished Make data base on Fri Feb 18 11:51:36 2022
 
  

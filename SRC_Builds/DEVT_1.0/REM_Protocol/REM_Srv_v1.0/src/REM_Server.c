@@ -394,7 +394,7 @@ void  init_test_buffer(test_buffer **d_pbuffer)
 
 Name:	test_insert_data()                                       
 Purpose:  Test Prototype Function for inserting data into test buffer
-Parameters: Pointer to test_buffer struct                                          
+Parameters: Pointer to test_buffer struct, pointer to data, size                                          
 Returns: void                                        
 
 *****************************************************************************/
@@ -424,7 +424,27 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
   return;
 }
 
-// End init_test_buffer() 
+// End test_insert_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_read_data()                                       
+Purpose:  Test Prototype Function for reading data from test buffer
+Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_insert_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
+{
+  memcpy(p_dst, p_buffer->tst_bffr_data + p_buffer->next, size);
+
+  p_buffer->next += size;
+}
+
+// End test_read_data() 
 /****************************************************************************/
 
 
