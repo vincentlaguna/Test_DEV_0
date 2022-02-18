@@ -290,7 +290,7 @@ void    init_test_buffer(test_buffer **d_pbuffer);
 void    test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
 void    test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
 void    test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
-void    test_reset_buffer(test_buffer *p_buffer)
+void    test_reset_buffer(test_buffer *p_buffer);
 void    test_free_buffer(test_buffer *p_buffer);
 void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool    bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
