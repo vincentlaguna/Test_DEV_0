@@ -214,9 +214,11 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
   // test_insert_data(&ptst_buff, ptst_data, byte size from... ???);
 
-  // test_read_data((uint8_t *)&test_dst, ptst_buff, size from...???);
+  // test_read_data((uint8_t *)&test_dst, ptst_buff, size from... ???);
 
-  // test_skip_data(ptst_buff, -size); example of rewinding back n size
+  // test_skip_data(ptst_buff, -size from... ???); example of rewinding back n size
+
+  // test_free_buffer(ptst_buff); // Don't forget to free the buffer, please
 
   // END TEST SECTION (#endif?)
   
@@ -463,9 +465,9 @@ void  test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
 
 /*****************************************************************************
 
-Name:	test_read_data()                                       
-Purpose:  Test Prototype Function for reading data from test buffer
-Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
+Name:	test_skip_data()                                       
+Purpose:  Test Prototype Function for skipping n data bytes from test buffer
+Parameters: Pointer to test_buffer struct, size                                          
 Returns: void                                        
 
 *****************************************************************************/
@@ -477,7 +479,25 @@ void  test_skip_data(test_buffer *p_buffer, uint8_t skip_sz)
     p_buffer->next += skip_sz;
 }
 
-// End test_read_data() 
+// End test_skip_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_free_buffer()                                       
+Purpose:  Test Prototype Function for freeing test buffer
+Parameters: Pointer to test_buffer struct                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_free_buffer(test_buffer *p_buffer)
+{
+  free(p_buffer);
+}
+
+// End test_free_buffer() 
 /****************************************************************************/
 
 
