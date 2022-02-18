@@ -203,10 +203,21 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   S_SADDR_IN SrvAddr;
   S_SADDR_IN ClAddr;
 
+  // TEST SECTION (#ifdef?)
+  // uint8_t *ptst_data;
+
+  uint8_t test_dst;
+  
   test_buffer *ptst_buff;
 
   init_test_buffer(&ptst_buff);
 
+  // test_insert_data(&ptst_buff, ptst_data, byte size from... ???);
+
+  // test_read_data((uint8_t *)&test_dst, ptst_buff, size from...???)
+
+  // END TEST SECTION (#endif?)
+  
   // #ifdef THREAD_TEST
   
     // pthread_mutex_t SOKlock;
