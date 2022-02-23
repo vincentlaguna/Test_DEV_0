@@ -418,6 +418,10 @@ Returns: void
 //
 void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
 {
+  if (!p_data)
+  {
+    // continue here 02232022
+  }
   
   return; //
 }
