@@ -438,7 +438,7 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
   memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
   p_buffer->next += n_bytes;
 
-  return;
+  return; // Need to see if I can use it to flatten the object in buffer too... 02222022
 }
 
 // End test_insert_data() 
