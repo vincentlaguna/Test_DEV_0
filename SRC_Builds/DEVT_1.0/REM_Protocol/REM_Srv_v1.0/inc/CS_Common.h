@@ -259,6 +259,14 @@ typedef struct REMDataL
 
 } REMDataL;
 
+typedef struct test_data
+{
+  // Data fields
+  uint8_t data_0;
+  uint8_t data_1;
+  
+} test_data;
+
 typedef struct test_buffer
 {
   uint8_t *tst_bffr_data;
@@ -266,7 +274,6 @@ typedef struct test_buffer
   uint8_t next;
   
 } test_buffer;
-
 
 // struct  DataBuffer
 // {
@@ -287,6 +294,7 @@ typedef	struct DataBuffer DBffr;
 int     rID_Gen(void);
 void    *UDP_SrvConnection_Hndlr(void *SOKData);
 void    init_test_buffer(test_buffer **d_pbuffer);
+void    test_serialize_data(test_data *p_data, test_buffer *p_buffer);
 void    test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
 void    test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
 void    test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);

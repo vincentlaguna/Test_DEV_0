@@ -409,6 +409,25 @@ void  init_test_buffer(test_buffer **d_pbuffer)
 
 /*****************************************************************************
 
+Name:	test_serialize_data()                                       
+Purpose:  Test Prototype Function for serializing data struct for buffer
+Parameters: Pointer to data, pointer to buffer                                         
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
+{
+  
+  return; //
+}
+
+// End test_serialize_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
 Name:	test_insert_data()                                       
 Purpose:  Test Prototype Function for inserting data into test buffer
 Parameters: Pointer to test_buffer struct, pointer to data, size                                          
@@ -438,7 +457,7 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
   memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
   p_buffer->next += n_bytes;
 
-  return; // Need to see if I can use it to flatten the object in buffer too... 02222022
+  return; //
 }
 
 // End test_insert_data() 
