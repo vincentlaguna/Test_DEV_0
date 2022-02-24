@@ -422,7 +422,10 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
   {
     uint16_t sntel_val = 0xFFFFFFFF;
     test_insert_data(p_buffer, (uint16_t *)&sntel_val, sizeof(uint16_t));
+    return;
   }
+  
+  test_insert_data(p_buffer, (uint8_t)p_data->data_0, sizeof(uint8_t));
   
   return; //
 }
