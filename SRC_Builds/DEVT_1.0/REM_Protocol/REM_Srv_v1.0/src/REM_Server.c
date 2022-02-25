@@ -415,17 +415,21 @@ Parameters: Pointer to data, pointer to buffer
 Returns: void                                        
 
 *****************************************************************************/
-//
+// Since the MIN_STR_SZ is 30, test_data object has 2B of padding...
 void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
 {
   if (!p_data)
   {
-    uint16_t sntel_val = 0xFFFFFFFF;
+    uint16_t sntel_val = 0xFFFFFFFF; // 2B value
     test_insert_data(p_buffer, (uint16_t *)&sntel_val, sizeof(uint16_t));
+
+
     return;
   }
   
-  test_insert_data(p_buffer, (uint8_t)p_data->data_0, sizeof(uint8_t));
+  test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0, sizeof(uint8_t) * MIN_STR_SZ);
+  test_insert_data(p_buffer, (uint8_t)p_data->u8_data_1, sizeof(uint8_t));
+  test_insert_data(p_buffer, (uint8_t)p_data->u16_data_2, sizeof(uint16_t));
   
   return; //
 }
