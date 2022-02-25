@@ -56,6 +56,7 @@ Description: Common header file for REMOTE Server code
 // #define		M_THREADED_SOKETS
 #define MAX_LEN 1024
 #define MAX_STR_SZ 128
+#define MIN_STR_SZ 32
 #define BUFF_SZ 128
 #define IP_STR_SZ 16
 #define SLEEP sleep(1);
@@ -262,8 +263,8 @@ typedef struct REMDataL
 typedef struct test_data
 {
   // Data fields
-  uint8_t data_0;
-  uint8_t data_1;
+  uint8_t u8_sz_data_0[];
+  uint8_t u8_data_1;
   
 } test_data;
 
