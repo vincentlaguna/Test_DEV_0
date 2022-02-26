@@ -212,6 +212,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
   init_test_buffer(&ptst_buff);
 
+  // test_serialize_data() continue here 02252022
   // test_insert_data(&ptst_buff, ptst_data, byte size from... ???);
 
   // test_read_data((uint8_t *)&test_dst, ptst_buff, size from... ???);
