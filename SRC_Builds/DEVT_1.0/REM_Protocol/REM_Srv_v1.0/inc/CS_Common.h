@@ -260,11 +260,20 @@ typedef struct REMDataL
 
 } REMDataL;
 
+typedef struct nest_data
+{
+  // Data fields
+  uint8_t u8_sz_nst_data_0[MIN_STR_SZ];
+  uint8_t u8_nst_data_ID;
+
+} nest_data;
+
 typedef struct test_data
 {
   // Data fields
   uint8_t   u8_sz_data_0[MIN_STR_SZ];
   uint8_t   u8_data_1;
+  nest_data nst_data_0;
   uint16_t  u16_data_2;
   
 } test_data;
