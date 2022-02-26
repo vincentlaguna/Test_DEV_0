@@ -204,9 +204,11 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   S_SADDR_IN ClAddr;
 
   // TEST SECTION (#ifdef?)
-  // uint8_t *ptst_data;
+  // test_data tst_data = malloc(1 * sizeof(test_data));
+  
+  // uint8_t *ptst_data = &tst_data;
 
-  uint8_t test_dst;
+  // uint8_t test_dst;
   
   test_buffer *ptst_buff;
 
