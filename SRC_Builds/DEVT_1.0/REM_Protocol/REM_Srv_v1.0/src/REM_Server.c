@@ -432,7 +432,7 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
   
   test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0, sizeof(uint8_t) * MIN_STR_SZ);
   test_insert_data(p_buffer, (uint8_t)&p_data->u8_data_1, sizeof(uint8_t));
-  test_insert_nest_data(&p_data->nst_data_0, p_buffer);
+  test_insert_nest_data(&p_data->nst_data_0, p_buffer); // Create 02272022
   test_insert_data(p_buffer, (uint8_t)p_data->u16_data_2, sizeof(uint16_t));
   
   return; //
