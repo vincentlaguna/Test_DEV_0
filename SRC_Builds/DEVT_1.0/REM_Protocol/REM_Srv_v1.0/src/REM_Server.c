@@ -482,6 +482,44 @@ void  test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 
 /*****************************************************************************
 
+Name:	test_insert_nest_data()                                       
+Purpose:  Test Prototype Function for inserting nested struct data into test buffer
+Parameters: Pointer to test_buffer struct, pointer to data, size                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_insert_nest_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
+{
+  uint8_t alloc_sz = p_buffer->size - p_buffer->next;
+  
+  uint8_t rsz_ct = 0;
+
+  while (alloc_sz < n_bytes)
+  {
+    p_buffer->size = p_buffer->size * 2;
+    alloc_sz = p_buffer->size - p_buffer->next;
+    rsz_ct = 1;
+  }
+
+  if (rsz_ct == 0)
+  {
+    memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  }
+  // Size modification to buffer
+  p_buffer->tst_bffr_data = realloc(p_buffer->tst_bffr_data, p_buffer->size);
+  memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  p_buffer->next += n_bytes;
+
+  return; //
+}
+
+// End test_insert_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
 Name:	test_read_data()                                       
 Purpose:  Test Prototype Function for reading data from test buffer
 Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
