@@ -489,7 +489,7 @@ Returns: void
 
 *****************************************************************************/
 //
-void  test_insert_nest_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
+void  test_insert_nest_data(test_data *p_data, test_buffer *p_buffer)
 {
   // Not sure where to start... 02282022
   // uint8_t alloc_sz = p_buffer->size - p_buffer->next;
