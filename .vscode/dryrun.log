@@ -1,7 +1,6 @@
 make -f /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/ --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/ubuntu/workspace/Test_DEV_0'
+make: Leaving directory '/home/ubuntu/workspace/Test_DEV_0'
  
 make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/: Is a directory.  Stop.
- 
-make: Leaving directory '/home/ubuntu/workspace/Test_DEV_0'
  
