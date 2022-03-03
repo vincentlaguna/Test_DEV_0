@@ -489,29 +489,10 @@ Returns: void
 
 *****************************************************************************/
 //
-void  test_insert_nest_data(test_data *p_data, test_buffer *p_buffer)
+void  test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer)
 {
-  // Use serialization example from rpc local files... 03022022
-  // uint8_t alloc_sz = p_buffer->size - p_buffer->next;
-  
-  // uint8_t rsz_ct = 0;
-
-  // while (alloc_sz < n_bytes)
-  // {
-  //   p_buffer->size = p_buffer->size * 2;
-  //   alloc_sz = p_buffer->size - p_buffer->next;
-  //   rsz_ct = 1;
-  // }
-
-  // if (rsz_ct == 0)
-  // {
-  //   memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
-  // }
-  // // Size modification to buffer
-  // p_buffer->tst_bffr_data = realloc(p_buffer->tst_bffr_data, p_buffer->size);
-  // memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
-  // p_buffer->next += n_bytes;
-
+  test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_nst_data_0, sizeof(uint8_t) * MIN_STR_SZ);
+  test_insert_data(p_buffer, (uint8_t)&p_data->u8_data_1, sizeof(uint8_t));
   return; //
 }
 
