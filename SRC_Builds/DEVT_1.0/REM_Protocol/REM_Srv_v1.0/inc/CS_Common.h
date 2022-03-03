@@ -260,6 +260,8 @@ typedef struct REMDataL
 
 } REMDataL;
 
+typedef struct test_data test_data;
+
 typedef struct nest_data
 {
   // Data fields
@@ -268,7 +270,7 @@ typedef struct nest_data
 
 } nest_data;
 
-typedef struct test_data
+struct test_data
 {
   // Data fields
   uint8_t   u8_sz_data_0[MIN_STR_SZ];
@@ -276,7 +278,7 @@ typedef struct test_data
   nest_data nst_data_0;
   uint16_t  u16_data_2;
   
-} test_data;
+};
 
 typedef struct test_buffer
 {
@@ -307,7 +309,7 @@ void    *UDP_SrvConnection_Hndlr(void *SOKData);
 void    init_test_buffer(test_buffer **d_pbuffer);
 void    test_serialize_data(test_data *p_data, test_buffer *p_buffer);
 void    test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
-void    test_insert_nest_data(test_data *p_data, test_buffer *p_buffer);
+void    test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
 void    test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
 void    test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
 void    test_reset_buffer(test_buffer *p_buffer);
