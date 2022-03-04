@@ -495,7 +495,7 @@ void  test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer)
   test_insert_data(p_buffer, (uint8_t)&p_data->u8_nst_data_ID, sizeof(uint8_t));
   //test_serialize_data() // not yet...
   return; //
-}
+} // compiles now
 
 // End test_insert_nest_data() 
 /****************************************************************************/
