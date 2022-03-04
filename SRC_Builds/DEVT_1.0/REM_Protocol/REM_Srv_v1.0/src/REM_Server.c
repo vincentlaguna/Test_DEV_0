@@ -430,9 +430,10 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
     return;
   }
   
-  test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0, sizeof(uint8_t) * MIN_STR_SZ);
+  test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0,
+                   sizeof(uint8_t) * MIN_STR_SZ);
   test_insert_data(p_buffer, (uint8_t)&p_data->u8_data_1, sizeof(uint8_t));
-  test_insert_nest_data(&p_data->nst_data_0, p_buffer); // Insert internal struct
+  test_insert_nest_data(&p_data->nst_data_0, p_buffer); // Insert nest struct
   test_insert_data(p_buffer, (uint8_t)p_data->u16_data_2, sizeof(uint16_t));
   
   return; //
@@ -461,7 +462,16 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
     return NULL;
 
   test_skip_data(p_buffer, -1 * sizeof(uint16_t));
+  // Allocate memory to reconstruct the "object"
+  test_data *p_tst_data = calloc(1, sizeof(test_data));
+  test_parse_data((uint8_t *)p_tst_data->u8_sz_data_0,
+                  p_buffer, sizeof(uint8_t) * MIN_STR_SZ);
+  test_parse_data((uint8_t *)p_tst_data->u8_data_1, p_buffer, sizeof(uint8_t));
+  // parse nested stuff...
+  test_parse_data((uint8_t *)p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
   
+  return p_tst_data;
+
 }
 
 // End test_de_serialize_data() 
