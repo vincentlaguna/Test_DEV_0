@@ -312,9 +312,10 @@ int       rID_Gen(void);
 void      *UDP_SrvConnection_Hndlr(void *SOKData);
 void      init_test_buffer(test_buffer **d_pbuffer);
 void      test_serialize_data(test_data *p_data, test_buffer *p_buffer);
-test_data *test_de_serialize_data(test_buffer *p_buffer)
+test_data *test_de_serialize_data(test_buffer *p_buffer);
 void      test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
 void      test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
+void      test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
 void      test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
 void      test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
 void      test_reset_buffer(test_buffer *p_buffer);

@@ -446,7 +446,7 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
 /*****************************************************************************
 
 Name:	test_de_serialize_data()                                       
-Purpose:  Test Prototype Function for de- serializing data struct for buffer
+Purpose:  Test Prototype Function for de-serializing data struct for buffer
 Parameters: Pointer to data, pointer to buffer                                         
 Returns: Pointer to de-serialized data struct                                        
 
@@ -454,7 +454,7 @@ Returns: Pointer to de-serialized data struct
 //
 test_data *test_de_serialize_data(test_buffer *p_buffer)
 {
-  // x-val code here
+  // x-val detection code here
   uint16_t sntel_val = 0; // 2B value
   test_parse_data((uint8_t *)&sntel_val, p_buffer, sizeof(uint16_t));
 
@@ -471,7 +471,6 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
   test_parse_data((uint8_t *)p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
   
   return p_tst_data;
-
 }
 
 // End test_de_serialize_data() 
@@ -481,8 +480,8 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
 /*****************************************************************************
 
 Name:	test_insert_data()                                       
-Purpose:  Test Prototype Function for inserting data into test buffer
-Parameters: Pointer to test_buffer struct, pointer to data, size                                          
+Purpose:  Test Prototype Function for inserting data into data buffer
+Parameters: Pointer to buffer struct, pointer to data, size                                          
 Returns: void                                        
 
 *****************************************************************************/
@@ -535,6 +534,44 @@ void  test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer)
 }
 
 // End test_insert_nest_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_parse_data()                                       
+Purpose:  Test Prototype Function for parsing data from data buffer
+Parameters: Pointer to buffer struct, pointer to data, size                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
+{
+  // uint8_t alloc_sz = p_buffer->size - p_buffer->next;
+  
+  // uint8_t rsz_ct = 0;
+
+  // while (alloc_sz < n_bytes)
+  // {
+  //   p_buffer->size = p_buffer->size * 2;
+  //   alloc_sz = p_buffer->size - p_buffer->next;
+  //   rsz_ct = 1;
+  // }
+
+  // if (rsz_ct == 0)
+  // {
+  //   memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  // }
+  // // Size modification to buffer
+  // p_buffer->tst_bffr_data = realloc(p_buffer->tst_bffr_data, p_buffer->size);
+  // memcpy((uint8_t *)p_buffer->tst_bffr_data + p_buffer->next, p_data, n_bytes);
+  // p_buffer->next += n_bytes;
+
+  return; //
+}
+
+// End test_parse_data() 
 /****************************************************************************/
 
 
