@@ -55,6 +55,7 @@ Description: Common header file for REMOTE Server code
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
 #define MAX_LEN 1024
+#define MIN_LEN 16
 #define MAX_STR_SZ 128
 #define MIN_STR_SZ 30
 #define BUFF_SZ 128
@@ -260,13 +261,16 @@ typedef struct REMDataL
 
 } REMDataL;
 
+// Forward struct declaration
 typedef struct test_data test_data;
 
 typedef struct nest_data
 {
   // Data fields
-  uint8_t u8_sz_nst_data_0[MIN_STR_SZ];
-  uint8_t u8_nst_data_ID;
+  uint8_t   u8_sz_nst_data_0[MIN_STR_SZ];
+  uint8_t   u8_nst_data_ID;
+  test_data *p_test_data;
+  test_data *p_test_data_arr[]
 
 } nest_data;
 
