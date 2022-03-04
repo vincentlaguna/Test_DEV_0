@@ -270,7 +270,7 @@ typedef struct nest_data
   uint8_t   u8_sz_nst_data_0[MIN_STR_SZ];
   uint8_t   u8_nst_data_ID;
   test_data *p_test_data;
-  test_data *p_test_data_arr[]
+  test_data *p_test_data_arr[MIN_LEN];
 
 } nest_data;
 
@@ -308,20 +308,21 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-int     rID_Gen(void);
-void    *UDP_SrvConnection_Hndlr(void *SOKData);
-void    init_test_buffer(test_buffer **d_pbuffer);
-void    test_serialize_data(test_data *p_data, test_buffer *p_buffer);
-void    test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
-void    test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
-void    test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
-void    test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
-void    test_reset_buffer(test_buffer *p_buffer);
-void    test_free_buffer(test_buffer *p_buffer);
-void    REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
-bool    bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-uint8_t *convertHex(uint8_t *src, size_t len);
-int16_t UDP_SokInit_Handlr(void);
+int       rID_Gen(void);
+void      *UDP_SrvConnection_Hndlr(void *SOKData);
+void      init_test_buffer(test_buffer **d_pbuffer);
+void      test_serialize_data(test_data *p_data, test_buffer *p_buffer);
+test_data *test_de_serialize_data(test_buffer *p_buffer)
+void      test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
+void      test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
+void      test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
+void      test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
+void      test_reset_buffer(test_buffer *p_buffer);
+void      test_free_buffer(test_buffer *p_buffer);
+void      REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
+bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
+uint8_t   *convertHex(uint8_t *src, size_t len);
+int16_t   UDP_SokInit_Handlr(void);
 // int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
 // void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
 // int16_t  SokInit_Handlr(void);

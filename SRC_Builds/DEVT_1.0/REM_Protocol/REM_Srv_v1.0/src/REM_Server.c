@@ -424,7 +424,7 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
   if (!p_data)
   {
     uint16_t sntel_val = 0xFFFFFFFF; // 2B value
-    test_insert_data(p_buffer, (uint16_t *)&sntel_val, sizeof(uint16_t));
+    test_insert_data(p_buffer, (uint8_t *)&sntel_val, sizeof(uint16_t));
 
 
     return;
@@ -432,13 +432,39 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
   
   test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0, sizeof(uint8_t) * MIN_STR_SZ);
   test_insert_data(p_buffer, (uint8_t)&p_data->u8_data_1, sizeof(uint8_t));
-  test_insert_nest_data(&p_data->nst_data_0, p_buffer);
+  test_insert_nest_data(&p_data->nst_data_0, p_buffer); // Insert internal struct
   test_insert_data(p_buffer, (uint8_t)p_data->u16_data_2, sizeof(uint16_t));
   
   return; //
 }
 
 // End test_serialize_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_de_serialize_data()                                       
+Purpose:  Test Prototype Function for de- serializing data struct for buffer
+Parameters: Pointer to data, pointer to buffer                                         
+Returns: Pointer to de-serialized data struct                                        
+
+*****************************************************************************/
+//
+test_data *test_de_serialize_data(test_buffer *p_buffer)
+{
+  // x-val code here
+  uint16_t sntel_val = 0; // 2B value
+  test_parse_data((uint8_t *)&sntel_val, p_buffer, sizeof(uint16_t));
+
+  if (sntel_val == 0xFFFFFFFF)
+    return NULL;
+
+  test_skip_data(p_buffer, -1 * sizeof(uint16_t));
+  
+}
+
+// End test_de_serialize_data() 
 /****************************************************************************/
 
 
@@ -494,8 +520,9 @@ void  test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer)
   test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_nst_data_0, sizeof(uint8_t) * MIN_STR_SZ);
   test_insert_data(p_buffer, (uint8_t)&p_data->u8_nst_data_ID, sizeof(uint8_t));
   test_serialize_data(p_data->p_test_data, p_buffer);
-  return; //
-} // compiles now
+  
+  return;
+}
 
 // End test_insert_nest_data() 
 /****************************************************************************/
