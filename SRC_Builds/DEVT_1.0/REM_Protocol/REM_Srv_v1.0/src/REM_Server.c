@@ -548,6 +548,8 @@ Returns: void
 //
 void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 {
+  // Data extraction from buffer
+  
   // uint8_t alloc_sz = p_buffer->size - p_buffer->next;
   
   // uint8_t rsz_ct = 0;
