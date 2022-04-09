@@ -1,5 +1,5 @@
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.1  ~<NAME> 2021                                                                  
+Author(s) or Contributor(s): Version 0.1  ~Vincent A. Laguna 2022                                                                  
 
 File: ClientMain.c                                                  
 
@@ -230,6 +230,53 @@ int main(int argc, char *argv[])
 
   return(0);
   
+}
+
+/****************************************************************************/
+
+// UNDER CONSTRUCTION -> Convert to Multi-Threaded Client
+/* Main Starts Here: ********************************************************
+// Refactored Main (Multi-threaded)
+int main(int argc, char *argv[])
+{ 
+  // Initialize Local Objects
+  SOKData   sokData[NUM_SRV_THREADS];
+  pthread_t SOKthread[NUM_SRV_THREADS];
+  // Initialize Number of Server Thread Objects in a for-loop
+  for (int i = 0; i < NUM_SRV_THREADS; i++)
+  {
+  #ifdef DBG
+  
+    sokData[i].SOKid = (i+1) * 10;
+  
+  #endif
+  //Call Rem function here
+    // Basic Assignment
+    sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].cIP   = szRem_Srv_IP[i];
+    sokData[i].uPort = uRem_Srv_Port[i];
+    
+    sokData[i].data  = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].data  = szData[i];
+    // Initialize Thread Handlers  
+    pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
+  
+  #ifdef DBG
+  
+    printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
+  
+  #endif
+  
+    
+  }
+  // Join Threads (EXIT Thread Handlers)
+  for (int j = 0; j < NUM_SRV_THREADS; j++)
+  {
+    pthread_join(SOKthread[j], NULL);
+  }
+   
+  return(0);
+
 }
 
 /****************************************************************************/
