@@ -6,7 +6,7 @@ make all -f /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/R
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Mar  4 19:00:27 2022
+# Make data base, printed on Fri Apr  8 11:39:47 2022
 
 # Variables
 
@@ -47,7 +47,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:52872
+JOURNAL_STREAM = 8:55401
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from '/home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/', line 1)
@@ -65,7 +65,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 990
+MANAGERPID = 1039
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -77,7 +77,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1327,unix/vl-workstation-0:/tmp/.ICE-unix/1327
+SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1336,unix/vl-workstation-0:/tmp/.ICE-unix/1336
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -87,7 +87,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = e00f46f846c348ac9716fdf0d4c24058
+INVOCATION_ID = c6a8fad72a034652bb91c1a3aa9cb858
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -97,7 +97,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2375
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4391
 # automatic
 %F = $(notdir $%)
 # environment
@@ -109,7 +109,7 @@ PWD = /home/ubuntu/workspace/Test_DEV_0
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1271
+SSH_AGENT_PID = 1299
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -121,7 +121,7 @@ HOME = /home/ubuntu
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
-VSCODE_CODE_CACHE_PATH = /home/ubuntu/.config/Code/CachedData/b5205cc8eb4fbaa726835538cd82372cc0222d43
+VSCODE_CODE_CACHE_PATH = /home/ubuntu/.config/Code/CachedData/8dfae7a5cd50421d10cd99cb873990460525a898
 # environment
 LOGNAME = ubuntu
 # environment
@@ -145,7 +145,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ce490c07-ebbb-4b86-894a-93ca1c702546.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d862fe79-b2e6-4555-8e81-fd5ec788022b.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -163,7 +163,7 @@ MAKE_COMMAND := make
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-9415da10-1.65.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-9415da10-1.66.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -203,7 +203,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2375
+VSCODE_PID = 4391
 # variable set hash-table stats:
 # Load=97/1024=9%, Rehash=0, Collisions=11/110=10%
 
@@ -255,8 +255,8 @@ all:
 # strcache performance: lookups = 9 / hit rate = 33%
 # hash-table stats:
 # Load=6/8192=0%, Rehash=0, Collisions=0/9=0%
-# Finished Make data base on Fri Mar  4 19:00:27 2022
+# Finished Make data base on Fri Apr  8 11:39:47 2022
 
  
 make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/: Is a directory.  Stop.
- 
+

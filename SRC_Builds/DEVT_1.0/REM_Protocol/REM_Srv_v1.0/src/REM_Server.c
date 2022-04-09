@@ -189,7 +189,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   lData->msb   = MSB;
   lData->lsb   = LSB;
   lData->cs    = CS;
-
+  // make buffer more dynamic so that it can read and parse from file input 04082022
   // Receive and Reply Buffers
   uint8_t *rcvBuffer = NULL;
   uint8_t *rplyBuffer = NULL;
