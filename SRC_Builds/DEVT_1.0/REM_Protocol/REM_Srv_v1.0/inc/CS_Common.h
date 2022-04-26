@@ -62,6 +62,7 @@ Description: Common header file for REMOTE Server code
 #define IP_STR_SZ 16
 #define SLEEP sleep(1);
 #define NUM_SRV_THREADS 1
+#define NUM_CL_THREADS 1
 #define REM_CL_PORT 11069
 #define REM_SRV_PORT_0 11000
 #define REM_SRV_PORT_1 11001

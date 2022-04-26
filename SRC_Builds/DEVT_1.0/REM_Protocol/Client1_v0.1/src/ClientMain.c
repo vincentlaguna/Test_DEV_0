@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 { 
   // Initialize Local Objects
-  SOKData   sokData[NUM_SRV_THREADS];
+  SOKData   sokData[NUM_CL_THREADS];
   pthread_t SOKthread[NUM_SRV_THREADS];
   // Initialize Number of Server Thread Objects in a for-loop
   for (int i = 0; i < NUM_SRV_THREADS; i++)
