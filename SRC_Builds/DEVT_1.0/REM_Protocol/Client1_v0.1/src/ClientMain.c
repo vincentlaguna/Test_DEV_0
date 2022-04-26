@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 /****************************************************************************/
 
 // UNDER CONSTRUCTION -> Convert to Multi-Threaded Client
-/* Main Starts Here: ********************************************************
+/* Main Starts Here: ********************************************************/
 // Refactored Main (Multi-threaded)
 int main(int argc, char *argv[])
 { 
