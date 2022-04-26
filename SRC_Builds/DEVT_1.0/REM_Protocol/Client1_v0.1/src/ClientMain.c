@@ -241,9 +241,9 @@ int main(int argc, char *argv[])
 { 
   // Initialize Local Objects
   SOKData   sokData[NUM_CL_THREADS];
-  pthread_t SOKthread[NUM_SRV_THREADS];
+  pthread_t SOKthread[NUM_CL_THREADS];
   // Initialize Number of Server Thread Objects in a for-loop
-  for (int i = 0; i < NUM_SRV_THREADS; i++)
+  for (int i = 0; i < NUM_CL_THREADS; i++)
   {
   #ifdef DBG
   
@@ -270,7 +270,7 @@ int main(int argc, char *argv[])
     
   }
   // Join Threads (EXIT Thread Handlers)
-  for (int j = 0; j < NUM_SRV_THREADS; j++)
+  for (int j = 0; j < NUM_CL_THREADS; j++)
   {
     pthread_join(SOKthread[j], NULL);
   }
