@@ -325,12 +325,6 @@ void      REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *p
 bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t   *convertHex(uint8_t *src, size_t len);
 int16_t   UDP_SokInit_Handlr(void);
-// int32_t BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP);
-// void	    SrvConnection_Hndlr(uint32_t uSrvSok, uint16_t nConnections);
-// int16_t  SokInit_Handlr(void);
-// uint32_t  SokConnect_Hndlr(uint32_t uClSok, char* remIP, uint16_t remPort);
-// uint32_t  SokSend_Hndlr(uint32_t uClSok, char *pRqst, uint16_t pRqstLen);
-// uint32_t  SokRcv_Hndlr(uint32_t uClSok, char *pRsp, uint16_t rcvSize);
 
 /****************************************************************************/
 #endif // CS_COMMON_H

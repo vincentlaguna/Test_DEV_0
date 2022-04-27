@@ -26,38 +26,6 @@ int16_t listenSOKFD;
 
 /*****************************************************************************
 
-Name:	SokInit_Handlr()                                               
-Purpose: Handles the creation of a Socket                               
-Parameters: None                                                             
-Returns: signed 16-bit integer                                        
-
-*****************************************************************************
-
-int16_t  SokInit_Handlr(void)
-{
-  // Local Variables
-  int16_t  hSok;
-  // Output
-  printf("\n[-]SERVER-Side Socket Initialization = in progress...\n");
-  
-  SLEEP
-  
-  // Socket System Call
-  hSok = socket(AF_INET, SOCK_STREAM, 0);
-  // Output Validation
-  printf("[+]SERVER-Side Socket Initialization = OK\n");
-
-  SLEEP
-  // Function Return
-  return  hSok;
-}
-
-// End SokInit_Handlr()
-/****************************************************************************/
-
-
-/*****************************************************************************
-
 Name:	UDP_SokInit_Handlr()                                               
 Purpose: Handles the creation of a UDP Socket                               
 Parameters: None                                                             
@@ -90,80 +58,6 @@ int16_t  UDP_SokInit_Handlr(void)
 
 /*****************************************************************************
 
-Name: BindSrvSok_Handlr()                                            
-Purpose: Handles the binding of a Socket to the Server                  
-Parameters: signed 16-bit integer                                          
-Returns: signed 16-bit integer                                        
-
-*****************************************************************************
-
-int32_t	BindSrvSok_Hndlr(int16_t SrvSok, const uint8_t *szRemIP)
-{
-  printf("\nBind Call\n\n");
-  // Local Variables
-  int32_t   retVal;//   = -1;
-  uint32_t  remPort  =  0;
-  socklen_t SOKsz;
-  S_SADDR_IN *Srv = NULL;
-  Srv = (S_SADDR_IN *)malloc(sizeof(S_SADDR_IN));
-  printf("\nStruct Memory Allocation = PASS\n\n");
-  // Assign remPort Port to corresponding port number
-  if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_0]) == 0)
-  {
-    remPort = REM_SRV_PORT_0;
-  }
-  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_1]) == 0)
-  {
-    remPort = REM_SRV_PORT_1;
-  }
-  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_2]) == 0)
-  {
-    remPort = REM_SRV_PORT_2;
-  }
-  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_3]) == 0)
-  {
-    remPort = REM_SRV_PORT_3;
-  }
-  else if (strcmp(szRemIP, szRem_Srv_IP[eREM_SRV_IP_4]) == 0)
-  {
-    remPort = REM_SRV_PORT_4;
-  }
-  else
-  {
-    EXIT_FAILURE;
-  }
-  printf("\nszRempIP = %s uRem = %s\n\n", szRemIP, szRem_Srv_IP[eREM_SRV_IP_0]);
-  printf("\nREM_SRV_PORT_0 = %d size = %d\n\n", REM_SRV_PORT_0, sizeof(REM_SRV_PORT_0));
-  printf("\nremPort = %d size = %d\n\n", remPort, sizeof(remPort));
-  printf("\nSrvSOK = %d\n\n", SrvSok);
-  // sock_addr_in initialization
-  // S_SADDR_IN  Srv;
-  // Zero-out struct
-  memset(Srv, 0, sizeof(S_SADDR_IN));
-  printf("\n\nZero-out allocated struct = PASS\n\n");
-  // Struct Member Init
-  Srv->sin_family      = AF_INET;
-  printf("\n\nsin_family = OK\n\n");
-  Srv->sin_addr.s_addr = htonl(*szRemIP);
-  printf("\n\ns_addr (szRempIP) = OK\n\n");
-  Srv->sin_port        = htons(remPort);
-  printf("\n\nsin_port (remPort) = OK\n\n");
-  SOKsz = sizeof(Srv);
-  printf("[+]Binding to IP: %s on PORT: %d...\n", szRemIP, remPort);
-  // Bind System Call
-  // retVal = bind(SrvSok, (S_SADDR *)&Srv, sizeof(Srv));
-  retVal = bind(SrvSok, (S_SADDR *)Srv, SOKsz);
-  printf("\n\nretVal = %d\n\n", retVal);
-  // Function Return
-  return  retVal;    
-}
-
-// End BindSrvSok_Handlr() 
-/****************************************************************************/
-
-
-/*****************************************************************************
-
 Name:	UDP_SrvConnection_Hndlr() thread version                                         
 Purpose: Handles incoming connections to the server                 
 Parameters: unsigned uint8_t pointer                                          
@@ -171,9 +65,6 @@ Returns: void
 
 *****************************************************************************/
 // Clean Multi-Threaded Version
-// void  UDP_SrvConnection_Hndlr(const uint16_t clSOKFD)
-// void  *UDP_SrvConnection_Hndlr(void *clSOKFD)
-// void  UDP_SrvConnection_Hndlr(void *sokData)
 void  *UDP_SrvConnection_Hndlr(void *sokData)
 {
   // Local Data
@@ -669,7 +560,7 @@ void REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst,
                 uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs)
 {
   printf("\nTesting REMDataSnd() Function call >>> \n");
-  printf("\nsink1 = %02X | sink2 = %02X | src = %02X | dst = %02X | cmd = %02X | len = %02X | data = %s | msb = %02X | lsb = %02X | cs = %02X\n\n", pSink1, pSink2, pSrc, pDst, pCmd, pLen, pData, pMsb, pLsb, pCs);
+  printf("\n<sink1 = %02X>|<sink2 = %02X>|<src = %02X>|<dst = %02X>|<cmd = %02X>|<len = %02X>|<data = %s>|<msb = %02X>|<lsb = %02X>|<cs = %02X>\n\n", pSink1, pSink2, pSrc, pDst, pCmd, pLen, pData, pMsb, pLsb, pCs);
 
   // Build the message
   // Send the message in separate function
