@@ -554,7 +554,7 @@ Parameters: Pointer to SOKData, unsigned uint8_t pointer to send buffer
 Returns: void                                        
 
 *****************************************************************************/
-//
+// Only temp for testing
 void REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst,
                 uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, 
                 uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs)
