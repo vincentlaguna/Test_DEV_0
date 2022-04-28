@@ -439,7 +439,7 @@ Returns: void
 //
 void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 {
-  // Data extraction from buffer
+  // Data extraction from buffer - does any of the previous stuff works? 04282022
   
   // uint8_t alloc_sz = p_buffer->size - p_buffer->next;
   
