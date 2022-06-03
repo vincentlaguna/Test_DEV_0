@@ -54,14 +54,14 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
-#define MAX_LEN 1024
+#define MAX_LEN 254
 #define MIN_LEN 16
 #define MAX_STR_SZ 128
 #define MIN_STR_SZ 30
 #define BUFF_SZ 128
 #define IP_STR_SZ 16
 #define SLEEP sleep(1);
-#define NUM_SRV_THREADS 1
+#define NUM_SRV_THREADS 2
 #define NUM_CL_THREADS 1
 #define REM_CL_PORT 11069
 #define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
@@ -71,12 +71,12 @@ Description: Common header file for REMOTE Server code
 #define REM_SRV_PORT_3 11003
 #define REM_SRV_PORT_4 11004
 #define REM_SRV_PORT_5 11005
-#define REM_SRV_IP_0 "192.168.66.52" // Remote Device IP
+#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
 // #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
 // #define	  REM_SRV_IP_0 "192.168.143.20"
 // #define	  REM_SRV_IP_0 "192.168.128.250"
-// #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
-#define	REM_SRV_IP_1 "192.168.128.251"
+#define REM_SRV_IP_1 "127.0.0.1" // Local Tests
+// #define	REM_SRV_IP_1 "192.168.128.251"
 #define REM_SRV_IP_2 "192.168.128.252"
 #define REM_SRV_IP_3 "192.168.128.253"
 #define REM_SRV_IP_4 "192.168.128.254"
@@ -227,17 +227,86 @@ static const uint8_t *cStringPayload =
 //   // "",
 // };
 
+// static const uint8_t *cREMDataRFOn =
+// {
+//   "\xff"                                               // NUM bytes
+//   "\x02"                                               // STX
+//   "01234567890123456789012345678901234567890123456789" // 50 chrs
+//   "01234567890123456789012345678901234567890123456789" // 50 chrs
+//   "01234567890123456789012345678901234567890123456789" // 50 chrs
+//   "01234567890123456789012345678901234567890123456789" // 50 chrs
+//   "01234567890123456789012345678901234567890123456789" // 50 chrs
+//   "\x03",                                              // ETX
+//                                                        // 255 total
+// };
+
 static const uint8_t *cREMDataRFOn =
 {
-  "\xff"                                               // NUM bytes
-  "\x02"                                               // STX
-  "01234567890123456789012345678901234567890123456789" // 50 chrs
-  "01234567890123456789012345678901234567890123456789" // 50 chrs
-  "01234567890123456789012345678901234567890123456789" // 50 chrs
-  "01234567890123456789012345678901234567890123456789" // 50 chrs
-  "01234567890123456789012345678901234567890123456789" // 50 chrs
-  "\x03",                                              // ETX
-                                                       // 255 total
+  // "\xff"                                               // NUM bytes
+  // "\x02" 
+  // "\x0a"
+  // "\x0b"
+  // "\x20"
+  // "\x11"
+  // "\x52"
+  // "\x32"
+  // "\xff"
+  // "\xff"
+  // "\x00"
+  // "\x00"
+  // "\x0a"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\xff"
+  // "\x60"
+  // "\x01"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\xff"
+  // "\xff"
+  // "\xff"
+  // "\xff"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x10"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\xff"
+  // "\xff"
+  // "\xff"
+  // "\xff"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\x00"
+  // "\xf0"
+  // "\xff"
+  // "\xff"
+  // "\xff"
+  // "\x27"
+  "0a0b20115232ffff00"
+  "000a000000ff6000000000ffffffff0000"
+  "00000000000010000000ffffffff000000"
+  "000000000000000000f0ffffff26"
+  "",
+  // "\x03",
 };
 
 

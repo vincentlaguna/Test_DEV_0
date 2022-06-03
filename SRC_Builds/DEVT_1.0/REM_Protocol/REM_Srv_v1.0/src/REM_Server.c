@@ -166,7 +166,17 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
-      rcvBuffer[sVal] = '\0';
+      for (int reader = 0; reader < sVal; reader++)
+      {
+        if (rcvBuffer[reader] == "\x03")
+        {
+          rcvBuffer[reader] = '\0';
+          break;
+        }
+      }
+
+      
+      // rcvBuffer[sVal] = '\0';
     
     #ifdef DBG
       // Display Receive Buffer
