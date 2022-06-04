@@ -1,4 +1,6 @@
 make all -f /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/ --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/: Is a directory.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all -f /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/R
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun  2 21:14:15 2022
+# Make data base, printed on Sat Jun  4 16:02:27 2022
 
 # Variables
 
@@ -47,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:55537
+JOURNAL_STREAM = 8:55644
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from '/home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/', line 1)
@@ -65,7 +67,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1011
+MANAGERPID = 1027
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -77,7 +79,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1354,unix/vl-workstation-0:/tmp/.ICE-unix/1354
+SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1402,unix/vl-workstation-0:/tmp/.ICE-unix/1402
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -87,7 +89,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 3b08712634b24dcfac2e7e6df3977d70
+INVOCATION_ID = 638fa400f5b34d638ddd48bdb0dad8d2
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -97,7 +99,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2844
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3398
 # automatic
 %F = $(notdir $%)
 # environment
@@ -109,7 +111,7 @@ PWD = /home/ubuntu/workspace/Test_DEV_0
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1250
+SSH_AGENT_PID = 1342
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -145,7 +147,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-b62a3ca1-78ad-4acb-b13b-4391310d03e7.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-afb24c80-0cfd-4baf-834e-d06095e150da.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -203,7 +205,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2844
+VSCODE_PID = 3398
 # variable set hash-table stats:
 # Load=97/1024=9%, Rehash=0, Collisions=11/110=10%
 
@@ -255,8 +257,6 @@ all:
 # strcache performance: lookups = 9 / hit rate = 33%
 # hash-table stats:
 # Load=6/8192=0%, Rehash=0, Collisions=0/9=0%
-# Finished Make data base on Thu Jun  2 21:14:15 2022
+# Finished Make data base on Sat Jun  4 16:02:27 2022
 
  
-make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/: Is a directory.  Stop.
-
