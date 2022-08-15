@@ -8,7 +8,11 @@ make: *** /home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
+<<<<<<< HEAD
 # Make data base, printed on Sun Aug 14 14:35:25 2022
+=======
+# Make data base, printed on Sat Jun  4 16:02:27 2022
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 
 # Variables
 
@@ -47,7 +51,11 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
+<<<<<<< HEAD
 JOURNAL_STREAM = 8:56330
+=======
+JOURNAL_STREAM = 8:55644
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from '/home/ubuntu/workspace/Test_DEV_0/SRC_Builds/DEVT_1.0/REM_Protocol/REM_Srv_v1.0/', line 1)
@@ -63,6 +71,11 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
+<<<<<<< HEAD
+=======
+VSCODE_VERBOSE_LOGGING = true
+# environment
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 MANAGERPID = 1027
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
@@ -75,7 +88,11 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
+<<<<<<< HEAD
 SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1410,unix/vl-workstation-0:/tmp/.ICE-unix/1410
+=======
+SESSION_MANAGER = local/vl-workstation-0:@/tmp/.ICE-unix/1402,unix/vl-workstation-0:/tmp/.ICE-unix/1402
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -83,7 +100,11 @@ XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
+<<<<<<< HEAD
 INVOCATION_ID = e2eb7d208b8a45b2bde934a9d69f393b
+=======
+INVOCATION_ID = 638fa400f5b34d638ddd48bdb0dad8d2
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -93,7 +114,11 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
+<<<<<<< HEAD
 GIO_LAUNCHED_DESKTOP_FILE_PID = 3815
+=======
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3398
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # automatic
 %F = $(notdir $%)
 # environment
@@ -103,7 +128,11 @@ PWD = /home/ubuntu/workspace/Test_DEV_0
 # default
 .LOADED := 
 # environment
+<<<<<<< HEAD
 SSH_AGENT_PID = 1357
+=======
+SSH_AGENT_PID = 1342
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -115,7 +144,11 @@ HOME = /home/ubuntu
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
+<<<<<<< HEAD
 VSCODE_CODE_CACHE_PATH = /home/ubuntu/.config/Code/CachedData/6d9b74a70ca9c7733b29f0456fd8195364076dda
+=======
+VSCODE_CODE_CACHE_PATH = /home/ubuntu/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # environment
 LOGNAME = ubuntu
 # environment
@@ -138,6 +171,11 @@ QT_IM_MODULE = ibus
 SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
+<<<<<<< HEAD
+=======
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-afb24c80-0cfd-4baf-834e-d06095e150da.sock
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -155,7 +193,11 @@ MAKE_COMMAND := make
 # automatic
 *F = $(notdir $*)
 # environment
+<<<<<<< HEAD
 VSCODE_IPC_HOOK = /run/user/1000/vscode-9415da10-1.70.1-main.sock
+=======
+VSCODE_IPC_HOOK = /run/user/1000/vscode-9415da10-1.67.2-main.sock
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -195,7 +237,11 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
+<<<<<<< HEAD
 VSCODE_PID = 3815
+=======
+VSCODE_PID = 3398
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 # variable set hash-table stats:
 # Load=92/1024=9%, Rehash=0, Collisions=10/105=10%
 
@@ -247,6 +293,10 @@ all:
 # strcache performance: lookups = 9 / hit rate = 33%
 # hash-table stats:
 # Load=6/8192=0%, Rehash=0, Collisions=0/9=0%
+<<<<<<< HEAD
 # Finished Make data base on Sun Aug 14 14:35:25 2022
+=======
+# Finished Make data base on Sat Jun  4 16:02:27 2022
+>>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 
  
