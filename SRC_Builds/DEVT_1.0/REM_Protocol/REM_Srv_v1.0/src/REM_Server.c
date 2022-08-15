@@ -95,18 +95,23 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   S_SADDR_IN ClAddr;
 
   // TEST SECTION (#ifdef?)
-  // test_data tst_data = malloc(1 * sizeof(test_data));
-  
+  test_data *tst_data;// = (test_data *)malloc(1 * sizeof(test_data));
+  tst_data  = (test_data *)malloc(1 * sizeof(test_data));
+  // *tst_data->u8_sz_data_0  = malloc(sizeof(uint8_t) * MIN_STR_SZ);
   // uint8_t *ptst_data = &tst_data;
 
   // uint8_t test_dst;
+
+  uint8_t size_tst_data;
+  size_tst_data = sizeof(tst_data);
   
   test_buffer *ptst_buff;
 
   init_test_buffer(&ptst_buff);
 
-  // test_serialize_data() continue here 02252022
-  // test_insert_data(&ptst_buff, ptst_data, byte size from... ???);
+  test_insert_data(ptst_buff, tst_data, size_tst_data);
+
+  // test_serialize_data() // continue here 02252022 - continuing 08142022 (welcome back...)
 
   // test_read_data((uint8_t *)&test_dst, ptst_buff, size from... ???);
 

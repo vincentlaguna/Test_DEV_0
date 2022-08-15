@@ -39,7 +39,9 @@ int main(int argc, char *argv[])
     sokData[i].data  = szData[i];
     // Initialize Thread Handlers  
     pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
-  
+
+    SLEEP
+
   #ifdef DBG
   
     printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
