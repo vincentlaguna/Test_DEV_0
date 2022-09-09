@@ -64,15 +64,15 @@ Description: Common header file for REMOTE Server code
 #define NUM_SRV_THREADS 2
 #define NUM_CL_THREADS 1
 #define REM_CL_PORT 11069
-#define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
-// #define REM_SRV_PORT_0 11000
-#define REM_SRV_PORT_1 11000
+//#define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
+#define REM_SRV_PORT_0 11000
+#define REM_SRV_PORT_1 11001
 #define REM_SRV_PORT_2 11002
 #define REM_SRV_PORT_3 11003
 #define REM_SRV_PORT_4 11004
 #define REM_SRV_PORT_5 11005
-#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
-// #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
+//#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
+#define REM_SRV_IP_0 "127.0.0.1" // For quick local test
 // #define	  REM_SRV_IP_0 "192.168.143.20"
 // #define	  REM_SRV_IP_0 "192.168.128.250"
 #define REM_SRV_IP_1 "127.0.0.1" // Local Tests

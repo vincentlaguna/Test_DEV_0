@@ -71,13 +71,10 @@ Description: Common header file for REMOTE Server code
 #define REM_SRV_PORT_3 11003
 #define REM_SRV_PORT_4 11004
 #define REM_SRV_PORT_5 11005
-<<<<<<< HEAD
 // #define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
 #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
-=======
-#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
+//#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
 // #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
->>>>>>> 9450a636695208c75f94ca49d1f5858e7a8bb12f
 // #define	  REM_SRV_IP_0 "192.168.143.20"
 // #define	  REM_SRV_IP_0 "192.168.128.250"
 #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
