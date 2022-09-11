@@ -486,7 +486,7 @@ void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 
 /*****************************************************************************
 
-Name:	test_read_data()                                       
+Name:	test_read_data() AKA deserialize data...                                       
 Purpose:  Test Prototype Function for reading data from test buffer
 Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
 Returns: void                                        
