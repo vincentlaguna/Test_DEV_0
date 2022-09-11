@@ -105,7 +105,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   uint8_t size_tst_data;
   size_tst_data = sizeof(tst_data);
   
-  test_buffer *ptst_buff;
+  test_buffer *ptst_buff = NULL;
 
   init_test_buffer(&ptst_buff);
 
@@ -337,11 +337,11 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
     return;
   }
   
-  test_insert_data(p_buffer, (uint8_t)p_data->u8_sz_data_0,
+  test_insert_data(p_buffer, (uint8_t *)p_data->u8_sz_data_0,
                    sizeof(uint8_t) * MIN_STR_SZ);
-  test_insert_data(p_buffer, (uint8_t)&p_data->u8_data_1, sizeof(uint8_t));
+  test_insert_data(p_buffer, (uint8_t *)&p_data->u8_data_1, sizeof(uint8_t));
   test_insert_nest_data(&p_data->nst_data_0, p_buffer); // Insert nest struct
-  test_insert_data(p_buffer, (uint8_t)p_data->u16_data_2, sizeof(uint16_t));
+  test_insert_data(p_buffer, (uint8_t *)&p_data->u16_data_2, sizeof(uint16_t));
   
   return; //
 }
@@ -486,7 +486,7 @@ void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 
 /*****************************************************************************
 
-Name:	test_read_data() AKA deserialize data...                                       
+Name:	test_read_data() AKA de-serialize data...                                       
 Purpose:  Test Prototype Function for reading data from test buffer
 Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
 Returns: void                                        
@@ -495,6 +495,10 @@ Returns: void
 //
 void  test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
 {
+  // if (!p_buffer) assert(0); // include assert at some point 091122
+  if (!size) return;
+  // if ((p_buffer->size - p_buffer->next) < size) assert(0);
+
   memcpy(p_dst, p_buffer->tst_bffr_data + p_buffer->next, size);
 
   p_buffer->next += size;
@@ -516,11 +520,46 @@ Returns: void
 void  test_skip_data(test_buffer *p_buffer, uint8_t skip_sz)
 {
   if (p_buffer->next + skip_sz > 0 &&
-       p_buffer->next + skip_sz < p_buffer->size)
-    p_buffer->next += skip_sz;
+      p_buffer->next + skip_sz < p_buffer->size)
+      
+      p_buffer->next += skip_sz;
 }
 
 // End test_skip_data() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	test_buffer_skip() AKA ser-buff-skip                                       
+Purpose:  Test Prototype Function for skipping n bytes serialized test buffer
+Parameters: Pointer to test_buffer struct, size                                          
+Returns: void                                        
+
+*****************************************************************************/
+//
+void  test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz)
+{
+  u_int16_t available_sz = p_buffer->size - p_buffer->next;
+
+  if (available_sz >= skip_sz)
+  {
+    p_buffer->next += skip_sz;
+    return;
+  }
+
+  while (available_sz < skip_sz)
+  {
+    p_buffer->size = p_buffer->size * 2;
+    available_sz = p_buffer->size - p_buffer->next;
+  }
+  
+  p_buffer->tst_bffr_data = realloc(p_buffer->tst_bffr_data, p_buffer->size);
+  p_buffer->next += skip_sz;
+      
+}
+
+// End test_buffer_skip() 
 /****************************************************************************/
 
 

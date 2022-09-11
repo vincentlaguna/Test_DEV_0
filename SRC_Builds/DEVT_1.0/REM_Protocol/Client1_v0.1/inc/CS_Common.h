@@ -200,118 +200,6 @@ static const uint8_t *cStringPayload =
 //   "",
 // };
 
-// static const uint8_t *cREMDataRFOn =
-// {
-//   "\xff" 
-//   "\x02"  
-//   // "b6c565d971719cebe8f4eda60800450000"
-//   // "55bf52000080110000c0a84245c0a84234"
-//   // "feef081d0041061d"
-//   "0a0b20115232ffff00"
-//   "000a000000ff6000000000ffffffff0000"
-//   "00000000000010000000ffffffff000000"
-//   "000000000000000000f0ffffff26"
-//   "\x03",
-//   "",
-// };
-
-// static const uint8_t *cREMDataRFOn =
-// {
-//   // "\xff" 
-//   // "\x02"  
-//   "\x7a\x7f\x9c\x6e\xa3\x5f\x9c\xeb\xe8\xf4\xed\xa6\x08\x00\x45\x00\x00"
-//   "\x55\x40\xfa\x00\x00\x80\x11\x00\x00\xc0\xa8\x42\x45\xc0\xa8\x42\x34"
-//   "\xc5\x15\x08\x1d\x00\x41\x06\x1d\x0a\x0b\x20\x11\x52\x32\xff\xff\x00"
-//   "\x00\x0a\x00\x00\x00\xff\x60\x01\x00\x00\x00\xff\xff\xff\xff\x00\x00"
-//   "\x00\x00\x00\x00\x00\x00\x10\x00\x00\x00\xff\xff\xff\xff\x00\x00\x00"
-//   "\x00\x00\x00\x00\x00\x00\x00\x00\x00\xf0\xff\xff\xff\x27"
-//   // "\x03",
-//   // "",
-// };
-
-// static const uint8_t *cREMDataRFOn =
-// {
-//   "\xff"                                               // NUM bytes
-//   "\x02"                                               // STX
-//   "01234567890123456789012345678901234567890123456789" // 50 chrs
-//   "01234567890123456789012345678901234567890123456789" // 50 chrs
-//   "01234567890123456789012345678901234567890123456789" // 50 chrs
-//   "01234567890123456789012345678901234567890123456789" // 50 chrs
-//   "01234567890123456789012345678901234567890123456789" // 50 chrs
-//   "\x03",                                              // ETX
-//                                                        // 255 total
-// };
-
-static const uint8_t *cREMDataRFOn =
-{
-  // "\xff"                                               // NUM bytes
-  // "\x02" 
-  // "\x0a"
-  // "\x0b"
-  // "\x20"
-  // "\x11"
-  // "\x52"
-  // "\x32"
-  // "\xff"
-  // "\xff"
-  // "\x00"
-  // "\x00"
-  // "\x0a"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\xff"
-  // "\x60"
-  // "\x01"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\xff"
-  // "\xff"
-  // "\xff"
-  // "\xff"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x10"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\xff"
-  // "\xff"
-  // "\xff"
-  // "\xff"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\x00"
-  // "\xf0"
-  // "\xff"
-  // "\xff"
-  // "\xff"
-  // "\x27"
-  "0a0b20115232ffff00"
-  "000a000000ff6000000000ffffffff0000"
-  "00000000000010000000ffffffff000000"
-  "000000000000000000f0ffffff26"
-  "",
-  // "\x03",
-};
-
-
 /****************************************************************************/
 
 /* Data Sructure Definitions: ***********************************************/
@@ -449,6 +337,7 @@ void      test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
 void      test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
 void      test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
 void      test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
+void      test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz);
 void      test_reset_buffer(test_buffer *p_buffer);
 void      test_free_buffer(test_buffer *p_buffer);
 void      REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
