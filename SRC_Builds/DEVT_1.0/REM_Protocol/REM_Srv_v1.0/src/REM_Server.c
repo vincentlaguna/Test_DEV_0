@@ -368,14 +368,19 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
   if (sntel_val == 0xFFFFFFFF)
     return NULL;
 
-  test_skip_data(p_buffer, -1 * sizeof(uint16_t));
+  test_buffer_skip(p_buffer, -1 * sizeof(uint16_t));
   // Allocate memory to reconstruct the "object"
   test_data *p_tst_data = calloc(1, sizeof(test_data));
-  test_parse_data((uint8_t *)p_tst_data->u8_sz_data_0,
+
+  test_parse_data((uint8_t *)&p_tst_data->u8_sz_data_0,
                   p_buffer, sizeof(uint8_t) * MIN_STR_SZ);
-  test_parse_data((uint8_t *)p_tst_data->u8_data_1, p_buffer, sizeof(uint8_t));
+  test_parse_data((uint8_t *)&p_tst_data->u8_data_1, p_buffer, sizeof(uint8_t));
   // parse nested stuff...
-  test_parse_data((uint8_t *)p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
+  nest_data *p_nest_data = test_de_serialize_nest_data(p_buffer);
+  p_tst_data->nst_data_0 = *p_nest_data; // Shallow copy -> no internal objects
+  free(p_nest_data); // Shallow free as well...
+  // Last item in object
+  test_parse_data((uint8_t *)&p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
   
   return p_tst_data;
 }
@@ -383,6 +388,41 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
 // End test_de_serialize_data() 
 /****************************************************************************/
 
+
+/*****************************************************************************
+
+Name:	test_de_serialize_nest_data()                                       
+Purpose:  Prototype Function for de-serializing nested data structs in buffer
+Parameters: Pointer to data, pointer to buffer                                         
+Returns: Pointer to de-serialized nested data struct                                        
+
+*****************************************************************************/
+//
+nest_data *test_de_serialize_nest_data(test_buffer *p_buffer)
+{
+  // x-val detection code here
+  uint16_t sntel_val = 0; // 2B value
+  test_parse_data((uint8_t *)&sntel_val, p_buffer, sizeof(uint16_t));
+
+  if (sntel_val == 0xFFFFFFFF)
+    return NULL;
+
+  test_buffer_skip(p_buffer, -1 * sizeof(uint16_t));
+  // Allocate memory to reconstruct the "object"
+  nest_data *p_nest_data = calloc(1, sizeof(nest_data));
+
+  test_parse_data((uint8_t *)&p_nest_data->u8_sz_nst_data_0,
+                  p_buffer, sizeof(uint8_t) * MIN_STR_SZ);
+  test_parse_data((uint8_t *)&p_nest_data->u8_nst_data_ID, p_buffer, sizeof(uint8_t));
+  // parse pointer elements
+  p_nest_data->p_test_data = test_de_serialize_data(p_buffer);
+  // p_nest_data->p_test_data_arr = test_de_serialize_data(p_buffer); // Loop?
+  
+  return p_nest_data;
+}
+
+// End test_de_serialize_nest_data() 
+/****************************************************************************/
 
 /*****************************************************************************
 
@@ -446,14 +486,14 @@ void  test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer)
 
 /*****************************************************************************
 
-Name:	test_parse_data()                                       
-Purpose:  Test Prototype Function for parsing data from data buffer
+Name:	test_read_data()                                       
+Purpose:  Test Prototype Function for reading data from data buffer
 Parameters: Pointer to buffer struct, pointer to data, size                                          
 Returns: void                                        
 
 *****************************************************************************/
 //
-void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
+void  test_read_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
 {
   // Data extraction from buffer - does any of the previous stuff works? 04282022
   
@@ -480,20 +520,20 @@ void  test_parse_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes)
   return; //
 }
 
-// End test_parse_data() 
+// End test_read_data() 
 /****************************************************************************/
 
 
 /*****************************************************************************
 
-Name:	test_read_data() AKA de-serialize data...                                       
-Purpose:  Test Prototype Function for reading data from test buffer
+Name:	test_parse_data() AKA de-serialize data...                                       
+Purpose:  Test Prototype Function for de-serializing data from test buffer
 Parameters: Pointer to destination, pointer to test_buffer struct, size                                          
 Returns: void                                        
 
 *****************************************************************************/
 //
-void  test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
+void  test_parse_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
 {
   // if (!p_buffer) assert(0); // include assert at some point 091122
   if (!size) return;
@@ -504,7 +544,7 @@ void  test_read_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size)
   p_buffer->next += size;
 }
 
-// End test_read_data() 
+// End test_parse_data() 
 /****************************************************************************/
 
 
