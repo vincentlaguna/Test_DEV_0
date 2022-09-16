@@ -352,7 +352,7 @@ void  test_serialize_data(test_data *p_data, test_buffer *p_buffer)
 
 /*****************************************************************************
 
-Name:	test_de_serialize_data()                                       
+Name:	test_de_serialize_data() AKA de-serialize struct xp_t(buffer)                                      
 Purpose:  Test Prototype Function for de-serializing data struct for buffer
 Parameters: Pointer to data, pointer to buffer                                         
 Returns: Pointer to de-serialized data struct                                        
@@ -378,6 +378,8 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
   // parse nested stuff...
   nest_data *p_nest_data = test_de_serialize_nest_data(p_buffer);
   p_tst_data->nst_data_0 = *p_nest_data; // Shallow copy -> no internal objects
+  // parse pointer nested object
+  //p_tst_data->p_nst_data_0 = test_de_serialize_nest_data(p_buffer);
   free(p_nest_data); // Shallow free as well...
   // Last item in object
   test_parse_data((uint8_t *)&p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
