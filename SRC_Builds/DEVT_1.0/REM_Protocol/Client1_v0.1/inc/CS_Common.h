@@ -299,6 +299,7 @@ struct test_data
   uint8_t   u8_sz_data_0[MIN_STR_SZ];
   uint8_t   u8_data_1;
   nest_data nst_data_0;
+  nest_data *p_nst_data_0;
   uint16_t  u16_data_2;
   
 };

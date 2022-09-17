@@ -379,8 +379,9 @@ test_data *test_de_serialize_data(test_buffer *p_buffer)
   nest_data *p_nest_data = test_de_serialize_nest_data(p_buffer);
   p_tst_data->nst_data_0 = *p_nest_data; // Shallow copy -> no internal objects
   // parse pointer nested object
-  //p_tst_data->p_nst_data_0 = test_de_serialize_nest_data(p_buffer);
-  free(p_nest_data); // Shallow free as well...
+  p_tst_data->p_nst_data_0 = test_de_serialize_nest_data(p_buffer);
+   // Shallow free as well...
+  free(p_nest_data);
   // Last item in object
   test_parse_data((uint8_t *)&p_tst_data->u16_data_2, p_buffer, sizeof(uint16_t));
   
@@ -417,7 +418,7 @@ nest_data *test_de_serialize_nest_data(test_buffer *p_buffer)
                   p_buffer, sizeof(uint8_t) * MIN_STR_SZ);
   test_parse_data((uint8_t *)&p_nest_data->u8_nst_data_ID, p_buffer, sizeof(uint8_t));
   // parse pointer elements
-  p_nest_data->p_test_data = test_de_serialize_data(p_buffer);
+  // p_nest_data->p_test_data = test_de_serialize_data(p_buffer);
   // p_nest_data->p_test_data_arr = test_de_serialize_data(p_buffer); // Loop?
   
   return p_nest_data;
