@@ -306,6 +306,7 @@ struct test_data
 
 typedef struct test_buffer
 {
+  // Data fields
   uint8_t *tst_bffr_data;
   uint8_t size;
   uint8_t next;
