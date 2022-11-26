@@ -231,6 +231,7 @@ typedef struct SOKData
   // struct IPData *ipData;
 } SOKData;
 
+
 typedef struct Data
 {
   // Data field structure (variable length fields <field N> -> implement in Server.c)
@@ -243,6 +244,7 @@ typedef struct Data
   uint8_t LMSB;
   // uint8_t CS;
 } Data;
+
 
 typedef struct REMDataM // REM Protocol Packet Structure
 {
@@ -259,6 +261,7 @@ typedef struct REMDataM // REM Protocol Packet Structure
   uint8_t cs; // <sink1-last data byte % 256>
               // 	struct PayloadData  *PyldData;
 } REMDataM;
+
 
 typedef struct REMDataL
 {
@@ -279,8 +282,10 @@ typedef struct REMDataL
 
 // Forward struct declaration
 typedef struct test_data test_data;
+typedef struct test_list_node test_list_node; 
 
-typedef struct nest_data
+
+typedef struct nest_data // "P-Object Attributes"
 {
   // Data fields
   uint8_t   u8_sz_nst_data_0[MIN_STR_SZ];
@@ -290,7 +295,8 @@ typedef struct nest_data
 
 } nest_data;
 
-struct test_data
+
+struct test_data // "P Object"
 {
   // Data fields
   uint8_t   u8_sz_data_0[MIN_STR_SZ];
@@ -301,6 +307,7 @@ struct test_data
   
 };
 
+
 typedef struct test_buffer
 {
   uint8_t *tst_bffr_data;
@@ -308,6 +315,23 @@ typedef struct test_buffer
   uint8_t next;
   
 } test_buffer;
+
+// Linked Lists 10282022
+typedef struct test_ll
+{
+  
+  test_list_node *head;
+
+} test_ll;
+
+
+typedef struct test_list_node
+{
+  // Data fields
+  test_data *pNode_tst_data; // Pointer member to "P-Object"
+  test_list_node *pRight;
+
+};
 
 // struct  DataBuffer
 // {
@@ -329,6 +353,7 @@ int       rID_Gen(void);
 void      *UDP_SrvConnection_Hndlr(void *SOKData);
 void      init_test_buffer(test_buffer **d_pbuffer);
 void      test_serialize_data(test_data *p_data, test_buffer *p_buffer);
+void      test_serialize_nest_data(nest_data *p_nst_data, test_buffer *p_buffer);
 test_data *test_de_serialize_data(test_buffer *p_buffer);
 nest_data *test_de_serialize_nest_data(test_buffer *p_buffer);
 void      test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
