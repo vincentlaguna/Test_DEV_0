@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
   memset(sndBuffer, '\0', MAX_LEN);
   strcpy(sndBuffer, cSerialData);    
   // strcpy(sndBuffer, cStringPayload);    
-  // strcpy(sndBuffer, cREMDataRFOn);
+  strcpy(sndBuffer, cREMDataRFOn);
   // Connect to server
   printf("[-]CONNECTING TO SERVER: IP %s PORT %d\n", REM_SRV_IP_0, REM_SRV_PORT_0);
   if(connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
