@@ -202,7 +202,6 @@ static const uint8_t *cREMDataRFOn =
 
 static const uint8_t *cREMDataSYSReset =
 { 
-  // "\x0A 0B 20 11 38 04 01 38 01 00 BC\r\n"
   "\x0A"
   "\x0B"
   "\x20"
