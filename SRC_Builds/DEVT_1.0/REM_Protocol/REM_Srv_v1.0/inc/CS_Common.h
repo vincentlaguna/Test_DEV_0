@@ -197,6 +197,22 @@ static const uint8_t *cStringPayload =
 //                                                        // 255 total
 // };
 
+static const uint8_t *cREMDataSYSReset =
+{
+  "\x0A"
+  "\x0B"
+  "\x20"
+  "\x11"
+  "\x38"
+  "\x04"
+  "\x01"
+  "\x38"
+  "\x01"
+  "\x00"
+  "\xBC"
+  "",
+};
+
 /****************************************************************************/
 
 /* Data Sructure Definitions: ***********************************************/

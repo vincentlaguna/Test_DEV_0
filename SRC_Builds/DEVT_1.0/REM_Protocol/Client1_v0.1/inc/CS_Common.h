@@ -64,15 +64,15 @@ Description: Common header file for REMOTE Server code
 #define NUM_SRV_THREADS 2
 #define NUM_CL_THREADS 1
 #define REM_CL_PORT 11069
-// #define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
-#define REM_SRV_PORT_0 11000
+#define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
+// #define REM_SRV_PORT_0 11000
 #define REM_SRV_PORT_1 11001
 #define REM_SRV_PORT_2 11002
 #define REM_SRV_PORT_3 11003
 #define REM_SRV_PORT_4 11004
 #define REM_SRV_PORT_5 11005
-// #define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
-#define REM_SRV_IP_0 "127.0.0.1" // For quick local test
+#define REM_SRV_IP_0 "192.168.128.132" // Remote Device IP
+// #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
 //#define REM_SRV_IP_0 "192.168.128.229" // Remote Device IP
 // #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
 // #define	  REM_SRV_IP_0 "192.168.143.20"
@@ -198,6 +198,23 @@ static const uint8_t *cREMDataRFOn =
   "00 00 00 00 00 00 00 00 00 f0 ff ff ff 26"
   // "\x03",
   "",
+};
+
+static const uint8_t *cREMDataSYSReset =
+{ 
+  // "\x0A 0B 20 11 38 04 01 38 01 00 BC\r\n"
+  "\x0A"
+  "\x0B"
+  "\x20"
+  "\x11"
+  "\x38"
+  "\x04"
+  "\x01"
+  "\x38"
+  "\x01"
+  "\x01"
+  "\xBD",
+  ""
 };
 
 /****************************************************************************/

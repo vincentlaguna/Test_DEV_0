@@ -138,16 +138,16 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);
-      for (int reader = 0; reader < sVal; reader++)
-      {
-        if (rcvBuffer[reader] == "\x03")
-        {
-          rcvBuffer[reader] = '\0';
-          break;
-        }
-      }
+      // for (int reader = 0; reader < sVal; reader++)
+      // {
+      //   if (rcvBuffer[reader] == "")
+      //   {
+      //     rcvBuffer[reader] = '\0';
+      //     break;
+      //   }
+      // }
       
-      // rcvBuffer[sVal] = '\0';
+      rcvBuffer[sVal] = '\0';
     
     #ifdef DBG
       // Display Receive Buffer
@@ -164,7 +164,8 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     #endif
       // Copying to reply buffer for sending
       // strcpy(rplyBuffer, cStringPayload);
-      strcpy(rplyBuffer, cSerialData);      
+      // strcpy(rplyBuffer, cSerialData);
+      strcpy(rplyBuffer, cREMDataSYSReset);      
       //strcpy(rplyBuffer, cREMDataRFOn);
       // Replying Buffer w/active notifier
       if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
