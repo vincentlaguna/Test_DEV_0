@@ -54,6 +54,7 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
+#define LOCAL_TEST
 #define MAX_LEN 254
 #define MIN_LEN 16
 #define MAX_STR_SZ 128
@@ -64,8 +65,16 @@ Description: Common header file for REMOTE Server code
 #define NUM_SRV_THREADS 2
 #define NUM_CL_THREADS 1
 #define REM_CL_PORT 11069
-//#define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
-#define REM_SRV_PORT_0 11000
+
+#ifdef LOCAL_TEST
+  #define REM_SRV_PORT_0 11000
+  #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
+  #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
+#else
+  #define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
+  #define REM_SRV_IP_0 "192.168.128.132" // Remote Device IP
+#endif
+
 #define REM_SRV_PORT_1 11001
 #define REM_SRV_PORT_2 11002
 #define REM_SRV_PORT_3 11003
