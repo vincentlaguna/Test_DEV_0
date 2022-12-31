@@ -68,15 +68,17 @@ Description: Common header file for REMOTE Server code
 
 #ifdef LOCAL_TEST
   #define REM_SRV_PORT_0 11000
+  #define REM_SRV_PORT_1 11001
   #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
   #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
 #else
+  #define REM_SRV_PORT_1 11001
   #define REM_SRV_PORT_0 2077 // Remote Protocol Test Port
-  #define REM_SRV_IP_0 "192.168.128.132" // Remote Device IP
-  #define REM_SRV_IP_1 "127.0.0.1"
+  #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
+  #define REM_SRV_IP_0 "192.168.129.158" // Remote Device IP
 #endif
 
-#define REM_SRV_PORT_1 11001
+// #define REM_SRV_PORT_1 11001
 #define REM_SRV_PORT_2 11002
 #define REM_SRV_PORT_3 11003
 #define REM_SRV_PORT_4 11004
@@ -85,7 +87,7 @@ Description: Common header file for REMOTE Server code
 // #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
 // #define REM_SRV_IP_0 "192.168.143.20"
 // #define REM_SRV_IP_0 "192.168.128.250"
-// #define REM_SRV_IP_1 "192.168.128.251"
+// #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
 #define REM_SRV_IP_2 "192.168.128.252"
 #define REM_SRV_IP_3 "192.168.128.253"
 #define REM_SRV_IP_4 "192.168.128.254"
@@ -305,6 +307,7 @@ typedef struct REMDataL
 
 // Forward struct declaration
 typedef struct test_data test_data;
+typedef struct test_list_node test_list_node; 
 
 typedef struct nest_data
 {
@@ -336,6 +339,22 @@ typedef struct test_buffer
   
 } test_buffer;
 
+typedef struct test_ll
+{
+  
+  test_list_node *head;
+
+} test_ll;
+
+
+typedef struct test_list_node
+{
+  // Data fields
+  test_data *pNode_tst_data; // Pointer member to "P-Object"
+  test_list_node *pRight;
+
+} test_list_node;
+
 // struct  DataBuffer
 // {
 //   char  cPayload[MAX_STR_SZ]; // Storage for string
@@ -352,24 +371,29 @@ typedef	struct DataBuffer DBffr;
 
 /* Function Prototypes: *****************************************************/
 // Helper Functions
-int       rID_Gen(void);
-void      *UDP_SrvConnection_Hndlr(void *SOKData);
-void      init_test_buffer(test_buffer **d_pbuffer);
-void      test_serialize_data(test_data *p_data, test_buffer *p_buffer);
-test_data *test_de_serialize_data(test_buffer *p_buffer);
-nest_data *test_de_serialize_nest_data(test_buffer *p_buffer);
-void      test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
-void      test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
-void      test_read_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
-void      test_parse_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
-void      test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
-void      test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz);
-void      test_reset_buffer(test_buffer *p_buffer);
-void      test_free_buffer(test_buffer *p_buffer);
-void      REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
-bool      bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
-uint8_t   *convertHex(uint8_t *src, size_t len);
-int16_t   UDP_SokInit_Handlr(void);
+int             rID_Gen(void);
+void            *UDP_SrvConnection_Hndlr(void *SOKData);
+void            init_test_buffer(test_buffer **d_pbuffer);
+void            test_serialize_data(test_data *p_data, test_buffer *p_buffer);
+void            test_serialize_nest_data(nest_data *p_nst_data, test_buffer *p_buffer);
+void            test_serialize_llist(test_ll *p_test_ll, test_buffer *p_buffer);
+void            test_serialize_ll_node(test_list_node *p_ll_node, test_buffer *p_buffer);
+test_data       *test_de_serialize_data(test_buffer *p_buffer);
+nest_data       *test_de_serialize_nest_data(test_buffer *p_buffer);
+test_ll         *test_de_serialize_llist(test_buffer *p_buffer);
+test_list_node  *test_de_serialize_ll_node(test_buffer *p_buffer);
+void            test_insert_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
+void            test_insert_nest_data(nest_data *p_data, test_buffer *p_buffer);
+void            test_read_data(test_buffer *p_buffer, uint8_t *p_data, uint8_t n_bytes);
+void            test_parse_data(uint8_t *p_dst, test_buffer *p_buffer, uint8_t size);
+void            test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
+void            test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz);
+void            test_reset_buffer(test_buffer *p_buffer);
+void            test_free_buffer(test_buffer *p_buffer);
+void            REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
+bool            bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
+uint8_t         *convertHex(uint8_t *src, size_t len);
+int16_t         UDP_SokInit_Handlr(void);
 
 /****************************************************************************/
 #endif // CS_COMMON_H

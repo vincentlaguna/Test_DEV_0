@@ -184,6 +184,7 @@ int main(int argc, char *argv[])
   // while (1)
   // {
     sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
+    // sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
     // Waiting for response
     uint16_t sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);
     // sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
@@ -201,7 +202,7 @@ int main(int argc, char *argv[])
     // SLEEP
     printf("\n[-]Confirming receive values...\n");
     printf("\n%s", convertHex(rcvBuffer, strlen(rcvBuffer)));
-  // }
+  // } // While-Loop for Server connection
   
   if (rcvBuffer != NULL)
   {

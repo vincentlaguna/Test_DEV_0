@@ -147,7 +147,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       //   }
       // }
       
-      rcvBuffer[sVal] = '\0';
+      rcvBuffer[sVal++] = '\0';
     
     #ifdef DBG
       // Display Receive Buffer
@@ -168,9 +168,9 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       strcpy(rplyBuffer, cREMDataSYSReset);      
       //strcpy(rplyBuffer, cREMDataRFOn);
       // Replying Buffer w/active notifier
-      if (sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0,
-            (S_SADDR *)&ClAddr, sizeof(ClAddr)))
-      {
+      sendto(listenSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)&ClAddr, sizeof(ClAddr));
+      // sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(ClAddr));
+      // {
       
       #ifndef DBG  
         
@@ -179,7 +179,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
       #endif
       
         puts("[+]Replying Back to Client Status: ACTIVE\n");
-      }
+      // }
           
     #ifdef DBG
   
