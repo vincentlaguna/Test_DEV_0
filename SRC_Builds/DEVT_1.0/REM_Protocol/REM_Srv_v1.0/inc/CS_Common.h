@@ -310,7 +310,8 @@ typedef struct REMDataL
 
 // Forward struct declaration
 typedef struct test_data test_data;
-typedef struct test_list_node test_list_node; 
+typedef struct test_list_node test_list_node;
+typedef struct _person_t person_t; 
 
 
 typedef struct nest_data // "P-Object Attributes"
@@ -356,10 +357,34 @@ typedef struct test_ll
 typedef struct test_list_node
 {
   // Data fields
-  test_data *pNode_tst_data; // Pointer member to "P-Object"
-  test_list_node *pRight;
+  test_data       *pNode_tst_data; // Pointer member to "P-Object"
+  test_list_node  *pRight;
 
 };
+
+// Serializing example structures 12312022
+typedef struct _company_t
+{
+  // Data fields
+  char      comp_name[32];
+  int       emp_strength;
+  person_t  *CEO;
+} company_t;
+
+struct _person_t
+{
+  // Data fields
+  unsigned int      vehicle_no[4];
+  int               age;
+  int               *height;
+  unsigned int      *last_sal_amounts[5];
+  char              name[32];
+  company_t         company;
+  company_t         dream_companies[3];
+  struct _person_t  *CEO;
+  struct _person_t  *admin_staff[5];
+};
+
 
 // struct  DataBuffer
 // {
@@ -396,6 +421,7 @@ void            test_skip_data(test_buffer *p_buffer, uint8_t skip_sz);
 void            test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz);
 void            test_reset_buffer(test_buffer *p_buffer);
 void            test_free_buffer(test_buffer *p_buffer);
+void            serialize_person_t(person_t *p_person_t, test_buffer *p_buffer);
 void            REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool            bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t         *convertHex(uint8_t *src, size_t len);
