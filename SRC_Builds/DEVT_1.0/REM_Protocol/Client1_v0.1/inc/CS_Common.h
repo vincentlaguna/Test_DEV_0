@@ -112,6 +112,19 @@ Description: Common header file for REMOTE Server code
 
 #define CS        0x00
 
+
+#define SENTINEL_INSERTION_CODE(p_person_t, p_buffer)                           \
+{                                                                               \
+  if (!p_person_t)                                                              \
+  {                                                                             \
+    unsigned int sentinel = 0xFFFFFFFF;                                         \
+    test_insert_data(p_buffer, (uint8_t *)&sentinel_val, sizeof(unsigned int)); \
+    if (sentinel == 0xFFFFFFFF) return NULL;                                    \
+    test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \
+    return;                                                                     \
+  }                                                                             \
+}
+
 /****************************************************************************/
 
 /* Globals: *****************************************************************/
