@@ -119,16 +119,32 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // Bind Server address to socket descriptor
     // printf("[+]Binding to IP: %s on PORT: %d...\n", lData->cIP, lData->uPort);
     // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
-    if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
-    {
-      perror("[-]BIND = FAIL\n"); // Print the error message
-    }
-    else
-    {
-      printf("[+]Bind = OK\n");
-      printf("Inside Thread Handler...\n");
-    }
+    #ifdef SERVER_CONNECT
     
+      if(connect(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
+      {
+        perror("[-]CONNECT = FAIL\n"); // Print the error message
+      }
+      else
+      {
+        printf("[+]Bind = OK\n");
+        printf("Inside Thread Handler...\n");
+      }
+    
+    #else
+
+      if ((bind(listenSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr))) < 0)
+      {
+        perror("[-]BIND = FAIL\n"); // Print the error message
+      }
+      else
+      {
+        printf("[+]Bind = OK\n");
+        printf("Inside Thread Handler...\n");
+      }
+    
+    #endif // SERVER_CONNECT
+
     clAddrLen = sizeof(ClAddr);
     // While-Loop to receive data from incomming connections
     // while (1)
