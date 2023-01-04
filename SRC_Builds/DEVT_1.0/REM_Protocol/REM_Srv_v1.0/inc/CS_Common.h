@@ -54,7 +54,7 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
-#define LOCAL_TEST
+// #define LOCAL_TEST
 #define MAX_LEN 254
 #define MIN_LEN 16
 #define MAX_STR_SZ 128
@@ -75,7 +75,7 @@ Description: Common header file for REMOTE Server code
   #define REM_SRV_PORT_0 11001
   #define REM_SRV_PORT_1 2077 // Remote Protocol Test Port
   #define REM_SRV_IP_0 "127.0.0.1" // Local Tests
-  #define REM_SRV_IP_1 "192.168.129.158" // Remote Device IP
+  #define REM_SRV_IP_1 "192.168.128.131" // Remote Device IP
 #endif
 
 // #define REM_SRV_PORT_1 11001
@@ -221,21 +221,87 @@ static const uint8_t *cStringPayload =
 //                                                        // 255 total
 // };
 
+// static const uint8_t *cREMDataSYSReset =
+// {
+//   "\x0A"
+//   "\x0B"
+//   "\x20"
+//   "\x11"
+//   "\x38"
+//   "\x04" // Specifying the length of the bytes to CS
+//   "\x01"
+//   "\x38"
+//   "\x01"
+//   "\x00"
+//   "\xBC"
+//   "",
+// };
+
+// static const uint8_t *cREMDataRFOn =
 static const uint8_t *cREMDataSYSReset =
 {
   "\x0A"
   "\x0B"
   "\x20"
   "\x11"
-  "\x38"
-  "\x04"
-  "\x01"
-  "\x38"
-  "\x01"
+  "\x52"
+  "\x32"
+  "\xFF"
+  "\xFF"
   "\x00"
-  "\xBC"
+  "\x00"
+  "\x0A"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\xFF"
+  "\x00"
+  "\x60"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\xFF"
+  "\xFF"
+  "\xFF"
+  "\xFF"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\xFF"
+  "\xFF"
+  "\xFF"
+  "\xFF"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\x00"
+  "\xF0"
+  "\xFF"
+  "\xFF"
+  "\xFF"
+  "\x15"
   "",
 };
+
 
 /****************************************************************************/
 
