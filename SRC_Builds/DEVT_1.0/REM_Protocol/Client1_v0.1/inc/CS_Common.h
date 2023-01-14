@@ -54,7 +54,7 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
-// #define LOCAL_TEST
+#define LOCAL_TEST
 #define SERVER_CONNECT
 #define MAX_LEN 254
 #define MIN_LEN 16
@@ -118,7 +118,7 @@ Description: Common header file for REMOTE Server code
 {                                                                               \
   if (!p_person_t)                                                              \
   {                                                                             \
-    unsigned int sentinel = 0xFFFFFFFF;                                         \
+    unsigned int sentinel_val = 0xFFFFFFFF;                                     \
     test_insert_data(p_buffer, (uint8_t *)&sentinel_val, sizeof(unsigned int)); \
     if (sentinel == 0xFFFFFFFF) return NULL;                                    \
     test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \

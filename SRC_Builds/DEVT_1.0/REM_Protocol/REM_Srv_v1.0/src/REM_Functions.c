@@ -566,7 +566,7 @@ void  serialize_person_t(person_t *p_person_t, test_buffer *p_buffer)
 {
   int i = 0;
   unsigned int sentinel = 0xFFFFFFFF;
-  // SENTINEL_INSERTION_CODE(p_person_t, p_buffer);
+  SENTINEL_INSERTION_CODE(p_person_t, p_buffer);
   // Use a For-Loop to serialize each element in the person_t data structure
   for (i = 0; i < 4; i++)
   {
