@@ -388,6 +388,7 @@ typedef struct REMDataL
 typedef struct test_data test_data;
 typedef struct test_list_node test_list_node; 
 typedef struct _person_t person_t;
+// typedef struct _company_t company_t;
 
 typedef struct nest_data
 {
@@ -439,7 +440,7 @@ typedef struct test_list_node
 typedef struct _company_t
 {
   // Data fields
-  char      comp_name[32];
+  uint8_t   comp_name[32];
   int       emp_strength;
   person_t  *CEO;
 } company_t;
@@ -451,7 +452,7 @@ struct _person_t
   int               age;
   int               *height;
   unsigned int      *last_sal_amounts[5];
-  char              name[32];
+  uint8_t           name[32];
   company_t         company;
   company_t         dream_companies[3];
   struct _person_t  *CEO;
@@ -495,6 +496,7 @@ void            test_buffer_skip(test_buffer *p_buffer, uint8_t skip_sz);
 void            test_reset_buffer(test_buffer *p_buffer);
 void            test_free_buffer(test_buffer *p_buffer);
 void            serialize_person_t(person_t *p_person_t, test_buffer *p_buffer);
+void            serialize_company_t(company_t *p_company_t, test_buffer *p_buffer);
 void            REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool            bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t         *convertHex(uint8_t *src, size_t len);

@@ -598,12 +598,50 @@ void  serialize_person_t(person_t *p_person_t, test_buffer *p_buffer)
   }
 
   test_insert_data(p_buffer, (uint8_t *)p_person_t->name, 32);
-  ///test_serialize_company_t()
+  serialize_company_t(&p_person_t->company, p_buffer);
+  // For-Loop to serialize each element in the *dream_companies[3] array
+  for (i = 0; i < 3; i++)
+  {
+    serialize_company_t(&p_person_t->dream_companies[i], p_buffer);
+  }
+  // Recursive
+  serialize_person_t(p_person_t->CEO, p_buffer);
+  // For-Loop to serialize each element in the admin_staff[5] array
+  for (i = 0; i < 5; i++)
+  {
+    serialize_person_t(p_person_t->admin_staff[i], p_buffer);
+  }
 
   return; //
 }
 
 // End serialize_person_t() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	serialize_company_t()                              
+Purpose:  Function for serializing company_t struct for buffer
+Parameters: Pointer to company_t struct, pointer to buffer                                         
+Returns: void                                        
+
+*****************************************************************************/
+// 
+void  serialize_company_t(company_t *p_company_t, test_buffer *p_buffer)
+{
+  int i = 0;
+  unsigned int sentinel = 0xFFFFFFFF;
+  SENTINEL_INSERTION_CODE(p_company_t, p_buffer);
+  
+  test_insert_data(p_buffer, (uint8_t *)p_company_t->comp_name, 32);
+  test_insert_data(p_buffer, (uint8_t *)p_company_t->emp_strength, sizeof(int));
+  serialize_person_t(p_company_t->CEO, p_buffer);
+
+  return; //
+}
+
+// End serialize_company_t() 
 /****************************************************************************/
 
 
