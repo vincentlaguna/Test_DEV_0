@@ -567,13 +567,38 @@ void  serialize_person_t(person_t *p_person_t, test_buffer *p_buffer)
   int i = 0;
   unsigned int sentinel = 0xFFFFFFFF;
   SENTINEL_INSERTION_CODE(p_person_t, p_buffer);
-  // Use a For-Loop to serialize each element in the person_t data structure
+  // Use a For-Loop to serialize each element in the vehicle_no[4] array
   for (i = 0; i < 4; i++)
   {
     test_insert_data(p_buffer, (uint8_t *)&p_person_t->vehicle_no[i], sizeof(unsigned int));
   }
   
   test_insert_data(p_buffer, (uint8_t *)&p_person_t, sizeof(int));
+
+  if (p_person_t->height)
+  {
+    test_insert_data(p_buffer, (uint8_t *)p_person_t->height, sizeof(int));
+  }
+  else // Use Sentinel value to fill the space
+  {
+    test_insert_data(p_buffer, (uint8_t *)&sentinel, sizeof(unsigned int));
+  }
+  // For-Loop to serialize each element in the *last_sal_amounts[5] array
+  for (i = 0; i < 5; i++)
+  {
+    if (p_person_t->last_sal_amounts[i])
+    {
+      test_insert_data(p_buffer, (uint8_t *)p_person_t->last_sal_amounts[i],
+                       sizeof(unsigned int));
+    }
+    else
+    {
+      test_insert_data(p_buffer, (uint8_t *)&sentinel, sizeof(unsigned int));
+    }
+  }
+
+  test_insert_data(p_buffer, (uint8_t *)p_person_t->name, 32);
+  ///test_serialize_company_t()
 
   return; //
 }
