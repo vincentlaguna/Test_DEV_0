@@ -630,7 +630,6 @@ Returns: void
 // 
 void  serialize_company_t(company_t *p_company_t, test_buffer *p_buffer)
 {
-  int i = 0;
   unsigned int sentinel = 0xFFFFFFFF;
   SENTINEL_INSERTION_CODE(p_company_t, p_buffer);
   
@@ -642,6 +641,118 @@ void  serialize_company_t(company_t *p_company_t, test_buffer *p_buffer)
 }
 
 // End serialize_company_t() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	de_serialize_person_t()                              
+Purpose:  Function for de-serializing person_t struct from buffer
+Parameters: Pointer to buffer                                         
+Returns: Pointer to person_t structure                                        
+
+*****************************************************************************/
+// 
+person_t  *de_serialize_person_t(test_buffer *p_buffer)
+{
+  int i = 0;
+  unsigned int sentinel = 0;
+
+  SENTINEL_DETECTION_CODE(p_buffer);
+
+  person_t *p_person_t = calloc(1, sizeof(person_t));
+  // Use a For-Loop to parse each element of the vehicle_no[4] array
+  for (i = 0; i < 4; i++)
+  {
+    test_parse_data((uint8_t *)&p_person_t->vehicle_no[i], p_buffer, sizeof(unsigned int));
+  }
+  
+  test_parse_data((uint8_t *)&p_person_t->age, p_buffer, sizeof(int));
+
+  // Next member field is a pointer! Test for Sentinel value (pad-filler)
+  // in the next 4 Bytes in the serialized buffer you are parsing from
+  test_parse_data((uint8_t *)&sentinel, p_buffer, sizeof(unsigned int));
+
+  if (sentinel == 0xFFFFFFFF)
+  {
+    p_person_t->height = NULL;
+  }
+  else
+  {
+    test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));
+    p_person_t->height = calloc(1, sizeof(int));
+    test_parse_data((uint8_t *)p_person_t->height, p_buffer, sizeof(int));
+  }
+
+  // For-Loop to parse each element in the *last_sal_amounts[5] array
+  for (i = 0; i < 5; i++)
+  {
+    test_parse_data((uint8_t *)&sentinel, p_buffer, sizeof(unsigned int));
+
+    if (sentinel == 0xFFFFFFFF)
+    {
+      p_person_t->last_sal_amounts[i] = NULL;
+    }
+    else
+    {
+      test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));
+      p_person_t->last_sal_amounts[i] = calloc(1, sizeof(unsigned int));
+      test_parse_data((uint8_t *)p_person_t->last_sal_amounts[i], p_buffer, sizeof(unsigned int));
+    }
+  }
+
+  test_parse_data((uint8_t *)p_person_t->name, p_buffer, 32);
+
+  company_t *company = de_serialize_company_t(p_buffer);
+  // Shallow-copy (not a pointer) - Free it right after!
+  p_person_t->company = *company;
+  free(company);
+
+  // For-Loop to parse each element in the *dream_companies[3] array
+  for (i = 0; i < 3; i++)
+  {
+    company = de_serialize_company_t(p_buffer);
+    p_person_t->dream_companies[i] = *company;
+    free(company);
+  }
+  // Recursive
+  p_person_t->CEO = de_serialize_person_t(p_buffer);
+  // For-Loop to serialize each element in the admin_staff[5] array
+  for (i = 0; i < 5; i++)
+  {
+    p_person_t->admin_staff[i] = de_serialize_person_t(p_buffer);
+  }
+
+  return; //
+}
+
+// End de_serialize_person_t() 
+/****************************************************************************/
+
+
+/*****************************************************************************
+
+Name:	de_serialize_company_t()                              
+Purpose:  Function for de-serializing company_t struct from buffer
+Parameters: pointer to buffer                                         
+Returns: pointer to company_t data structure                                        
+
+*****************************************************************************/
+// 
+company_t  *de_serialize_company_t(test_buffer *p_buffer)
+{  
+  SENTINEL_DETECTION_CODE(p_buffer);
+  
+  company_t *p_company_t = calloc(1, sizeof(company_t));
+
+  test_parse_data((uint8_t *)p_company_t->comp_name, p_buffer, 32);
+  test_parse_data((uint8_t *)p_company_t->emp_strength, p_buffer, sizeof(int));
+  p_company_t->CEO = de_serialize_person_t(p_buffer);
+
+  return; //
+}
+
+// End de_serialize_company_t() 
 /****************************************************************************/
 
 

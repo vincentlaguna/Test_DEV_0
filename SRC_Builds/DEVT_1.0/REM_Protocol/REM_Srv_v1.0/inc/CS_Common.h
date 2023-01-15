@@ -126,6 +126,19 @@ Description: Common header file for REMOTE Server code
   }                                                                             \
 }
 
+#define SENTINEL_DETECTION_CODE(p_buffer) 0
+// #define SENTINEL_DETECTION_CODE(p_person_t, p_buffer)                           \
+// {                                                                               \
+//   if (!p_person_t)                                                              \
+//   {                                                                             \
+//     unsigned int sentinel_val = 0xFFFFFFFF;                                     \
+//     test_insert_data(p_buffer, (uint8_t *)&sentinel_val, sizeof(unsigned int)); \
+//     if (sentinel == 0xFFFFFFFF) return NULL;                                    \
+//     test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \
+//     return;                                                                     \
+//   }                                                                             \
+// }
+
 /****************************************************************************/
 
 /* Globals: *****************************************************************/
@@ -503,6 +516,8 @@ void            test_reset_buffer(test_buffer *p_buffer);
 void            test_free_buffer(test_buffer *p_buffer);
 void            serialize_person_t(person_t *p_person_t, test_buffer *p_buffer);
 void            serialize_company_t(company_t *p_company_t, test_buffer *p_buffer);
+person_t        *de_serialize_person_t(test_buffer *p_buffer);
+company_t       *de_serialize_company_t(test_buffer *p_buffer);
 void            REMDataSnd(uint8_t *pSink1, uint8_t *pSink2, uint8_t *pSrc, uint8_t *pDst, uint8_t *pCmd, uint8_t *pLen, uint8_t *pData, uint8_t *pMsb, uint8_t *pLsb, uint8_t *pCs);
 bool            bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t         *convertHex(uint8_t *src, size_t len);
