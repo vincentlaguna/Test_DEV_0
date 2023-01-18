@@ -749,7 +749,7 @@ company_t  *de_serialize_company_t(test_buffer *p_buffer)
   test_parse_data((uint8_t *)p_company_t->emp_strength, p_buffer, sizeof(int));
   p_company_t->CEO = de_serialize_person_t(p_buffer);
 
-  return; //
+  return p_company_t; //
 }
 
 // End de_serialize_company_t() 

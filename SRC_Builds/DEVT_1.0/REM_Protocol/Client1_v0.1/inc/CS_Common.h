@@ -120,24 +120,19 @@ Description: Common header file for REMOTE Server code
   {                                                                             \
     unsigned int sentinel_val = 0xFFFFFFFF;                                     \
     test_insert_data(p_buffer, (uint8_t *)&sentinel_val, sizeof(unsigned int)); \
-    if (sentinel == 0xFFFFFFFF) return NULL;                                    \
+    if (sentinel_val == 0xFFFFFFFF) return NULL;                                \
     test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \
     return;                                                                     \
   }                                                                             \
 }
 
-#define SENTINEL_DETECTION_CODE(p_buffer) 0
-// #define SENTINEL_DETECTION_CODE(p_person_t, p_buffer)                           \
-// {                                                                               \
-//   if (!p_person_t)                                                              \
-//   {                                                                             \
-//     unsigned int sentinel_val = 0xFFFFFFFF;                                     \
-//     test_insert_data(p_buffer, (uint8_t *)&sentinel_val, sizeof(unsigned int)); \
-//     if (sentinel == 0xFFFFFFFF) return NULL;                                    \
-//     test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \
-//     return;                                                                     \
-//   }                                                                             \
-// }
+#define SENTINEL_DETECTION_CODE(p_buffer)                                       \
+{                                                                               \
+    unsigned int sentinel_val = 0;                                              \
+    test_parse_data((uint8_t *)&sentinel_val, p_buffer, sizeof(unsigned int));  \
+    if(sentinel_val == 0xFFFFFFFF)  return NULL;                                \
+    test_buffer_skip(p_buffer, -1 * sizeof(unsigned int));                      \
+}
 
 /****************************************************************************/
 
