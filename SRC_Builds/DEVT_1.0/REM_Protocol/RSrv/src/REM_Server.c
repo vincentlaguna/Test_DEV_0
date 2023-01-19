@@ -60,35 +60,6 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   // Local Structs
   S_SADDR_IN SrvAddr;
   S_SADDR_IN ClAddr;
-
-  // TEST SECTION (#ifdef?)
-  test_data *tst_data;// = (test_data *)malloc(1 * sizeof(test_data));
-  tst_data  = (test_data *)malloc(1 * sizeof(test_data));
-  // *tst_data->u8_sz_data_0  = malloc(sizeof(uint8_t) * MIN_STR_SZ);
-  // uint8_t *ptst_data = &tst_data;
-
-  // uint8_t test_dst;
-
-  uint8_t size_tst_data;
-  size_tst_data = sizeof(tst_data);
-  
-  test_buffer *ptst_buff = NULL;
-
-  init_test_buffer(&ptst_buff);
-
-  test_insert_data(ptst_buff, tst_data, size_tst_data);
-
-  // test_serialize_data() // continue here 02252022 - continuing 08142022 (welcome back...)
-
-  // test_read_data((uint8_t *)&test_dst, ptst_buff, size from... ???);
-
-  // test_skip_data(ptst_buff, -size from... ???); example of rewinding back n size
-
-  // test_reset_buffer(ptst_buff); // Reset buffer to ptst_buff->next = 0
-
-  // test_free_buffer(ptst_buff); // Don't forget to free the buffer, please
-
-  // END TEST SECTION (#endif?)
   
   // #ifdef THREAD_TEST
   
@@ -149,8 +120,6 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
     // While-Loop to receive data from incomming connections
     // while (1)
     // {
-      // Testing placement of REMDataSnd() Function call
-      REMDataSnd(lData->sink1, lData->sink2, lData->src, lData->dst, lData->cmd, lData->len, lData->data, lData->msb, lData->lsb, lData->cs);
       // receive message
       uint16_t sVal = recvfrom(listenSOKFD, rcvBuffer, MAX_LEN, 0,
                     (S_SADDR *)&ClAddr, &clAddrLen);

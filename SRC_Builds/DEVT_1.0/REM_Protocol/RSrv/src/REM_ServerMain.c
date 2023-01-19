@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     sokData[i].SOKid = (i+1) * 10;
   
   #endif
-  //Call Rem function here
+  
     // Basic Assignment
     sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
     sokData[i].cIP   = szRem_Srv_IP[i];
