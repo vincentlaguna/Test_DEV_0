@@ -60,6 +60,22 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   // Local Structs
   S_SADDR_IN SrvAddr;
   S_SADDR_IN ClAddr;
+  // Recent testing for initializing generic examples... 01232023
+  person_t p_person_t;
+  memset(&p_person_t, sizeof(person_t));
+
+  p_person_t.age    = 34;
+  p_person_t.height = 180;
+  p_person_t.last_sal_amounts[0] = NULL;
+  p_person_t.last_sal_amounts[1] = NULL;
+  p_person_t.last_sal_amounts[2] = calloc(1, sizeof(unsigned int));
+  p_person_t.last_sal_amounts[2] = 10000;
+  p_person_t.last_sal_amounts[3] = calloc(1, sizeof(unsigned int));
+  p_person_t.last_sal_amounts[3] = 20000;
+  p_person_t.last_sal_amounts[4] = NULL;
+
+  strncpy(p_person_t.name, "Dummy_No_1", strlen("Dummy_No_1"));
+  strncpy(p_person_t.company.comp_name, "Stumpany", strlen("Stumpany"));
 
   // TEST SECTION (#ifdef?)
   test_data *tst_data;// = (test_data *)malloc(1 * sizeof(test_data));
