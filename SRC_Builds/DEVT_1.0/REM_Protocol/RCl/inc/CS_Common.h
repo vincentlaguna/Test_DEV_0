@@ -56,6 +56,7 @@ Description: Common header file for REMOTE Server code
 // #define		M_THREADED_SOKETS
 // #define LOCAL_TEST
 // #define SERVER_CONNECT
+#define NO_RX
 #define MAX_LEN 254
 #define MIN_LEN 16
 #define MAX_STR_SZ 128
