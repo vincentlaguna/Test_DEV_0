@@ -184,8 +184,8 @@ int main(int argc, char *argv[])
   // while (1)
   // {
     sndBuffer[-1] = '\r';
-    //sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
-    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
+    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(SrvAddr));
+    // sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
     // Waiting for response
 #ifndef NO_RX
     uint16_t sVal = recvfrom(connectSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)NULL, NULL);

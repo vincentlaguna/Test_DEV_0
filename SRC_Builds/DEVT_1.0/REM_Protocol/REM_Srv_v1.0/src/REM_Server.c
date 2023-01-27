@@ -62,7 +62,7 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
   S_SADDR_IN ClAddr;
   // Recent testing for initializing generic examples... 01232023
   person_t p_person_t;
-  memset(&p_person_t, sizeof(person_t));
+  memset(&p_person_t, 0, sizeof(person_t));
 
   p_person_t.age    = 34;
   p_person_t.height = 180;
@@ -76,6 +76,10 @@ void  *UDP_SrvConnection_Hndlr(void *sokData)
 
   strncpy(p_person_t.name, "Dummy_No_1", strlen("Dummy_No_1"));
   strncpy(p_person_t.company.comp_name, "Stumpany", strlen("Stumpany"));
+  p_person_t.company.emp_strength = 10000;
+
+  p_person_t.CEO = NULL;
+  
 
   // TEST SECTION (#ifdef?)
   test_data *tst_data;// = (test_data *)malloc(1 * sizeof(test_data));
