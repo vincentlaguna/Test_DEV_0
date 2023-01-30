@@ -54,8 +54,8 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
-#define LOCAL_TEST
-// #define SERVER_CONNECT
+#define LOCAL_TEST // ONLY
+// #define SERVER_CONNECT // Breaks local tests and doesn't connect to remote tgt
 #define MAX_LEN 254
 #define MIN_LEN 16
 #define MAX_STR_SZ 128

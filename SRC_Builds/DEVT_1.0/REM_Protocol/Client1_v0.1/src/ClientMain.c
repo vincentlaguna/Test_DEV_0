@@ -21,12 +21,51 @@ Description: Client-side Main
 
 int main(int argc, char *argv[])
 {
+#ifdef MT_SRV
+// Initialize Local Objects
+  SOKData   sokData[NUM_CL_THREADS];
+  pthread_t SOKthread[NUM_CL_THREADS];
+  // Initialize Number of Server Thread Objects in a for-loop
+  for (int i = 0; i < NUM_CL_THREADS; i++)
+  {
+  #ifdef DBG
+  
+    sokData[i].SOKid = (i+1) * 10;
+  
+  #endif
+  //Call Rem function here
+    // Basic Assignment
+    sokData[i].cIP   = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].cIP   = szRem_Srv_IP[i];
+    sokData[i].uPort = uRem_Srv_Port[i];
+    
+    sokData[i].data  = malloc(sizeof(uint8_t) * IP_STR_SZ);
+    sokData[i].data  = szData[i];
+    // Initialize Thread Handlers  
+    pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
+  
+  #ifdef DBG
+  
+    printf("\nIn Main: SOKid = %d\n", sokData[i].SOKid);
+  
+  #endif
+  
+    
+  }
+  // Join Threads (EXIT Thread Handlers)
+  for (int j = 0; j < NUM_CL_THREADS; j++)
+  {
+    pthread_join(SOKthread[j], NULL);
+  }
+
+#else
   // Receive and Reply Buffers
   uint8_t *sndBuffer = NULL;
   uint8_t *rcvBuffer = NULL;
   sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
-  
+#endif //
+
 #ifdef USE_TCP
   // Initialize Local Variables
   int connectSOKFD; 
@@ -148,7 +187,9 @@ int main(int argc, char *argv[])
     close(connectSOKFD);
   #endif
 
-#else // UDP
+#endif // 0
+#ifndef MT_SRV
+//#else // UDP
   // Local Variables
   uint16_t connectSOKFD;
   S_SADDR_IN SrvAddr;

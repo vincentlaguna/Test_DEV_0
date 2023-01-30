@@ -54,8 +54,8 @@ Description: Common header file for REMOTE Server code
 // #define		USE_TCP
 // #define		THREAD_TEST
 // #define		M_THREADED_SOKETS
-#define LOCAL_TEST
-#define SERVER_CONNECT
+// #define LOCAL_TEST
+// #define SERVER_CONNECT
 // #define NO_RX
 #define MAX_LEN 254
 #define MIN_LEN 16
@@ -70,8 +70,10 @@ Description: Common header file for REMOTE Server code
 
 #ifdef LOCAL_TEST
   #define REM_SRV_PORT_0 11000
+  // #define REM_SRV_PORT_0 2077
   #define REM_SRV_PORT_1 11001
   #define REM_SRV_IP_0 "127.0.0.1" // For quick local test
+  // #define REM_SRV_IP_0 "192.168.128.133"
   #define REM_SRV_IP_1 "127.0.0.1" // Local Tests
 #else
   #define REM_SRV_PORT_1 11001
@@ -223,7 +225,7 @@ static const uint8_t *cREMDataSYSReset =
   "\x01"
   "\x38"
   "\x01"
-  "\x01" // FIX ME -> if "\x00": it skips the CS and keeps sending (n) "00's"...
+  "\x00" // FIX ME -> if "\x00": it skips the CS and keeps sending (n) "00's"...
   "\xBD",
   ""
 };
