@@ -1,6 +1,6 @@
 #pragma once
 /*****************************************************************************
-Author(s) or Contributor(s): Version 0.0 (IN TEST)  ~Vincent A. Laguna 2022
+Author(s) or Contributor(s): Version 0.0 (IN TEST)  ~Vincent A. Laguna 2023
 
 File: CS_Common.h
 
@@ -64,7 +64,7 @@ Description: Common header file for REMOTE Server code
 #define IP_STR_SZ 16
 #define SLEEP sleep(1);
 #define NUM_SRV_THREADS 2
-#define NUM_CL_THREADS 1
+#define NUM_CL_THREADS 2
 #define REM_CL_PORT 11069
 
 #ifdef LOCAL_TEST
