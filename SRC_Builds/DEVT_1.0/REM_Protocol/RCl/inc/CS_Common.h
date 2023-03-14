@@ -51,9 +51,10 @@ Description: Common header file for REMOTE Server code
 #define DBG
 #define TIME_O 5
 #define MAX_CONN 6
-// #define		USE_TCP
-// #define		THREAD_TEST
-// #define		M_THREADED_SOKETS
+// #define USE_TCP
+// #define THREAD_TEST
+// #define M_THREADED_SOKETS
+#define MT_CL
 // #define LOCAL_TEST
 // #define SERVER_CONNECT
 // #define NO_RX
