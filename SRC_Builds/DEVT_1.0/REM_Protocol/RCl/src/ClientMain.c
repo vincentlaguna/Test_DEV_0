@@ -21,7 +21,7 @@ Description: Client-side Main
 
 int main(int argc, char *argv[])
 {
-#ifdef MT_SRV
+#ifdef MT_CL
 // Initialize Local Objects
   SOKData   sokData[NUM_CL_THREADS];
   pthread_t SOKthread[NUM_CL_THREADS];
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     sokData[i].data  = malloc(sizeof(uint8_t) * IP_STR_SZ);
     sokData[i].data  = szData[i];
     // Initialize Thread Handlers  
-    pthread_create(&SOKthread[i], NULL, UDP_SrvConnection_Hndlr, (void *)&sokData[i]);
+    pthread_create(&SOKthread[i], NULL, UDP_ClConnection_Hndlr, (void *)&sokData[i]);
   
   #ifdef DBG
   
@@ -188,7 +188,9 @@ int main(int argc, char *argv[])
     close(connectSOKFD);
   #endif
 
-#else // UDP
+#endif
+
+#ifdef USE_UDP
   // Local Variables
   uint16_t connectSOKFD;
   S_SADDR_IN SrvAddr;
@@ -198,7 +200,11 @@ int main(int argc, char *argv[])
   {
     printf("[-]Creation of SOCKET = FAIL\n");
     return EXIT_FAILURE;
-  }
+  }// Receive and Reply Buffers
+  uint8_t *sndBuffer = NULL;
+  uint8_t *rcvBuffer = NULL;
+  sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
+  rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Clear SrvAddr
   memset(&SrvAddr, 0, sizeof(SrvAddr));
   // SrvAddr.sin_addr.s_addr = inet_addr(LOCAL_IP);

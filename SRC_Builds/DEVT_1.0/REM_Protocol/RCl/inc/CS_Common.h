@@ -55,8 +55,8 @@ Description: Common header file for REMOTE Server code
 // #define THREAD_TEST
 // #define M_THREADED_SOKETS
 #define MT_CL
-// #define LOCAL_TEST
-// #define SERVER_CONNECT
+#define LOCAL_TEST
+#define CLIENT_CONNECT
 // #define NO_RX
 #define MAX_LEN 254
 #define MIN_LEN 16
@@ -66,7 +66,7 @@ Description: Common header file for REMOTE Server code
 #define IP_STR_SZ 16
 #define SLEEP sleep(1);
 #define NUM_SRV_THREADS 2
-#define NUM_CL_THREADS 1
+#define NUM_CL_THREADS 2
 #define REM_CL_PORT 11069
 
 #ifdef LOCAL_TEST
@@ -387,6 +387,7 @@ typedef	struct DataBuffer DBffr;
 // Helper Functions
 int             rID_Gen(void);
 void            *UDP_SrvConnection_Hndlr(void *SOKData);
+void            *UDP_ClConnection_Hndlr(void *SOKData);
 bool            bCheckSum(const uint8_t *buff1, const uint8_t *buff2, size_t sZ);
 uint8_t         *convertHex(uint8_t *src, size_t len);
 int16_t         UDP_SokInit_Handlr(void);
