@@ -52,7 +52,7 @@ $(PATHB)%.o:: $(PATHS)%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(TGT): $(OBJ)
-	gcc -o $@ $^ 
+	gcc -o $@ $^ -lnetsnmp
 
 
 clean:
