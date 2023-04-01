@@ -40,25 +40,17 @@ int bin_search(int *array, int index, int left, int right)
 
   printf("\nTESTING INSIDE FUNCTION CALL\n");
 
-  int mid = (left + right) / 2;
+  if (left > right)
+    return(-1);
 
-  for (int i = 0; i <= 10; i++)
-  {
-    if (mid == index)
-      return mid;
-    else if (index < mid)
-    {
-      mid = (left + (mid - 1)) / 2;
-      mid = bin_search(array, index, left, mid);      
-    }
-    else if (index > mid)
-    {
-      mid = (right + (mid + 1)) / 2;
-      mid = bin_search(array, index, mid, right);
-    }
-    else
-      return(-1);
-  } 
+  int mid = left + (right - 1) / 2;
+
+  if (*(array + mid) == index)
+    return mid;
+  else if (*(array + mid) > index)
+    return bin_search(array, index, left, mid - 1);      
+  else if (*(array + mid) < index)
+    return bin_search(array, index, mid + 1, right);
 }
 
 // End bin_search() 

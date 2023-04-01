@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   
   int array[] = {1,4,3,7,8,10,12,13,15,20};
 
-  int result = bin_search(array, 4, 0, 10);
+  int result = bin_search(array, 4, 0, 9);
 
   printf("\nIn Main... Result is: %d\n\n", result);
 
