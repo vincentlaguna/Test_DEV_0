@@ -24,7 +24,7 @@ DLFLAGS=-fPIC -shared
 all: $(TARGETS)
 
 snmpdemoapp: $(OBJS1)
-	$(CC) -o snmpdemoapp $(OBJS1) $(BUILDLIBS)
+	$(CC) -o snmpdemoapp $(OBJS1) $(BUILDLIBS) -lsnmp
 
 asyncapp: $(OBJS3)
 	$(CC) -o asyncapp $(OBJS3) $(BUILDLIBS)

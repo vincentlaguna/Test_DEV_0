@@ -1,5 +1,8 @@
 #include  <net-snmp/net-snmp-config.h>
 #include  <net-snmp/net-snmp-includes.h>
+#include  <string.h>
+
+//#define   OTHER_METHODS
 
 /* change the word "define" to "undef" to try the (insecure) SNMPv1 version */
  #undef   DEMO_USE_SNMP_VERSION_3
@@ -9,7 +12,7 @@
   const char  *our_v3_passphrase = "The Net-SNMP Demo Password";
  #endif
 
- int  main(void)
+ int  main(int argc, char **argv)
  {
   // Declare variables
   struct  snmp_session  session, *ss; // Info about who we're going to be talking to
@@ -17,17 +20,18 @@
   struct  snmp_pdu      *response;    // Info about what is getting sent back
 
   oid     anOID[MAX_OID_LEN];         // Location of the information we want to retrieve
-  size_t  anOID_len = MAX_OID_LEN;
+  size_t  anOID_len;// = MAX_OID_LEN;
 
   struct  variable_list *vars;        // List of variables we want to manipulate via SNMP
   int     status;
+  int     count = 1;
 
   // Initialize the SNMP Library
-  init_snmp("snmpapp");
+  init_snmp("snmpdemoapp");
 
   // Initialize a "session" that defines who we're going to talk to
   snmp_sess_init(&session);           // Setup the defaults
-  session.peername = "test.net-snmp.org";
+  session.peername = strdup("test.net-snmp.org");
 
   // Setup authentication parameters for talking to the server
   #ifdef  DEMO_USE_SNMP_VERSION_3      // Use SNMPv3
@@ -83,9 +87,10 @@
   // If failed...
   if (!ss)
   {
-    snmp_perror("ack");
-    snmp_log(LOG_ERR, "Something horrible happened!!!\n");
-    exit(2);
+    snmp_sess_perror("ack", &session);
+    //snmp_log(LOG_ERR, "Something horrible happened!!!\n");
+    SOCK_CLEANUP;
+    exit(1);
   }
 
   // Create the PDU we are sending when requesting information. 
@@ -95,8 +100,8 @@
 
   // Create the PDU for the data (for our request).
   // 1) We're going to GET the system.sysDescr.0.node.
-  pdu = snmp_pdu_create(SNMP_MSG_GET);
-
+  pdu = snmp_pdu_create(SNMP_MSG_GETNEXT);
+  anOID_len = MAX_OID_LEN;
   // So, let's fill it with our requested oid. 
   // Let's get the system.sysDescr.0 variable for this example. 
   // There are numerous ways you could create the oid in question. 
@@ -104,8 +109,17 @@
   // into the anOID array we created above, or you could use one of 
   // the following function calls to do it. We recommend the first one (get_node), 
   // as it is the most powerful and accepts more types of OIDs. 
-  read_objid(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len);
+  if (!snmp_parse_oid(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len)) 
+  {
+    snmp_perror(".1.3.6.1.2.1.1.1.0");
+    SOCK_CLEANUP;
+    exit(1);
+  }
 
+  get_node("sysDescr.0", anOID, &anOID_len);
+  //read_objid(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len); // <- This method times out 040523
+  read_objid("system.sysDescr.0", anOID, &anOID_len); // <- Timeout (Sub-id not found: (top) -> system)
+  
   #if OTHER_METHODS
     get_node("sysDescr.0", anOID, &anOID_len);
     read_objid("system.sysDescr.0", anOID, &anOID_len);
@@ -171,6 +185,6 @@
   snmp_close(ss);
 
   // Windows32 Specific cleanup (is a noop in unix)
-  SOCK_CLEANUP;
+  //SOCK_CLEANUP;
 
  } // End of main()
