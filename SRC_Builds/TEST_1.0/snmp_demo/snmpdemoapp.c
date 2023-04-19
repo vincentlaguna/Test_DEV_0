@@ -8,9 +8,11 @@
  #define   DEMO_USE_SNMP_VERSION_3
  
  #ifdef   DEMO_USE_SNMP_VERSION_3
-  #include  "net-snmp/transform_oids.h"
+  #include  "../net-snmp/library/transform_oids.h"
   const char  *our_v3_passphrase = "The Net-SNMP Demo Password";
  #endif
+
+#define SYSDESCR_OID ".1.3.6.1.2.1.1.1.0"
 
  int  main(int argc, char **argv)
  {
@@ -22,7 +24,7 @@
   oid     anOID[MAX_OID_LEN];         // Location of the information we want to retrieve
   size_t  anOID_len;// = MAX_OID_LEN;
 
-  struct  variable_list *vars;        // List of variables we want to manipulate via SNMP
+  netsnmp_variable_list *vars;        // List of variables we want to manipulate via SNMP
   int     status;
   int     count = 1;
 
@@ -31,7 +33,7 @@
 
   // Initialize a "session" that defines who we're going to talk to
   snmp_sess_init(&session);           // Setup the defaults
-  session.peername = strdup("test.net-snmp.org");
+  session.peername = strdup("localhost");
 
   // Setup authentication parameters for talking to the server
   #ifdef  DEMO_USE_SNMP_VERSION_3      // Use SNMPv3
@@ -50,15 +52,17 @@
     session.securityAuthProto    = usmHMACMD5AuthProtocol;
     session.securityAuthProtoLen = sizeof(usmHMACMD5AuthProtocol) / sizeof(oid); 
     session.securityAuthKeyLen   = USM_AUTH_KU_LEN;
+    session.securityPrivKeyLen   = USM_PRIV_KU_LEN;
 
     // Set the authentication key to a MD5 hashed version of our passphrase 
     // "The Net-SNMP Demo Password" (which must be at least 8 characters long)
     if (generate_Ku(session.securityAuthProto,
                     session.securityAuthProtoLen,
-                    (u_char *)our_v3_passphrase, strlen(our_v3_passphrase),
+                    (const char *)our_v3_passphrase, 
+                    strlen(our_v3_passphrase),
                     session.securityAuthKeyLen) != SNMPERR_SUCCESS)
     {
-      snmp_error(argv[0]);
+      //snmp_error(argv[0]);
       snmp_log(LOG_ERR, "Error generating Ku from authentication passphrase. \n");
       exit(1);
     }
@@ -109,18 +113,21 @@
   // into the anOID array we created above, or you could use one of 
   // the following function calls to do it. We recommend the first one (get_node), 
   // as it is the most powerful and accepts more types of OIDs. 
-  if (!snmp_parse_oid(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len)) 
+  
+  // if (!snmp_parse_oid(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len))
+  if (!snmp_parse_oid(SYSDESCR_OID, anOID, &anOID_len)) 
   {
-    snmp_perror(".1.3.6.1.4.1.2021.13.4242.1.1.2");
+    // snmp_perror(".1.3.6.1.4.1.2021.13.4242.1.1.2");
+    snmp_perror(SYSDESCR_OID);
     SOCK_CLEANUP;
     exit(1);
   }
 
-  get_node(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len);
-  //read_objid(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len); // <- This method times out 040523
-  read_objid(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len); // <- Timeout (Sub-id not found: (top) -> system)
-  
   #if OTHER_METHODS
+    //get_node(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len);
+    get_node(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len);
+    //read_objid(".1.3.6.1.4.1.2021.13.4242.1.1.2", anOID, &anOID_len); // <- Timeout (Sub-id not found: (top) -> system)
+    //read_objid(".1.3.6.1.2.1.1.1.0", anOID, &anOID_len); // <- This method times out 040523
     get_node("sysDescr.0", anOID, &anOID_len);
     read_objid("system.sysDescr.0", anOID, &anOID_len);
   #endif
