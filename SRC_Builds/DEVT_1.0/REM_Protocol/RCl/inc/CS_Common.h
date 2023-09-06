@@ -113,7 +113,7 @@ Description: Common header file for REMOTE Server code
 #define DATA_1    "DATA 1"
 
 #define MSB       0xFF
-#define LSB       0xFF00
+#define LSB       0xFF//00
 
 #define CS        0x00
 
@@ -227,8 +227,8 @@ static const uint8_t *cREMDataSYSReset =
   "\x38"
   "\x01"
   "\x00" // FIX ME -> if "\x00": it skips the CS and keeps sending (n) "00's"...
-  "\xBD",
-  ""
+  "\xBD"
+  "",
 };
 
 // static const uint8_t *cREMDataRFOn =
