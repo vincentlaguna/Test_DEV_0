@@ -61,7 +61,7 @@ void  *UDP_ClConnection_Hndlr(void *sokData)
   rcvBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   sndBuffer  = (uint8_t *)malloc(sizeof(uint8_t) * MAX_LEN);
   // Local Variables
-  socklen_t srvAddrLen;
+  socklen_t clAddrLen;
   int16_t connectSOKFD;
   
   // Local Structs
@@ -90,24 +90,16 @@ void  *UDP_ClConnection_Hndlr(void *sokData)
       printf("[-]Creation of SOCKET = FAIL\n");
     }
 
-    // Zero-out struct
-    #if 0 // 20230906-1130
+    // Clear ClAddr <- used from working Client1_v0.1 20230906-1130
     memset(&ClAddr, 0, sizeof(ClAddr));
     ClAddr.sin_addr.s_addr = inet_addr(lData->cIP);
     ClAddr.sin_port = htons(lData->uPort);
     ClAddr.sin_family = AF_INET;
-    #endif
-
-    // Clear SrvAddr <- used from working Client1_v0.1 20230906-1130
-    memset(&SrvAddr, 0, sizeof(SrvAddr));
-    SrvAddr.sin_addr.s_addr = inet_addr(lData->cIP);
-    SrvAddr.sin_port = htons(lData->uPort);
-    SrvAddr.sin_family = AF_INET;
 
     memset(sndBuffer, '\0', MAX_LEN);
     strcpy(sndBuffer, cREMDataSYSReset);    
 
-    if(connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
+    if(connect(connectSOKFD, (S_SADDR *)&ClAddr, sizeof(ClAddr)) < 0)
     {
         printf("\n[-]CONNECT TO SERVER Error: Connect Failed \n");
         exit(0);
@@ -118,18 +110,7 @@ void  *UDP_ClConnection_Hndlr(void *sokData)
     // if ((bind(listenSOKFD, (S_SADDR *)&lData->ipData->srvAddr, sizeof(lData->ipData->srvAddr))) < 0)
     #ifdef CLIENT_CONNECT
 
-      #if 0 // 20230906-1130
       if(connect(connectSOKFD, (S_SADDR *)&ClAddr, sizeof(ClAddr)) < 0)
-      {
-        perror("[-]CONNECT = FAIL\n"); // Print the error message
-      }
-      else
-      {
-        printf("[+]Bind = OK\n");
-        printf("Inside Thread Handler...\n");
-      }
-      #endif
-      if(connect(connectSOKFD, (S_SADDR *)&SrvAddr, sizeof(SrvAddr)) < 0)
       {
         perror("[-]CONNECT = FAIL\n"); // Print the error message
       }
@@ -153,12 +134,12 @@ void  *UDP_ClConnection_Hndlr(void *sokData)
     
     #endif // CLIENT_CONNECT
 
-    srvAddrLen = sizeof(SrvAddr);
+    clAddrLen = sizeof(ClAddr);
 
     //strcpy(sndBuffer, cREMDataSYSReset);      
     //strcpy(rplyBuffer, cREMDataRFOn);
     // Buffer w/active notifier
-    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
+    sendto(connectSOKFD, sndBuffer, MAX_LEN, 0, (S_SADDR *)&ClAddr, sizeof(ClAddr));
     // While-Loop to receive data from incomming connections
     // while (1)
     // {
@@ -197,7 +178,7 @@ void  *UDP_ClConnection_Hndlr(void *sokData)
       strcpy(rcvBuffer, cREMDataSYSReset);      
       //strcpy(rplyBuffer, cREMDataRFOn);
       // Replying Buffer w/active notifier
-      sendto(listenSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)&SrvAddr, sizeof(SrvAddr));
+      sendto(listenSOKFD, rcvBuffer, MAX_LEN, 0, (S_SADDR *)&ClAddr, sizeof(ClAddr));
       // sendto(listenSOKFD, rplyBuffer, MAX_LEN, 0, (S_SADDR *)NULL, sizeof(ClAddr));
       // {
       
